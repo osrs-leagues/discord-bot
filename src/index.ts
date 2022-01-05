@@ -1,3 +1,7 @@
-import multiply from './multiply';
+import { initializeDatabase } from './database';
 
-console.log(multiply(2, 5));
+console.log('Starting Leagues Discord Bot...');
+
+initializeDatabase().then(() => {
+  console.log('connected');
+});
