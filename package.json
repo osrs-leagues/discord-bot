@@ -56,5 +56,9 @@
     "dotenv": "^10.0.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.12.5"
+  },
+  "engines": {
+    "node": "16.x",
+    "yarn": "1.x"
   }
 }
