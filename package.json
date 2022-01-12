@@ -5,6 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "tsc",
+    "commands": "ts-node ./src/deploy-commands.ts",
     "lint": "eslint src --ext .ts & prettier src",
     "lint:fix": "eslint src --ext .ts --fix & prettier src --write",
     "start": "ts-node ./src/index.ts",
@@ -48,6 +49,10 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.19.0",
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.5.0",
     "dotenv": "^10.0.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.12.5"
