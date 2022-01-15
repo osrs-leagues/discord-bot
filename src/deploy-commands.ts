@@ -1,7 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 
-import { commandData } from './commands';
+import { commandData } from './discord/commands';
 import config from './config';
 
 const rest = new REST({ version: '9' }).setToken(config.discord_bot.token);
