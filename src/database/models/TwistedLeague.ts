@@ -26,7 +26,7 @@ const initializeTwistedLeague = (sequelize: Sequelize) => {
         unique: true,
       },
       points: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
