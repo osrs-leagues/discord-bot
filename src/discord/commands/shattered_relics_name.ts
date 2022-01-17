@@ -4,7 +4,7 @@ import {
 } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser, TrailblazerLeague } from '../../database/models';
+import { DiscordUser, ShatteredRelicsLeague } from '../../database/models';
 import { getRank, League } from '../../leagues';
 import setLeagueRole from '../actions/setLeagueRole';
 import getRankedMessage from '../messages/ranked';
@@ -24,15 +24,17 @@ const channels = [
   '931963036896464946', // #bot-commands
 ];
 
-const trailblazerNameCommand: Command = {
+const shatteredRelicsNameCommand: Command = {
   channels,
   data: new SlashCommandBuilder()
-    .setName('trailblazer_name')
-    .setDescription('Set your Trailblazer League username and discord role.')
+    .setName('shattered_relics_name')
+    .setDescription(
+      'Set your Shattered Relics League username and discord role.',
+    )
     .addStringOption((option: SlashCommandStringOption) =>
       option
         .setName('username')
-        .setDescription('Enter your Trailblazer League username.')
+        .setDescription('Enter your Shattered Relics League username.')
         .setRequired(true),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
@@ -43,12 +45,12 @@ const trailblazerNameCommand: Command = {
     const discordMember = interaction.member;
     const result = await DiscordUser.upsert({
       user_id: discordMember.user.id,
-      trailblazer_name: username,
+      shattered_relics_name: username,
     });
     const discordUser = result[0];
     if (discordUser) {
-      const league: League = 'trailblazer';
-      const leagueUser = await TrailblazerLeague.findOne({
+      const league: League = 'shattered_relics';
+      const leagueUser = await ShatteredRelicsLeague.findOne({
         where: { name: username },
       });
       if (leagueUser) {
@@ -84,4 +86,4 @@ const trailblazerNameCommand: Command = {
   },
 };
 
-export default trailblazerNameCommand;
+export default shatteredRelicsNameCommand;
