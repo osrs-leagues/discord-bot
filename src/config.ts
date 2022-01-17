@@ -3,6 +3,8 @@ import { League, Rank } from './leagues';
 
 dotenv.config();
 
+export type Environment = 'testing' | 'development' | 'stage' | 'production';
+
 export type BotConfig = {
   discord_bot: {
     application_id: string;
@@ -14,7 +16,7 @@ export type BotConfig = {
     password: string;
     username: string;
   };
-  environment: string;
+  environment: Environment;
   guild_id: string;
   ranks: {
     [key in League]: {
@@ -34,7 +36,7 @@ const config: BotConfig = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   },
-  environment: process.env.NODE_ENV,
+  environment: process.env.NODE_ENV as Environment,
   guild_id: process.env.GUILD_ID,
   ranks: {
     twisted: {
