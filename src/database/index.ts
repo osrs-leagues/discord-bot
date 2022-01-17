@@ -14,13 +14,9 @@ export const initializeDatabase = async () => {
 
     models.forEach((model) => model(sequelize));
     await sequelize.sync({
-      alter:
-        config.environment !== 'testing'
-          ? {
-              drop: false,
-            }
-          : undefined,
-      force: config.environment === 'testing',
+      alter: {
+        drop: false,
+      },
     });
     console.log('Synced sequelize models.');
   } catch (error) {
