@@ -1,13 +1,9 @@
 import { DataTypes, Sequelize, Model } from 'sequelize';
-
-interface TwistedLeagueAttributes {
-  name: string;
-  points: number;
-}
+import { LeagueAttributes } from './League';
 
 class TwistedLeague
-  extends Model<TwistedLeagueAttributes>
-  implements TwistedLeagueAttributes
+  extends Model<LeagueAttributes>
+  implements LeagueAttributes
 {
   declare name: string;
   declare points: number;

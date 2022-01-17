@@ -4,7 +4,7 @@ import {
 } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser, TwistedLeague } from '../../database/models';
+import { DiscordUser, TrailblazerLeague } from '../../database/models';
 import { getRank, League } from '../../leagues';
 import setLeagueRole from '../actions/setLeagueRole';
 import getRankedMessage from '../messages/ranked';
@@ -24,15 +24,15 @@ const channels = [
   '931963036896464946', // #bot-commands
 ];
 
-const twistedNameCommand: Command = {
+const trailblazerNameCommand: Command = {
   channels,
   data: new SlashCommandBuilder()
-    .setName('twisted_name')
-    .setDescription('Set your Twisted League username and discord role.')
+    .setName('trailblazer_name')
+    .setDescription('Set your Trailblazer League username and discord role.')
     .addStringOption((option: SlashCommandStringOption) =>
       option
         .setName('username')
-        .setDescription('Enter your Twisted League username.')
+        .setDescription('Enter your Trailblazer League username.')
         .setRequired(true),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
@@ -43,16 +43,16 @@ const twistedNameCommand: Command = {
     const discordMember = interaction.member;
     const result = await DiscordUser.upsert({
       user_id: discordMember.user.id,
-      twisted_name: username,
+      trailblazer_name: username,
     });
     const discordUser = result[0];
     if (discordUser) {
-      const league: League = 'twisted';
-      const twistedLeagueUser = await TwistedLeague.findOne({
+      const league: League = 'trailblazer';
+      const trailblazerLeagueUser = await TrailblazerLeague.findOne({
         where: { name: username },
       });
-      if (twistedLeagueUser) {
-        const rank = getRank(twistedLeagueUser.points, league);
+      if (trailblazerLeagueUser) {
+        const rank = getRank(trailblazerLeagueUser.points, league);
         const rankResult = await setLeagueRole({
           league,
           rank: rank,
@@ -84,4 +84,4 @@ const twistedNameCommand: Command = {
   },
 };
 
-export default twistedNameCommand;
+export default trailblazerNameCommand;

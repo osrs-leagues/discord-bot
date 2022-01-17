@@ -3,6 +3,7 @@ import { DataTypes, Sequelize, Model } from 'sequelize';
 interface DiscordUserAttributes {
   user_id: string;
   twisted_name?: string;
+  trailblazer_name?: string;
 }
 
 class DiscordUser
@@ -10,7 +11,8 @@ class DiscordUser
   implements DiscordUserAttributes
 {
   declare user_id: string;
-  declare twisted_name: string;
+  declare twisted_name?: string;
+  declare trailblazer_name?: string;
 
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -26,6 +28,10 @@ const initializeDiscordUser = (sequelize: Sequelize) => {
         unique: true,
       },
       twisted_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      trailblazer_name: {
         type: DataTypes.STRING,
         allowNull: true,
       },

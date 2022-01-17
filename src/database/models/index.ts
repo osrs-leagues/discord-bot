@@ -1,8 +1,15 @@
 import DiscordUser, { initializeDiscordUser } from './DiscordUser';
-import TwistedLeague, { initializeTwistedLeague } from './TwistedLeague';
+import TrailblazerLeague, {
+  initializeTrailblazerLeague,
+} from './League/TrailblazerLeague';
+import TwistedLeague, { initializeTwistedLeague } from './League/TwistedLeague';
 
-const initializeModels = [initializeDiscordUser, initializeTwistedLeague];
+const initializeModels = [
+  initializeDiscordUser,
+  initializeTrailblazerLeague,
+  initializeTwistedLeague,
+];
 
-export { DiscordUser, TwistedLeague };
+export { DiscordUser, TrailblazerLeague, TwistedLeague };
 
 export default initializeModels;
