@@ -25,19 +25,23 @@ const fetchHiscoreUser: Task<
       console.error('Invalid username provided to fetchHiscoreUser task.');
       return undefined;
     }
-    const response = await axios({ url: HISCORE_PLAYER_URL + username });
-    if (response && response.status == 200 && response.data.length > 0) {
-      const stats = response.data.split('\n');
-      if (stats.length > 0) {
-        const league_stats = stats[LEAGUE_POINTS_INDEX].split(',');
-        const league_rank = league_stats[0];
-        const league_points = league_stats[1];
-        return {
-          league_rank,
-          league_points,
-        };
+    try {
+      const response = await axios({ url: HISCORE_PLAYER_URL + username });
+      if (response && response.status == 200 && response.data.length > 0) {
+        const stats = response.data.split('\n');
+        if (stats.length > 0) {
+          const league_stats = stats[LEAGUE_POINTS_INDEX].split(',');
+          const league_rank = league_stats[0];
+          const league_points = league_stats[1];
+          return {
+            league_rank,
+            league_points,
+          };
+        }
+      } else {
+        return undefined;
       }
-    } else {
+    } catch (error) {
       return undefined;
     }
   },

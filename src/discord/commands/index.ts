@@ -3,6 +3,7 @@ import { Collection } from 'discord.js';
 import pingCommand from './ping';
 import fetchLeagueRanksCommand from './fetch_league_ranks';
 import hiscoresCommand from './hiscores';
+import leagueNameCommand from './league_name';
 import leagueRanksCommand from './league_ranks';
 import shatteredRelicsNameCommand from './shattered_relics_name';
 import trailblazerNameCommand from './trailblazer_name';
@@ -14,6 +15,7 @@ const commandData = [
   pingCommand,
   fetchLeagueRanksCommand,
   hiscoresCommand,
+  leagueNameCommand,
   leagueRanksCommand,
   shatteredRelicsNameCommand,
   trailblazerNameCommand,

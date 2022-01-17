@@ -39,7 +39,7 @@ const updateAllRanksCommand: Command = {
     await interaction.reply('Attempting to update all user roles!');
     await updateLeagueUsers.execute();
     const amountUpdated = await updateDiscordRoles.execute();
-    await interaction.reply(`Updated ${amountUpdated} discord user roles!`);
+    await interaction.editReply(`Updated ${amountUpdated} discord user roles!`);
   },
 };
 
