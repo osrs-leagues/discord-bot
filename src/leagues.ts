@@ -1,3 +1,5 @@
+export const CURRENT_LEAGUE: League = 'shattered_relics';
+
 export enum Rank {
   BRONZE = 'bronze',
   IRON = 'iron',
@@ -77,6 +79,13 @@ export const getRankName = (rank: Rank) => {
 
 export const getLeagueName = (league: League) => {
   return LeagueNames[league];
+};
+
+export const setLeagueStandings = (
+  pointRankings: PointRankings,
+  league?: League,
+) => {
+  LeagueRankings[league ?? CURRENT_LEAGUE] = pointRankings;
 };
 
 export default LeagueRankings;
