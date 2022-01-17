@@ -8,6 +8,7 @@ const channels = [
   /**
    * OSRS Leagues server
    */
+  '769283619595485224', // #bot-commands
   '636193036195463178', // #bot-commands-test
 
   /**
