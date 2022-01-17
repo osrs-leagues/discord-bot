@@ -26,7 +26,7 @@ const getPointRankingsMessage = (
   }
   return new MessageEmbed()
     .setColor('#64d85b')
-    .setTitle(`Current ${leagueName} point rankings:`)
+    .setTitle(`Current ${leagueName} League point rankings:`)
     .setDescription(body);
 };
 

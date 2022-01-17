@@ -1,7 +1,10 @@
 import { Job } from './types';
 
 const jobs: Job[] = [
-  //leaguePointRankingsJob - Disabled until league hiscores are working.
+  /* Disabled until league starts
+  leaguePointRankingsJob,
+  updateUsersJob
+  */
 ];
 
 export const scheduleJobs = () => {

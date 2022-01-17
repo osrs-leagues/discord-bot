@@ -47,9 +47,9 @@ const LeagueRankings: Leagues = {
 };
 
 const LeagueNames: { [key in League]: string } = {
-  twisted: 'Twisted League',
-  trailblazer: 'Trailblazer League',
-  shattered_relics: 'Shattered Relics League',
+  twisted: 'Twisted',
+  trailblazer: 'Trailblazer',
+  shattered_relics: 'Shattered Relics',
 };
 
 const RankNames: { [key in Rank]: string } = {

@@ -36,10 +36,11 @@ const trailblazerNameCommand: Command = {
         .setRequired(true),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
-    const username = interaction.options.getString('username');
+    let username = interaction.options.getString('username');
     if (!username) {
       return interaction.reply('Please enter a valid username.');
     }
+    username = username.toLocaleLowerCase();
     const discordMember = interaction.member;
     const result = await DiscordUser.upsert({
       user_id: discordMember.user.id,
