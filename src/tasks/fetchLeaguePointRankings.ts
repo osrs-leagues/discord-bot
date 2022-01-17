@@ -63,6 +63,7 @@ const fetchLeaguePointRankings: Task = {
     console.log(`Final Point Rankings: ${JSON.stringify(pointRankings)}`);
 
     setLeagueStandings(pointRankings);
+    await browser.close();
     console.timeEnd('league_standings');
   },
 };
