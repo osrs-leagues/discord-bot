@@ -1,3 +1,4 @@
 import leaguePointRankingsJob from './leaguePointRankings';
+import updateUsersJob from './updateUsers';
 
-export { leaguePointRankingsJob };
+export { leaguePointRankingsJob, updateUsersJob };

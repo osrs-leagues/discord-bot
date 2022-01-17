@@ -65,6 +65,7 @@ const fetchLeaguePointRankings: Task = {
     setLeagueStandings(pointRankings);
     await browser.close();
     console.timeEnd('league_standings');
+    return true;
   },
 };
 
