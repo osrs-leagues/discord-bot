@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 
+import config from '../config';
 import databaseConfig from './config';
 import models from './models';
 
@@ -12,11 +13,13 @@ export const initializeDatabase = async () => {
     console.log('Connected to OSRS Leagues database.');
 
     models.forEach((model) => model(sequelize));
-    await sequelize.sync({
-      alter: {
-        drop: false,
-      },
-    });
+    if (config.environment !== 'production') {
+      await sequelize.sync({
+        alter: {
+          drop: false,
+        },
+      });
+    }
     console.log('Synced sequelize models.');
   } catch (error) {
     console.error('Unable to connect to the OSRS Leagues database:', error);
