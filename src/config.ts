@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { League, Rank } from './leagues';
 
 dotenv.config();
 
@@ -15,6 +16,11 @@ export type BotConfig = {
   };
   environment: string;
   guild_id: string;
+  ranks: {
+    [key in League]: {
+      [key in Rank]: string;
+    };
+  };
 };
 
 const config: BotConfig = {
@@ -30,6 +36,35 @@ const config: BotConfig = {
   },
   environment: process.env.NODE_ENV,
   guild_id: process.env.GUILD_ID,
+  ranks: {
+    twisted: {
+      bronze: process.env.TWISTED_BRONZE,
+      iron: process.env.TWISTED_IRON,
+      steel: process.env.TWISTED_STEEL,
+      mithril: process.env.TWISTED_MTHRIL,
+      adamant: process.env.TWISTED_ADAMANT,
+      rune: process.env.TWISTED_RUNE,
+      dragon: process.env.TWISTED_DRAGON,
+    },
+    trailblazer: {
+      bronze: process.env.TRAILBLAZER_BRONZE,
+      iron: process.env.TRAILBLAZER_IRON,
+      steel: process.env.TRAILBLAZER_STEEL,
+      mithril: process.env.TRAILBLAZER_MTHRIL,
+      adamant: process.env.TRAILBLAZER_ADAMANT,
+      rune: process.env.TRAILBLAZER_RUNE,
+      dragon: process.env.TRAILBLAZER_DRAGON,
+    },
+    shattered_relics: {
+      bronze: process.env.SHATTERED_RELICS_BRONZE,
+      iron: process.env.SHATTERED_RELICS_IRON,
+      steel: process.env.SHATTERED_RELICS_STEEL,
+      mithril: process.env.SHATTERED_RELICS_MTHRIL,
+      adamant: process.env.SHATTERED_RELICS_ADAMANT,
+      rune: process.env.SHATTERED_RELICS_RUNE,
+      dragon: process.env.SHATTERED_RELICS_DRAGON,
+    },
+  },
 };
 
 export default config;
