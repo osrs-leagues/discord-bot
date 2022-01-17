@@ -12,12 +12,12 @@ export const handleInteraction = async (
   if (!command) return;
 
   if (
-    command.channels.length > 0 &&
+    command.channels?.length > 0 &&
     !command.channels.includes(interaction.channel.id)
   ) {
     return interaction.reply('You cannot use this command in this channel.');
   }
-  if (command.roles.length > 0) {
+  if (command.roles?.length > 0) {
     let hasRole = false;
     const memberRoles = interaction.member.roles as GuildMemberRoleManager;
     for (const role of command.roles) {

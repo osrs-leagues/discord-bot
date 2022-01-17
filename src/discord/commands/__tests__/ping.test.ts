@@ -1,4 +1,4 @@
-import { pingCommand } from '../ping';
+import pingCommand from '../ping';
 
 test('ping command', () => {
   const mockInteraction = {
