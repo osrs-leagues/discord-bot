@@ -40,20 +40,17 @@ const twistedNameCommand: Command = {
     if (!username) {
       return interaction.reply('Please enter a valid username.');
     }
-    console.log(`Adding twisted user: ${username}`);
     const discordMember = interaction.member;
     const result = await DiscordUser.upsert({
       user_id: discordMember.user.id,
       twisted_name: username,
     });
     const discordUser = result[0];
-    console.log(`Discord User: ${discordUser.user_id}`);
     if (discordUser) {
       const league: League = 'twisted';
       const twistedLeagueUser = await TwistedLeague.findOne({
         where: { name: username },
       });
-      console.log(`Twisted user: ${twistedLeagueUser}`);
       if (twistedLeagueUser) {
         const rank = getRank(twistedLeagueUser.points, league);
         const rankResult = await setLeagueRole({
