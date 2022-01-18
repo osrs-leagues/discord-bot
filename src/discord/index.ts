@@ -4,7 +4,7 @@ import config from '../config';
 import { handleInteraction } from './interactionRouter';
 import { deleteMessageOnDelay } from './listeners/deleteMessageOnDelay';
 
-export const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 export const initializeDiscord = (callback?: () => void) => {
   client.once('ready', () => {
