@@ -73,7 +73,7 @@ const config: BotConfig = {
   },
   delete_message_on_delay: {
 	  channel_id: process.env.DELETE_MESSSAGE_ON_DELAY_CHANNEL_ID,
-	  time_ms: process.env.DELETE_MESSSAGE_ON_DELAY_DELAY_TIME_MS,
+	  time_ms: Number(process.env.DELETE_MESSSAGE_ON_DELAY_DELAY_TIME_MS),
   },
 };
 
