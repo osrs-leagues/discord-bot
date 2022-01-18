@@ -23,6 +23,10 @@ export type BotConfig = {
       [key in Rank]: string;
     };
   };
+  delete_message_on_delay: {
+	  channel_id: string;
+	  delay_time_ms: number;
+  };
 };
 
 const config: BotConfig = {
@@ -66,6 +70,10 @@ const config: BotConfig = {
       rune: process.env.SHATTERED_RELICS_RUNE,
       dragon: process.env.SHATTERED_RELICS_DRAGON,
     },
+  },
+  delete_message_on_delay: {
+	  channel_id: process.env.DELETE_MESSSAGE_ON_DELAY_CHANNEL_ID,
+	  time_ms: process.env.DELETE_MESSSAGE_ON_DELAY_DELAY_TIME_MS,
   },
 };
 
