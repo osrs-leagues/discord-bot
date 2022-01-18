@@ -25,7 +25,7 @@ export type BotConfig = {
   };
   delete_message_on_delay: {
 	  channel_id: string;
-	  delay_time_ms: number;
+	  time_ms: number;
   };
 };
 
