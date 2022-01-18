@@ -1,6 +1,13 @@
 # @osrs-leagues/discord-bot
 
+## 2.0.1
+
+### Patch Changes
+
+- 1dd9a07: Fix typos in role config variables.
+
 ## 2.0.0
+
 ### Major Changes
 
 - 898d206: Add jobs & tasks for updating all discord user roles for the current league.
