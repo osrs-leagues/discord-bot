@@ -12,6 +12,11 @@ const IMP_MESSAGE_REGEX = /^(.*) imp on w([0-9]{3})(.*)?$/;
 const MESSAGE_LIFESPAN = config.imp_spotting_time * 60 * 1000;
 
 /**
+ * Set error message to expire after 1 minute.
+ */
+const ERROR_LIFESPAN = 60 * 1000;
+
+/**
  * This listener is for the #imp-spotting channel.
  * The goal is to force users to adhere to a specifc message format
  *  and delete messages after a period of time.
@@ -30,7 +35,7 @@ const impSpottingListener: ChannelListener = {
   ],
   onChannelMessage: async (message: Message) => {
     if (message.author.bot) {
-      setMessageExpiration(message, MESSAGE_LIFESPAN);
+      setMessageExpiration(message, ERROR_LIFESPAN);
       return;
     }
 
