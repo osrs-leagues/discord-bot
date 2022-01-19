@@ -17,7 +17,7 @@ const leaguePointRankingsJob: Job = {
       try {
         fetchLeaguePointRankings.execute();
       } catch (error) {
-        console.error('Error executing league points rankings job.', error);
+        console.error('Error executing leaguePointRankingsJob.', error);
       }
     });
   },

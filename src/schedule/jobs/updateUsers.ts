@@ -18,7 +18,7 @@ const updateUsersJob: Job = {
         await updateLeagueUsers.execute();
         await updateDiscordRoles.execute();
       } catch (error) {
-        console.error('Error executing update all users job.', error);
+        console.error('Error executing updateUsersJob.', error);
       }
     });
   },
