@@ -1,5 +1,16 @@
 # @osrs-leagues/discord-bot
 
+## 2.1.0
+
+### Minor Changes
+
+- b54095a: Add support for channel listening. Add #imp-spotting channel listener.
+- f7c948e: Add remove roles command.
+
+### Patch Changes
+
+- 9d42ad6: Add error boundaries to jobs & tasks.
+
 ## 2.0.1
 
 ### Patch Changes
