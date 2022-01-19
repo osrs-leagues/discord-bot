@@ -1,17 +1,17 @@
+import { leaguePointRankingsJob } from './jobs';
 import { Job } from './types';
 
-const jobs: Job[] = [
-  /* Disabled until league starts
-  leaguePointRankingsJob,
-  updateUsersJob
-  */
-];
+const jobs: Job[] = [leaguePointRankingsJob /*, updateUsersJob*/];
 
 export const scheduleJobs = () => {
-  jobs.forEach((job) => {
-    job.schedule();
-  });
-  console.log('Scheduled all jobs for execution!');
+  try {
+    jobs.forEach((job) => {
+      if (job.interval) job.schedule();
+    });
+    console.log('Scheduled all jobs for execution!');
+  } catch (error) {
+    console.error('Error scheduling jobs: ', error);
+  }
 };
 
 export default jobs;

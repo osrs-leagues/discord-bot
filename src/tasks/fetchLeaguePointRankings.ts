@@ -16,7 +16,7 @@ const fetchLeaguePointRankings: Task = {
     console.log('Starting league standings fetch...');
     console.time('league_standings');
     try {
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
       const page = await browser.newPage();
 
       let completed = false;
@@ -104,8 +104,9 @@ const getFirstRowRank = async (page: puppeteer.Page): Promise<number> => {
     const result = $('#contentHiscores .personal-hiscores__row td')
       .first()
       .text()
-      .trim();
-    return result;
+      .trim()
+      .replaceAll(',', '');
+    return parseInt(result);
   });
   return rank;
 };
@@ -116,8 +117,9 @@ const getLastRowRank = async (page: puppeteer.Page): Promise<number> => {
     const result = $('#contentHiscores .personal-hiscores__row:last-child td')
       .first()
       .text()
-      .trim();
-    return result;
+      .trim()
+      .replaceAll(',', '');
+    return parseInt(result);
   });
   return rank;
 };
