@@ -18,6 +18,7 @@ export type BotConfig = {
   };
   environment: Environment;
   guild_id: string;
+  imp_spotting_time: number;
   ranks: {
     [key in League]: {
       [key in Rank]: string;
@@ -38,6 +39,7 @@ const config: BotConfig = {
   },
   environment: process.env.NODE_ENV as Environment,
   guild_id: process.env.GUILD_ID,
+  imp_spotting_time: parseInt(process.env.IMP_SPOTTING_TIME ?? '1'),
   ranks: {
     twisted: {
       bronze: process.env.TWISTED_BRONZE,
