@@ -5,6 +5,7 @@ import fetchLeagueRanksCommand from './fetch_league_ranks';
 import hiscoresCommand from './hiscores';
 import leagueNameCommand from './league_name';
 import leagueRanksCommand from './league_ranks';
+import removeRolesCommand from './remove_roles';
 import shatteredRelicsNameCommand from './shattered_relics_name';
 import trailblazerNameCommand from './trailblazer_name';
 import twistedNameCommand from './twisted_name';
@@ -17,6 +18,7 @@ const commandData = [
   hiscoresCommand,
   leagueNameCommand,
   leagueRanksCommand,
+  removeRolesCommand,
   shatteredRelicsNameCommand,
   trailblazerNameCommand,
   twistedNameCommand,
