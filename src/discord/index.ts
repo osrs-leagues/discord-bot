@@ -2,17 +2,19 @@ import { Client, Intents } from 'discord.js';
 
 import config from '../config';
 import { handleInteraction } from './interactionRouter';
-import { deleteMessageOnDelay } from './listeners/deleteMessageOnDelay';
+import { handleMessageCreate } from './listeners';
 
-export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+export const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 export const initializeDiscord = (callback?: () => void) => {
   client.once('ready', () => {
     console.log('Started OSRS Leagues Bot!');
     callback?.();
   });
-  
-  client.on('messageCreate', deleteMessageOnDelay);
+
+  client.on('messageCreate', handleMessageCreate);
 
   client.on('interactionCreate', handleInteraction);
 

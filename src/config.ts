@@ -18,14 +18,11 @@ export type BotConfig = {
   };
   environment: Environment;
   guild_id: string;
+  imp_spotting_time: number;
   ranks: {
     [key in League]: {
       [key in Rank]: string;
     };
-  };
-  delete_message_on_delay: {
-	  channel_id: string;
-	  time_ms: number;
   };
 };
 
@@ -42,6 +39,7 @@ const config: BotConfig = {
   },
   environment: process.env.NODE_ENV as Environment,
   guild_id: process.env.GUILD_ID,
+  imp_spotting_time: parseInt(process.env.IMP_SPOTTING_TIME ?? '1'),
   ranks: {
     twisted: {
       bronze: process.env.TWISTED_BRONZE,
@@ -70,10 +68,6 @@ const config: BotConfig = {
       rune: process.env.SHATTERED_RELICS_RUNE,
       dragon: process.env.SHATTERED_RELICS_DRAGON,
     },
-  },
-  delete_message_on_delay: {
-	  channel_id: process.env.DELETE_MESSSAGE_ON_DELAY_CHANNEL_ID,
-	  time_ms: Number(process.env.DELETE_MESSSAGE_ON_DELAY_DELAY_TIME_MS),
   },
 };
 
