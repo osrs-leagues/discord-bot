@@ -9,6 +9,7 @@
     "lint": "eslint src --ext .ts & prettier src",
     "lint:fix": "eslint src --ext .ts --fix & prettier src --write",
     "start": "ts-node ./src/index.ts",
+    "release": "changeset tag",
     "test": "jest",
     "prepare": "husky install"
   },
