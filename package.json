@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "commands": "ts-node ./src/deploy-commands.ts",
-    "lint": "eslint src --ext .ts & prettier src",
+    "lint": "eslint src --ext .ts & prettier src --check",
     "lint:fix": "eslint src --ext .ts --fix & prettier src --write",
     "start": "ts-node ./src/index.ts",
     "release": "changeset tag",

@@ -1,4 +1,4 @@
-import { Guild, GuildMember } from 'discord.js';
+import { GuildMember } from 'discord.js';
 
 import { League, Rank } from '../../leagues';
 import config from '../../config';
