@@ -14,8 +14,12 @@ const updateUsersJob: Job = {
   schedule: () => {
     const interval = updateUsersJob.interval;
     cron.schedule(interval[config.environment], async () => {
-      await updateLeagueUsers.execute();
-      await updateDiscordRoles.execute();
+      try {
+        await updateLeagueUsers.execute();
+        await updateDiscordRoles.execute();
+      } catch (error) {
+        console.error('Error executing update all users job.', error);
+      }
     });
   },
 };

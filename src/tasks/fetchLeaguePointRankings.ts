@@ -15,57 +15,64 @@ const fetchLeaguePointRankings: Task = {
   execute: async () => {
     console.log('Starting league standings fetch...');
     console.time('league_standings');
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    try {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
 
-    let completed = false;
-    let currentPage = PAGE_START;
-    let maxBoundary = 0;
-    let minBoundary = 0;
-    while (!completed) {
-      await page.goto(`${HISCORES_URL}${currentPage}`);
-      const rank = await getFirstRowRank(page);
-      if (rank == 1) {
-        maxBoundary = currentPage;
-        currentPage =
-          minBoundary == 0
-            ? currentPage / 2
-            : minBoundary + Math.floor((maxBoundary - minBoundary) / 2);
-      } else {
-        minBoundary = currentPage;
-        currentPage = minBoundary + Math.ceil((maxBoundary - minBoundary) / 2);
-      }
-      currentPage = Math.floor(currentPage);
+      let completed = false;
+      let currentPage = PAGE_START;
+      let maxBoundary = 0;
+      let minBoundary = 0;
+      while (!completed) {
+        await page.goto(`${HISCORES_URL}${currentPage}`);
+        const rank = await getFirstRowRank(page);
+        if (rank == 1) {
+          maxBoundary = currentPage;
+          currentPage =
+            minBoundary == 0
+              ? currentPage / 2
+              : minBoundary + Math.floor((maxBoundary - minBoundary) / 2);
+        } else {
+          minBoundary = currentPage;
+          currentPage =
+            minBoundary + Math.ceil((maxBoundary - minBoundary) / 2);
+        }
+        currentPage = Math.floor(currentPage);
 
-      if (maxBoundary - minBoundary <= 1) {
-        console.log(`Completed: ${minBoundary}, ${maxBoundary}`);
-        completed = true;
+        if (maxBoundary - minBoundary <= 1) {
+          console.log(`Completed: ${minBoundary}, ${maxBoundary}`);
+          completed = true;
+        }
       }
+      await page.goto(`${HISCORES_URL}${minBoundary}`);
+      const finalRank = await getLastRowRank(page);
+      console.log(`Final Rank: ${finalRank}`);
+      const pointRankings: PointRankings = {
+        bronze: 100,
+        iron: 0,
+        steel: 0,
+        mithril: 0,
+        adamant: 0,
+        rune: 0,
+        dragon: 0,
+      };
+      pointRankings.iron = await getPointsAtRank(page, finalRank * 0.8);
+      pointRankings.steel = await getPointsAtRank(page, finalRank * 0.6);
+      pointRankings.mithril = await getPointsAtRank(page, finalRank * 0.4);
+      pointRankings.adamant = await getPointsAtRank(page, finalRank * 0.2);
+      pointRankings.rune = await getPointsAtRank(page, finalRank * 0.05);
+      pointRankings.dragon = await getPointsAtRank(page, finalRank * 0.01);
+      console.log(`Final Point Rankings: ${JSON.stringify(pointRankings)}`);
+
+      setLeagueStandings(pointRankings);
+      await browser.close();
+      console.timeEnd('league_standings');
+      return true;
+    } catch (error) {
+      console.error('Error running fetchLeaguePointRankings task.', error);
+      console.timeEnd('league_standings');
+      return false;
     }
-    await page.goto(`${HISCORES_URL}${minBoundary}`);
-    const finalRank = await getLastRowRank(page);
-    console.log(`Final Rank: ${finalRank}`);
-    const pointRankings: PointRankings = {
-      bronze: 100,
-      iron: 0,
-      steel: 0,
-      mithril: 0,
-      adamant: 0,
-      rune: 0,
-      dragon: 0,
-    };
-    pointRankings.iron = await getPointsAtRank(page, finalRank * 0.8);
-    pointRankings.steel = await getPointsAtRank(page, finalRank * 0.6);
-    pointRankings.mithril = await getPointsAtRank(page, finalRank * 0.4);
-    pointRankings.adamant = await getPointsAtRank(page, finalRank * 0.2);
-    pointRankings.rune = await getPointsAtRank(page, finalRank * 0.05);
-    pointRankings.dragon = await getPointsAtRank(page, finalRank * 0.01);
-    console.log(`Final Point Rankings: ${JSON.stringify(pointRankings)}`);
-
-    setLeagueStandings(pointRankings);
-    await browser.close();
-    console.timeEnd('league_standings');
-    return true;
   },
 };
 

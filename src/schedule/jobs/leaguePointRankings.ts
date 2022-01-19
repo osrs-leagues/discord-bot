@@ -13,10 +13,13 @@ const leaguePointRankingsJob: Job = {
   },
   schedule: () => {
     const interval = leaguePointRankingsJob.interval;
-    cron.schedule(
-      interval[config.environment],
-      fetchLeaguePointRankings.execute,
-    );
+    cron.schedule(interval[config.environment], () => {
+      try {
+        fetchLeaguePointRankings.execute();
+      } catch (error) {
+        console.error('Error executing league points rankings job.', error);
+      }
+    });
   },
 };
 
