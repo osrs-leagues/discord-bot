@@ -1,6 +1,3 @@
-import cron from 'node-cron';
-
-import config from '../../config';
 import { updateDiscordRoles, updateLeagueUsers } from '../../tasks';
 import { Job } from '../types';
 
@@ -11,18 +8,13 @@ const updateUsersJob: Job = {
     stage: undefined, // '* * *',
     production: '2 */12 * * *',
   },
-  schedule: () => {
-    const intervalMap = updateUsersJob.interval;
-    const interval = intervalMap[config.environment];
-    if (interval) {
-      cron.schedule(interval, async () => {
-        try {
-          await updateLeagueUsers.execute();
-          await updateDiscordRoles.execute();
-        } catch (error) {
-          console.error('Error executing updateUsersJob.', error);
-        }
-      });
+  runOnStart: false,
+  execute: async () => {
+    try {
+      await updateLeagueUsers.execute();
+      await updateDiscordRoles.execute();
+    } catch (error) {
+      console.error('Error executing updateUsersJob.', error);
     }
   },
 };
