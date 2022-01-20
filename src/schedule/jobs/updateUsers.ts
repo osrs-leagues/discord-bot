@@ -8,8 +8,8 @@ const updateUsersJob: Job = {
   interval: {
     testing: undefined,
     development: undefined, //'* * * * *',
-    stage: '* * *',
-    production: '* * *',
+    stage: undefined, // '* * *',
+    production: '2 */12 * * *',
   },
   schedule: () => {
     const intervalMap = updateUsersJob.interval;

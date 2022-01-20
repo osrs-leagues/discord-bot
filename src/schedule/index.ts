@@ -1,7 +1,7 @@
-import { leaguePointRankingsJob } from './jobs';
+import { leaguePointRankingsJob, updateUsersJob } from './jobs';
 import { Job } from './types';
 
-const jobs: Job[] = [leaguePointRankingsJob /*, updateUsersJob*/];
+const jobs: Job[] = [leaguePointRankingsJob, updateUsersJob];
 
 export const scheduleJobs = () => {
   try {
