@@ -10,9 +10,13 @@ export type SetLeagueRoleParams = {
   guild: Guild;
 };
 
-const setLeagueRole = async (params: SetLeagueRoleParams): Promise<Rank> => {
+const setLeagueRole = async ({
+  league,
+  rank,
+  member,
+  guild,
+}: SetLeagueRoleParams): Promise<Rank> => {
   try {
-    const { league, rank, member, guild } = params;
     const discordRole = config.ranks[league][rank];
     const others = Object.values(config.ranks[league]).filter(
       (r) => r != discordRole,
@@ -26,7 +30,11 @@ const setLeagueRole = async (params: SetLeagueRoleParams): Promise<Rank> => {
     await member.roles.add(roleToAdd);
     return rank;
   } catch (error) {
-    console.error(error);
+    console.error(
+      `Error setting discord role: `,
+      JSON.stringify({ league, rank, member_id: member.id }),
+      error,
+    );
     return undefined;
   }
 };
