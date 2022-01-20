@@ -8,7 +8,7 @@ const leaguePointRankingsJob: Job = {
   interval: {
     testing: undefined,
     development: undefined, //'* * * * *',
-    stage: '* * * * *',
+    stage: '0 0 * * *',
     production: '0 */1 * * *',
   },
   schedule: () => {
