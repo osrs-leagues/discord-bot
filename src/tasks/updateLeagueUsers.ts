@@ -1,37 +1,48 @@
 import { fetchHiscoreUser } from '.';
 import sequelize from '../database';
-import { ShatteredRelicsLeague } from '../database/models';
+import { DiscordUser, ShatteredRelicsLeague } from '../database/models';
 import { Task } from './types';
 
 const updateLeagueUsers: Task = {
   execute: async () => {
     console.log(`Running league users update task...`);
     try {
-      const leagueUsers = await ShatteredRelicsLeague.findAll();
+      const discordUsers = await DiscordUser.findAll();
       const updateTransaction = await sequelize.transaction();
-      for (const leagueUser of leagueUsers) {
-        if (leagueUser.name) {
+      console.log(
+        `Attempting update on ${discordUsers.length} shattered relic usernames.`,
+      );
+      for (const discordUser of discordUsers) {
+        if (
+          discordUser.shattered_relics_name &&
+          discordUser.shattered_relics_name.length > 0
+        ) {
           try {
             const hiscoreResult = await fetchHiscoreUser.execute({
-              username: leagueUser.name,
+              username: discordUser.shattered_relics_name,
             });
             if (hiscoreResult) {
-              await ShatteredRelicsLeague.update(
-                { points: hiscoreResult.league_points },
+              await ShatteredRelicsLeague.upsert(
                 {
-                  where: { name: leagueUser.name },
+                  name: discordUser.shattered_relics_name,
+                  points: hiscoreResult.league_points,
+                },
+                {
                   transaction: updateTransaction,
                 },
               );
             }
           } catch (error) {
-            // no user results
+            console.error(
+              `Error fetching hiscores for ${discordUser.shattered_relics_name}: `,
+              error,
+            );
           }
         }
       }
-      updateTransaction.commit();
+      await updateTransaction.commit();
       console.log(
-        `Updated ${leagueUsers.length} shattered relic league users.`,
+        `Updated ${discordUsers.length} shattered relic league users.`,
       );
       return true;
     } catch (error) {

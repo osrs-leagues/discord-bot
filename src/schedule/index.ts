@@ -1,12 +1,19 @@
-import { leaguePointRankingsJob } from './jobs';
+import cron from 'node-cron';
+
+import config from '../config';
+import { leaguePointRankingsJob, updateUsersJob } from './jobs';
 import { Job } from './types';
 
-const jobs: Job[] = [leaguePointRankingsJob /*, updateUsersJob*/];
+const jobs: Job[] = [leaguePointRankingsJob, updateUsersJob];
 
 export const scheduleJobs = () => {
   try {
     jobs.forEach((job) => {
-      if (job.interval) job.schedule();
+      const interval = job.interval[config.environment];
+      if (interval) {
+        cron.schedule(interval, job.execute);
+      }
+      if (job.runOnStart) job.execute();
     });
     console.log('Scheduled all jobs for execution!');
   } catch (error) {
