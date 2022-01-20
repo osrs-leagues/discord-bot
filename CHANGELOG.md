@@ -1,5 +1,12 @@
 # @osrs-leagues/discord-bot
 
+## 2.1.2
+
+### Patch Changes
+
+- 9e3e977: Allow jobs to run upon startup.
+- 2048c86: Fix the update all discord roles task.
+
 ## 2.1.1
 
 ### Patch Changes
