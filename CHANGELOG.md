@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.1.1
+
+### Patch Changes
+
+- 9c68cd3: Fix puppeteer on heroku and fix the league point rankings job.
+
 ## 2.1.0
 
 ### Minor Changes

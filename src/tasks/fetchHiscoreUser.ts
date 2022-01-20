@@ -14,7 +14,7 @@ type FetchLeagueUserResults = {
 const HISCORE_PLAYER_URL =
   'https://services.runescape.com/m=hiscore_oldschool_seasonal/index_lite.ws?player=';
 
-const LEAGUE_POINTS_INDEX = 23;
+const LEAGUE_POINTS_INDEX = 24;
 
 const fetchHiscoreUser: Task<
   FetchLeagueUserParams,

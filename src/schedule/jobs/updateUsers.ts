@@ -12,15 +12,18 @@ const updateUsersJob: Job = {
     production: '* * *',
   },
   schedule: () => {
-    const interval = updateUsersJob.interval;
-    cron.schedule(interval[config.environment], async () => {
-      try {
-        await updateLeagueUsers.execute();
-        await updateDiscordRoles.execute();
-      } catch (error) {
-        console.error('Error executing updateUsersJob.', error);
-      }
-    });
+    const intervalMap = updateUsersJob.interval;
+    const interval = intervalMap[config.environment];
+    if (interval) {
+      cron.schedule(interval, async () => {
+        try {
+          await updateLeagueUsers.execute();
+          await updateDiscordRoles.execute();
+        } catch (error) {
+          console.error('Error executing updateUsersJob.', error);
+        }
+      });
+    }
   },
 };
 
