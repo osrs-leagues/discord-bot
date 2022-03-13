@@ -1,10 +1,18 @@
 import cron from 'node-cron';
 
 import config from '../config';
-import { leaguePointRankingsJob, updateUsersJob, postLeagueRankingsJob } from './jobs';
+import {
+  leaguePointRankingsJob,
+  updateUsersJob,
+  postLeagueRankingsJob,
+} from './jobs';
 import { Job } from './types';
 
-const jobs: Job[] = [leaguePointRankingsJob, updateUsersJob, postLeagueRankingsJob];
+const jobs: Job[] = [
+  leaguePointRankingsJob,
+  updateUsersJob,
+  postLeagueRankingsJob,
+];
 
 export const scheduleJobs = () => {
   try {

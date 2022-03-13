@@ -10,6 +10,6 @@ export {
   fetchHiscoreUser,
   updateDiscordRoles,
   updateLeagueUsers,
-  postLeagueRankings
+  postLeagueRankings,
 };
 export type { Task };
