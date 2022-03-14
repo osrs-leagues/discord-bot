@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.2.0
+
+### Minor Changes
+
+- 500404e: Add post league rankings job.
+
 ## 2.1.2
 
 ### Patch Changes
