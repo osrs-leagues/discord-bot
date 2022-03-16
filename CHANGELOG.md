@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.2.1
+
+### Patch Changes
+
+- 92f9740: Add ability to enable/disable jobs. Disable all jobs for end of leagues.
+
 ## 2.2.0
 
 ### Minor Changes
