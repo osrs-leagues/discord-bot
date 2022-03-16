@@ -2,6 +2,7 @@ import { updateDiscordRoles, updateLeagueUsers } from '../../tasks';
 import { Job } from '../types';
 
 const updateUsersJob: Job = {
+  enabled: false,
   interval: {
     testing: undefined,
     development: undefined, //'* * * * *',

@@ -16,14 +16,18 @@ const jobs: Job[] = [
 
 export const scheduleJobs = () => {
   try {
+    let jobsStarted = 0;
     jobs.forEach((job) => {
-      const interval = job.interval[config.environment];
-      if (interval) {
-        cron.schedule(interval, job.execute);
+      if (job.enabled) {
+        const interval = job.interval[config.environment];
+        if (interval) {
+          cron.schedule(interval, job.execute);
+        }
+        if (job.runOnStart) job.execute();
+        jobsStarted++;
       }
-      if (job.runOnStart) job.execute();
     });
-    console.log('Scheduled all jobs for execution!');
+    console.log(`Scheduled ${jobsStarted} jobs for execution!`);
   } catch (error) {
     console.error('Error scheduling jobs: ', error);
   }

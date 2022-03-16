@@ -2,13 +2,14 @@ import { postLeagueRankings } from '../../tasks';
 import { Job } from '../types';
 
 const postLeagueRankingsJob: Job = {
+  enabled: false,
   interval: {
     testing: undefined,
     development: '*/1 * * * *', //'* * * * *',
     stage: '*/10 * * * *',
     production: '0 */6 * * *',
   },
-  runOnStart: true,
+  runOnStart: false,
   execute: () => {
     try {
       postLeagueRankings.execute();
