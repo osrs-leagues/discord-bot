@@ -2,6 +2,7 @@ import { fetchLeaguePointRankings } from '../../tasks';
 import { Job } from '../types';
 
 const leaguePointRankingsJob: Job = {
+  enabled: false,
   interval: {
     testing: undefined,
     development: undefined, //'* * * * *',
