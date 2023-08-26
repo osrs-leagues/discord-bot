@@ -74,6 +74,15 @@ const config: BotConfig = {
       rune: process.env.SHATTERED_RELICS_RUNE,
       dragon: process.env.SHATTERED_RELICS_DRAGON,
     },
+    trailblazer_reloaded: {
+      bronze: process.env.TRAILBLAZER_RELOADED_BRONZE,
+      iron: process.env.TRAILBLAZER_RELOADED_IRON,
+      steel: process.env.TRAILBLAZER_RELOADED_STEEL,
+      mithril: process.env.TRAILBLAZER_RELOADED_MITHRIL,
+      adamant: process.env.TRAILBLAZER_RELOADED_ADAMANT,
+      rune: process.env.TRAILBLAZER_RELOADED_RUNE,
+      dragon: process.env.TRAILBLAZER_RELOADED_DRAGON,
+    },
   },
 };
 

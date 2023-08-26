@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { updateDiscordRoles, updateLeagueUsers } from '../../tasks';
 import { Command } from './types';
+import { getLeagueName } from '../../leagues';
 
 const roles = [
   /**
@@ -34,7 +35,7 @@ const updateAllRanksCommand: Command = {
   roles,
   data: new SlashCommandBuilder()
     .setName('update_all_ranks')
-    .setDescription('Update all user roles for Shattered Relics rankings.'),
+    .setDescription(`Update all user roles for ${getLeagueName()} rankings.`),
   execute: async (interaction) => {
     await interaction.reply('Attempting to update all user roles!');
     await updateLeagueUsers.execute();

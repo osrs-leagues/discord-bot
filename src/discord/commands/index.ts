@@ -8,6 +8,7 @@ import leagueRanksCommand from './league_ranks';
 import removeRolesCommand from './remove_roles';
 import shatteredRelicsNameCommand from './shattered_relics_name';
 import trailblazerNameCommand from './trailblazer_name';
+import trailblazerReloadedNameCommand from './trailblazer_reloaded_name';
 import twistedNameCommand from './twisted_name';
 import updateAllRanksCommand from './update_all_ranks';
 import { Command } from './types';
@@ -21,6 +22,7 @@ const commandData = [
   removeRolesCommand,
   shatteredRelicsNameCommand,
   trailblazerNameCommand,
+  trailblazerReloadedNameCommand,
   twistedNameCommand,
   updateAllRanksCommand,
 ];

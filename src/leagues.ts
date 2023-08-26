@@ -1,4 +1,13 @@
-export const CURRENT_LEAGUE: League = 'shattered_relics';
+import { Model } from 'sequelize';
+import {
+  ShatteredRelicsLeague,
+  TrailblazerLeague,
+  TrailblazerReloadedLeague,
+  TwistedLeague,
+} from './database/models';
+import { DiscordUserAttributes } from './database/models/DiscordUser';
+
+export const CURRENT_LEAGUE: League = 'trailblazer_reloaded';
 
 export enum Rank {
   BRONZE = 'bronze',
@@ -10,7 +19,11 @@ export enum Rank {
   DRAGON = 'dragon',
 }
 
-export type League = 'twisted' | 'trailblazer' | 'shattered_relics';
+export type League =
+  | 'twisted'
+  | 'trailblazer'
+  | 'shattered_relics'
+  | 'trailblazer_reloaded';
 
 export type PointRankings = { [key in Rank]: number };
 
@@ -36,6 +49,15 @@ const LeagueRankings: Leagues = {
     dragon: 56310,
   },
   shattered_relics: {
+    bronze: 100,
+    iron: 480,
+    steel: 1660,
+    mithril: 5475,
+    adamant: 15575,
+    rune: 31980,
+    dragon: 52545,
+  },
+  trailblazer_reloaded: {
     bronze: 0,
     iron: 0,
     steel: 0,
@@ -50,6 +72,7 @@ const LeagueNames: { [key in League]: string } = {
   twisted: 'Twisted',
   trailblazer: 'Trailblazer',
   shattered_relics: 'Shattered Relics',
+  trailblazer_reloaded: 'Trailbalzer Reloaded',
 };
 
 const RankNames: { [key in Rank]: string } = {
@@ -60,6 +83,24 @@ const RankNames: { [key in Rank]: string } = {
   adamant: 'Adamant',
   rune: 'Rune',
   dragon: 'Dragon',
+};
+
+const LeagueDatabaseTable: { [key in League]: typeof Model } = {
+  // @ts-ignore Weird sequelize typing
+  twisted: TwistedLeague,
+  // @ts-ignore Weird sequelize typing
+  trailblazer: TrailblazerLeague,
+  // @ts-ignore Weird sequelize typing
+  shattered_relics: ShatteredRelicsLeague,
+  // @ts-ignore Weird sequelize typing
+  trailblazer_reloaded: TrailblazerReloadedLeague,
+};
+
+const LeagueDiscordColumn: { [key in League]: keyof DiscordUserAttributes } = {
+  twisted: 'twisted_name',
+  trailblazer: 'trailblazer_name',
+  shattered_relics: 'shattered_relics_name',
+  trailblazer_reloaded: 'trailblazer_reloaded_name',
 };
 
 export const getRank = (points: number, league: League): Rank => {
@@ -77,8 +118,16 @@ export const getRankName = (rank: Rank) => {
   return RankNames[rank];
 };
 
-export const getLeagueName = (league: League) => {
-  return LeagueNames[league];
+export const getLeagueName = (league?: League) => {
+  return LeagueNames[league ?? CURRENT_LEAGUE];
+};
+
+export const getLeagueTable = (league?: League) => {
+  return LeagueDatabaseTable[league ?? CURRENT_LEAGUE];
+};
+
+export const getLeagueDiscordColumn = (league?: League) => {
+  return LeagueDiscordColumn[league ?? CURRENT_LEAGUE];
 };
 
 export const setLeagueStandings = (

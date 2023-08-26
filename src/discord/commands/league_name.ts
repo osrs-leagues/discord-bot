@@ -3,8 +3,8 @@ import {
   SlashCommandStringOption,
 } from '@discordjs/builders';
 
-import shatteredRelicsNameCommand from './shattered_relics_name';
 import { Command } from './types';
+import trailblazerReloadedNameCommand from './trailblazer_reloaded_name';
 
 const channels = [
   /**
@@ -32,7 +32,7 @@ const leagueNameCommand: Command = {
         .setDescription('Enter your username for the current & active league.')
         .setRequired(true),
     ) as SlashCommandBuilder,
-  execute: shatteredRelicsNameCommand.execute,
+  execute: trailblazerReloadedNameCommand.execute,
 };
 
 export default leagueNameCommand;
