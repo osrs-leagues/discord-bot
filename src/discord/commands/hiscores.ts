@@ -6,6 +6,7 @@ import {
 import { fetchHiscoreUser } from '../../tasks';
 import getHiscoreRankingMessage from '../messages/hiscoreRanking';
 import { Command } from './types';
+import { getLeagueName } from '../../leagues';
 
 const channels = [
   /**
@@ -30,7 +31,7 @@ const hiscoresCommand: Command = {
     .addStringOption((option: SlashCommandStringOption) =>
       option
         .setName('username')
-        .setDescription('Enter a Shattered Relics League username.')
+        .setDescription(`Enter a ${getLeagueName()} League username.`)
         .setRequired(true),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {

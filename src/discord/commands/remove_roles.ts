@@ -22,7 +22,7 @@ const removeRolesCommand: Command = {
   channels,
   data: new SlashCommandBuilder()
     .setName('remove_roles')
-    .setDescription('Remove all of your league roles'),
+    .setDescription('Remove all of your league rank roles'),
   execute: async (interaction) => {
     const discordMember = interaction.member;
     const result = await DiscordUser.findByPk(discordMember.user.id);
@@ -31,12 +31,13 @@ const removeRolesCommand: Command = {
         twisted_name: null,
         trailblazer_name: null,
         shattered_relics_name: null,
+        trailblazer_reloaded_name: null,
       });
     }
     await removeLeagueRoles({
       member: discordMember as GuildMember,
     });
-    await interaction.reply('Removed all of your league roles!');
+    await interaction.reply('All of your league rank roles have been removed.');
   },
 };
 

@@ -80,7 +80,7 @@ const getPointsAtRank = async (page: puppeteer.Page, rank: number) => {
   rank = Math.floor(rank);
   const pageNumber = Math.ceil(rank / 25);
   await page.goto(`${HISCORES_URL}${pageNumber}`);
-  const points = await page.evaluate((rank) => {
+  const points = await page.evaluate((rank: number) => {
     // @ts-ignore
     const rows = $('#contentHiscores .personal-hiscores__row');
     let points = 0;

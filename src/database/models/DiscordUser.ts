@@ -5,6 +5,7 @@ interface DiscordUserAttributes {
   twisted_name?: string;
   trailblazer_name?: string;
   shattered_relics_name?: string;
+  trailblazer_reloaded_name?: string;
 }
 
 class DiscordUser
@@ -15,6 +16,7 @@ class DiscordUser
   declare twisted_name?: string;
   declare trailblazer_name?: string;
   declare shattered_relics_name?: string;
+  declare trailblazer_reloaded_name?: string;
 
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -41,6 +43,10 @@ const initializeDiscordUser = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      trailblazer_reloaded_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       tableName: 'DiscordUser',
@@ -49,6 +55,6 @@ const initializeDiscordUser = (sequelize: Sequelize) => {
   );
 };
 
-export { initializeDiscordUser };
+export { DiscordUserAttributes, initializeDiscordUser };
 
 export default DiscordUser;
