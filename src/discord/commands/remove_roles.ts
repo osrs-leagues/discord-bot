@@ -4,22 +4,10 @@ import { GuildMember } from 'discord.js';
 import { DiscordUser } from '../../database/models';
 import removeLeagueRoles from '../actions/removeLeagueRoles';
 import { Command } from './types';
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '769283619595485224', // #bot-commands
-  '636193036195463178', // #bot-commands-test
-
-  /**
-   * Bot Testing Server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
 
 const removeRolesCommand: Command = {
-  channels,
+  channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('remove_roles')
     .setDescription('Remove all of your league rank roles'),

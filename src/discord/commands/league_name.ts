@@ -5,22 +5,10 @@ import {
 
 import { Command } from './types';
 import trailblazerReloadedNameCommand from './trailblazer_reloaded_name';
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '769283619595485224', // #bot-commands
-  '636193036195463178', // #bot-commands-test
-
-  /**
-   * Bot Testing Server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
 
 const leagueNameCommand: Command = {
-  channels,
+  channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('league_name')
     .setDescription(

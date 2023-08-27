@@ -11,39 +11,12 @@ import getRankedMessage from '../messages/ranked';
 import getUnrankedMessage from '../messages/unranked';
 import { fetchHiscoreUser } from '../../tasks';
 import { Command } from './types';
-
-/**
- * TODO: Remove upon release.
- */
-const roles = [
-  /**
-   * OSRS Leagues server
-   */
-  '636007821661569064', // Administrator
-  '636002727163592751', // Moderator
-
-  /**
-   * Bot testing server
-   */
-  '931999272738619473', // Tester
-];
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '769283619595485224', // #bot-commands
-  '636193036195463178', // #bot-commands-test
-
-  /**
-   * Bot Testing Server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
+import Role from '../Role';
 
 const trailblazerReloadedNameCommand: Command = {
-  channels,
-  roles,
+  channels: channelGroups.BOT_COMMANDS,
+  roles: [Role.Administrator, Role.Moderator, Role.Tester],
   data: new SlashCommandBuilder()
     .setName('trailblazer_reloaded_name')
     .setDescription(
