@@ -10,22 +10,10 @@ import setLeagueRole from '../actions/setLeagueRole';
 import getRankedMessage from '../messages/ranked';
 import getUnrankedMessage from '../messages/unranked';
 import { Command } from './types';
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '769283619595485224', // #bot-commands
-  '636193036195463178', // #bot-commands-test
-
-  /**
-   * Bot Testing Server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
 
 const trailblazerNameCommand: Command = {
-  channels,
+  channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('trailblazer_name')
     .setDescription('Set your Trailblazer League username and discord role.')

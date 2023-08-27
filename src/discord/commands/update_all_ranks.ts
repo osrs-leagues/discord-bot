@@ -3,36 +3,12 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { updateDiscordRoles, updateLeagueUsers } from '../../tasks';
 import { Command } from './types';
 import { getLeagueName } from '../../leagues';
-
-const roles = [
-  /**
-   * OSRS Leagues server
-   */
-  '636007821661569064', // Administrator
-
-  /**
-   * Bot testing server
-   */
-  '931999272738619473', // Tester
-];
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '636193036195463178', // #bot-commands-test
-  '763899863280648252', // #staff-casual
-  '931930206225178724', // #staff-admin
-
-  /**
-   * Bot testing server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
+import Role from '../Role';
 
 const updateAllRanksCommand: Command = {
-  channels,
-  roles,
+  channels: channelGroups.STAFF,
+  roles: [Role.Administrator, Role.Tester],
   data: new SlashCommandBuilder()
     .setName('update_all_ranks')
     .setDescription(`Update all user roles for ${getLeagueName()} rankings.`),

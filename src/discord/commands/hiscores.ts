@@ -7,22 +7,10 @@ import { fetchHiscoreUser } from '../../tasks';
 import getHiscoreRankingMessage from '../messages/hiscoreRanking';
 import { Command } from './types';
 import { getLeagueName } from '../../leagues';
-
-const channels = [
-  /**
-   * OSRS Leagues server
-   */
-  '769283619595485224', // #bot-commands
-  '636193036195463178', // #bot-commands-test
-
-  /**
-   * Bot Testing Server
-   */
-  '931963036896464946', // #bot-commands
-];
+import { channelGroups } from '../Channel';
 
 const hiscoresCommand: Command = {
-  channels,
+  channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('hiscores')
     .setDescription(
