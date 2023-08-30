@@ -4,8 +4,9 @@ import {
 } from '@discordjs/builders';
 
 import { Command } from './types';
-import trailblazerReloadedNameCommand from './trailblazer_reloaded_name';
 import { channelGroups } from '../Channel';
+import leagueNameRemote from './leagueNameRemote';
+import { CURRENT_LEAGUE } from '../../leagues';
 
 const leagueNameCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
@@ -20,7 +21,7 @@ const leagueNameCommand: Command = {
         .setDescription('Enter your username for the current & active league.')
         .setRequired(true),
     ) as SlashCommandBuilder,
-  execute: trailblazerReloadedNameCommand.execute,
+  execute: leagueNameRemote(CURRENT_LEAGUE).execute,
 };
 
 export default leagueNameCommand;
