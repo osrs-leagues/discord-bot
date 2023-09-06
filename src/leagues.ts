@@ -1,4 +1,3 @@
-import { Model } from 'sequelize';
 import {
   ShatteredRelicsLeague,
   TrailblazerLeague,
@@ -6,6 +5,7 @@ import {
   TwistedLeague,
 } from './database/models';
 import { DiscordUserAttributes } from './database/models/DiscordUser';
+import { LeagueAttributes } from './database/models/League/League';
 
 export const CURRENT_LEAGUE: League = 'trailblazer_reloaded';
 
@@ -85,17 +85,6 @@ const RankNames: { [key in Rank]: string } = {
   dragon: 'Dragon',
 };
 
-const LeagueDatabaseTable: { [key in League]: typeof Model } = {
-  // @ts-ignore Weird sequelize typing
-  twisted: TwistedLeague,
-  // @ts-ignore Weird sequelize typing
-  trailblazer: TrailblazerLeague,
-  // @ts-ignore Weird sequelize typing
-  shattered_relics: ShatteredRelicsLeague,
-  // @ts-ignore Weird sequelize typing
-  trailblazer_reloaded: TrailblazerReloadedLeague,
-};
-
 const LeagueDiscordColumn: { [key in League]: keyof DiscordUserAttributes } = {
   twisted: 'twisted_name',
   trailblazer: 'trailblazer_name',
@@ -122,8 +111,57 @@ export const getLeagueName = (league?: League) => {
   return LeagueNames[league ?? CURRENT_LEAGUE];
 };
 
-export const getLeagueTable = (league?: League) => {
-  return LeagueDatabaseTable[league ?? CURRENT_LEAGUE];
+export const getLeagueAttributes = async (
+  league: League,
+  username: string,
+): Promise<LeagueAttributes> => {
+  switch (league) {
+    case 'twisted':
+      return await TwistedLeague.findOne({
+        where: { name: username },
+      });
+    case 'trailblazer':
+      return await TrailblazerLeague.findOne({
+        where: { name: username },
+      });
+    case 'shattered_relics':
+      return await ShatteredRelicsLeague.findOne({
+        where: { name: username },
+      });
+    case 'trailblazer_reloaded':
+      return await TrailblazerReloadedLeague.findOne({
+        where: { name: username },
+      });
+  }
+};
+
+export const insertLeagueName = async (
+  league: League,
+  username: string,
+  points: number,
+) => {
+  switch (league) {
+    case 'twisted':
+      return await TwistedLeague.upsert({
+        name: username,
+        points: points,
+      });
+    case 'trailblazer':
+      return await TrailblazerLeague.upsert({
+        name: username,
+        points: points,
+      });
+    case 'shattered_relics':
+      return await ShatteredRelicsLeague.upsert({
+        name: username,
+        points: points,
+      });
+    case 'trailblazer_reloaded':
+      return await TrailblazerReloadedLeague.upsert({
+        name: username,
+        points: points,
+      });
+  }
 };
 
 export const getLeagueDiscordColumn = (league?: League) => {

@@ -6,24 +6,23 @@ import hiscoresCommand from './hiscores';
 import leagueNameCommand from './league_name';
 import leagueRanksCommand from './league_ranks';
 import removeRolesCommand from './remove_roles';
-import shatteredRelicsNameCommand from './shattered_relics_name';
-import trailblazerNameCommand from './trailblazer_name';
-import trailblazerReloadedNameCommand from './trailblazer_reloaded_name';
-import twistedNameCommand from './twisted_name';
 import updateAllRanksCommand from './update_all_ranks';
 import { Command } from './types';
+import leagueNameLocal from './leagueNameLocal';
+import leagueNameRemote from './leagueNameRemote';
+import { CURRENT_LEAGUE } from '../../leagues';
 
 const commandData = [
   pingCommand,
   fetchLeagueRanksCommand,
   hiscoresCommand,
   leagueNameCommand,
+  leagueNameLocal('shattered_relics'),
+  leagueNameLocal('trailblazer'),
+  leagueNameLocal('twisted'),
+  leagueNameRemote(CURRENT_LEAGUE),
   leagueRanksCommand,
   removeRolesCommand,
-  shatteredRelicsNameCommand,
-  trailblazerNameCommand,
-  trailblazerReloadedNameCommand,
-  twistedNameCommand,
   updateAllRanksCommand,
 ];
 
