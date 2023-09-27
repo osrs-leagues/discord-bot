@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 
 import { PointRankings, setLeagueStandings } from '../leagues';
 import { Task } from './types';
@@ -76,7 +76,7 @@ const fetchLeaguePointRankings: Task = {
   },
 };
 
-const getPointsAtRank = async (page: puppeteer.Page, rank: number) => {
+const getPointsAtRank = async (page: Page, rank: number) => {
   rank = Math.floor(rank);
   const pageNumber = Math.ceil(rank / 25);
   await page.goto(`${HISCORES_URL}${pageNumber}`);
@@ -98,7 +98,7 @@ const getPointsAtRank = async (page: puppeteer.Page, rank: number) => {
   return points;
 };
 
-const getFirstRowRank = async (page: puppeteer.Page): Promise<number> => {
+const getFirstRowRank = async (page: Page): Promise<number> => {
   const rank: number = await page.evaluate(() => {
     // @ts-ignore
     const result = $('#contentHiscores .personal-hiscores__row td')
@@ -111,7 +111,7 @@ const getFirstRowRank = async (page: puppeteer.Page): Promise<number> => {
   return rank;
 };
 
-const getLastRowRank = async (page: puppeteer.Page): Promise<number> => {
+const getLastRowRank = async (page: Page): Promise<number> => {
   const rank: number = await page.evaluate(() => {
     // @ts-ignore
     const result = $('#contentHiscores .personal-hiscores__row:last-child td')
