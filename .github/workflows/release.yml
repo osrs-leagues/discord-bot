@@ -1,33 +1,41 @@
-name: Release
+name: Production Release
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
 
 jobs:
-  release:
-    name: Release
+  lint_build_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-        with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-          fetch-depth: 0
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js 18.x
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          always-auth: true
+          cache: yarn
+          node-version: 18
 
-      - name: Install Dependencies
-        run: yarn
+      - name: Install yarn packages
+        run: yarn install --frozen-lockfile
 
-      - name: Create Release Pull Request
-        uses: changesets/action@master
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+
+  production_release:
+    needs:
+      - lint_build_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          title: 'Release'
-          commit: 'Release'
-          publish: yarn release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_PROD}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
