@@ -1,0 +1,77 @@
+name: Push Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint_build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          always-auth: true
+          cache: yarn
+          node-version: 18
+
+      - name: Install yarn packages
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+
+      - name: Persist build output as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+
+  changeset:
+    needs: lint_build_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          always-auth: true
+          cache: yarn
+          node-version: 18
+
+      - name: Install yarn packages
+        run: yarn install --frozen-lockfile
+
+      - name: Create Release Pull Request or Release
+        id: changeset
+        uses: changesets/action@v1
+        with:
+          publish: echo Production Release && echo "New tag:"
+          title: Production Release
+          commit: Production Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  stage_release:
+    needs:
+      - lint_build_test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_STAGE}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
