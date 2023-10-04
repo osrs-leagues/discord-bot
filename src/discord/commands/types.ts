@@ -5,7 +5,9 @@ import { League } from '../../leagues';
 export type Command = {
   channels?: string[];
   roles?: string[];
-  data: SlashCommandBuilder;
+  data:
+    | SlashCommandBuilder
+    | Omit<SlashCommandBuilder, 'addSubcommand' | 'addSubcommandGroup'>;
   execute: (interaction: CommandInteraction<CacheType>) => void;
 };
 

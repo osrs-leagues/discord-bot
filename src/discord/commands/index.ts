@@ -11,6 +11,7 @@ import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
 import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../leagues';
+import regionCommand from './regions';
 
 const commandData = [
   pingCommand,
@@ -22,6 +23,7 @@ const commandData = [
   leagueNameLocal('twisted'),
   leagueNameRemote(CURRENT_LEAGUE),
   leagueRanksCommand,
+  regionCommand,
   removeRolesCommand,
   updateAllRanksCommand,
 ];
