@@ -1,0 +1,83 @@
+import {
+  CacheType,
+  Collection,
+  GuildMemberRoleManager,
+  Interaction,
+} from 'discord.js';
+
+import pingCommand from './ping';
+import fetchLeagueRanksCommand from './fetch_league_ranks';
+import hiscoresCommand from './hiscores';
+import leagueNameCommand from './league_name';
+import leagueRanksCommand from './league_ranks';
+import removeRolesCommand from './remove_roles';
+import updateAllRanksCommand from './update_all_ranks';
+import { Command } from './types';
+import leagueNameLocal from './leagueNameLocal';
+import leagueNameRemote from './leagueNameRemote';
+import { CURRENT_LEAGUE } from '../../../leagues';
+import regionCommand from './regions';
+
+const commandData = [
+  pingCommand,
+  fetchLeagueRanksCommand,
+  hiscoresCommand,
+  leagueNameCommand,
+  leagueNameLocal('shattered_relics'),
+  leagueNameLocal('trailblazer'),
+  leagueNameLocal('twisted'),
+  leagueNameRemote(CURRENT_LEAGUE),
+  leagueRanksCommand,
+  regionCommand,
+  removeRolesCommand,
+  updateAllRanksCommand,
+];
+
+const commands = new Collection<string, Command>();
+commandData.forEach((command) => {
+  commands.set(command.data.name, command);
+});
+
+const handleCommandInteraction = async (
+  interaction: Interaction<CacheType>,
+) => {
+  if (!interaction.isCommand()) return;
+
+  const command = commands.get(interaction.commandName);
+
+  if (!command) return;
+
+  if (
+    command.channels?.length > 0 &&
+    !command.channels.includes(interaction.channel.id)
+  ) {
+    return interaction.reply('You cannot use this command in this channel.');
+  }
+  if (command.roles?.length > 0) {
+    let hasRole = false;
+    const memberRoles = interaction.member.roles as GuildMemberRoleManager;
+    for (const role of command.roles) {
+      if (memberRoles.cache.has(role)) {
+        hasRole = true;
+        break;
+      }
+    }
+    if (!hasRole) {
+      return interaction.reply(
+        'You do not have permission to use this command.',
+      );
+    }
+  }
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    return interaction.reply({
+      content: 'There was an error while executing this command!',
+      ephemeral: true,
+    });
+  }
+};
+
+export { commandData, commands, handleCommandInteraction };

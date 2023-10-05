@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CacheType, CommandInteraction } from 'discord.js';
-import { League } from '../../leagues';
+import { League } from '../../../leagues';
 
 export type Command = {
   channels?: string[];

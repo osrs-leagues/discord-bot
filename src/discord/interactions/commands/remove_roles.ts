@@ -1,10 +1,10 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser } from '../../database/models';
-import removeLeagueRoles from '../actions/removeLeagueRoles';
+import { DiscordUser } from '../../../database/models';
+import removeLeagueRoles from '../../actions/removeLeagueRoles';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
+import { channelGroups } from '../../Channel';
 
 const removeRolesCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,

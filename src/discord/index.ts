@@ -1,8 +1,8 @@
 import { Client, Intents } from 'discord.js';
 
 import config from '../config';
-import { handleInteraction } from './interactionRouter';
 import { handleMessageCreate } from './listeners';
+import interactions from './interactions';
 
 export const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -16,7 +16,9 @@ export const initializeDiscord = (callback?: () => void) => {
 
   client.on('messageCreate', handleMessageCreate);
 
-  client.on('interactionCreate', handleInteraction);
+  interactions.forEach((interactionHandler) => {
+    client.on('interactionCreate', interactionHandler);
+  });
 
   client.login(config.discord_bot.token);
 };

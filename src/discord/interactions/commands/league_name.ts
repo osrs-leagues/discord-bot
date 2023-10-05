@@ -4,9 +4,9 @@ import {
 } from '@discordjs/builders';
 
 import { Command } from './types';
-import { channelGroups } from '../Channel';
+import { channelGroups } from '../../Channel';
 import leagueNameRemote from './leagueNameRemote';
-import { CURRENT_LEAGUE } from '../../leagues';
+import { CURRENT_LEAGUE } from '../../../leagues';
 
 const leagueNameCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,

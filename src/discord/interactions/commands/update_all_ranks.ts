@@ -1,10 +1,10 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import { updateDiscordRoles, updateLeagueUsers } from '../../tasks';
+import { updateDiscordRoles, updateLeagueUsers } from '../../../tasks';
 import { Command } from './types';
-import { getLeagueName } from '../../leagues';
-import { channelGroups } from '../Channel';
-import Role from '../Role';
+import { getLeagueName } from '../../../leagues';
+import { channelGroups } from '../../Channel';
+import Role from '../../Role';
 
 const updateAllRanksCommand: Command = {
   channels: channelGroups.STAFF,

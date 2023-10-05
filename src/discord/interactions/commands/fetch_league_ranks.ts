@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import { fetchLeaguePointRankings } from '../../tasks';
+import { fetchLeaguePointRankings } from '../../../tasks';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
-import Role from '../Role';
+import { channelGroups } from '../../Channel';
+import Role from '../../Role';
 
 const fetchLeagueRanksCommand: Command = {
   channels: channelGroups.TESTING,

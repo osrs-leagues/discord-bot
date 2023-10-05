@@ -4,19 +4,19 @@ import {
 } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser } from '../../database/models';
+import { DiscordUser } from '../../../database/models';
 import {
   getLeagueAttributes,
   getLeagueDiscordColumn,
   getLeagueName,
   getRank,
   League,
-} from '../../leagues';
-import setLeagueRole from '../actions/setLeagueRole';
-import getRankedMessage from '../messages/ranked';
-import getUnrankedMessage from '../messages/unranked';
+} from '../../../leagues';
+import setLeagueRole from '../../actions/setLeagueRole';
+import getRankedMessage from '../../messages/ranked';
+import getUnrankedMessage from '../../messages/unranked';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
+import { channelGroups } from '../../Channel';
 
 const leagueNameLocal = (league: League): Command => {
   const leagueName = getLeagueName(league);
