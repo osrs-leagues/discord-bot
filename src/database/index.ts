@@ -19,8 +19,8 @@ export const initializeDatabase = async () => {
           drop: false,
         },
       });
+      console.log('Synced sequelize models.');
     }
-    console.log('Synced sequelize models.');
   } catch (error) {
     console.error('Unable to connect to the OSRS Leagues database:', error);
   }

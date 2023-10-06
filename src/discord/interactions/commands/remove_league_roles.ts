@@ -10,7 +10,7 @@ const removeLeagueRolesCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('remove_league_roles')
-    .setDescription('Remove all of your league rank roles'),
+    .setDescription('Remove all of your league rank roles.'),
   execute: async (interaction) => {
     const discordMember = interaction.member;
     const result = await DiscordUser.findByPk(discordMember.user.id);
@@ -26,7 +26,7 @@ const removeLeagueRolesCommand: Command = {
       member: discordMember as GuildMember,
     });
     await interaction.reply({
-      content: 'All of your league rank roles have been removed.',
+      content: 'Your league rank roles have been removed.',
       ephemeral: true,
     });
   },

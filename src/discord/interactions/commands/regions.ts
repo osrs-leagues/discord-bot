@@ -9,12 +9,14 @@ const regionCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('regions')
-    .setDescription(`Set your ${getLeagueName(CURRENT_LEAGUE)} region`),
+    .setDescription(`Set your ${getLeagueName(CURRENT_LEAGUE)} regions.`),
   execute: async (interaction) => {
     const selectMenuRow = new MessageActionRow().addComponents(
       new MessageSelectMenu()
         .setCustomId('regions')
-        .setPlaceholder('Select 3 regions')
+        .setPlaceholder(
+          `Select your 3 ${getLeagueName(CURRENT_LEAGUE)} regions.`,
+        )
         .setMinValues(3)
         .setMaxValues(3)
         .addOptions([
