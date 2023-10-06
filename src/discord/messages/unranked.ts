@@ -12,7 +12,7 @@ const getUnrankedMessage = (params: UnrankedMessageParams): MessageEmbed => {
   const { league, username } = params;
   const leagueName = getLeagueName(league);
   return new MessageEmbed()
-    .setColor('#64d85b')
+    .setColor('#99AAB5')
     .setTitle(
       `You have set your ${leagueName} League username to **${username}**. No ${leagueName} rank was found.`,
     )

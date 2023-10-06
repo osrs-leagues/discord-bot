@@ -1,6 +1,12 @@
 import { Guild, MessageEmbed } from 'discord.js';
 
-import { getLeagueName, getRankName, League, Rank } from '../../leagues';
+import {
+  getLeagueName,
+  getRankColor,
+  getRankName,
+  League,
+  Rank,
+} from '../../leagues';
 import { encodeURL } from '../../utils/strings';
 
 type RankedMessageParams = {
@@ -20,7 +26,7 @@ const getRankedMessage = (params: RankedMessageParams): MessageEmbed => {
   const emoji = guild.client.emojis.cache.find((e) => e.name === emojiName);
   const emojiMessage = emoji ? '<:' + emojiName + ':' + emoji.id + '>' : '';
   return new MessageEmbed()
-    .setColor('#64d85b')
+    .setColor(getRankColor(rank))
     .setTitle(
       `You have set your ${leagueName} League username to __**${username}**__. You are ranked **${rankName}** ${emojiMessage}`,
     )

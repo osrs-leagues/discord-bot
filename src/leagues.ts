@@ -1,3 +1,4 @@
+import { HexColorString } from 'discord.js';
 import {
   ShatteredRelicsLeague,
   TrailblazerLeague,
@@ -72,7 +73,7 @@ const LeagueNames: { [key in League]: string } = {
   twisted: 'Twisted',
   trailblazer: 'Trailblazer',
   shattered_relics: 'Shattered Relics',
-  trailblazer_reloaded: 'Trailbalzer Reloaded',
+  trailblazer_reloaded: 'Trailblazer Reloaded',
 };
 
 const RankNames: { [key in Rank]: string } = {
@@ -83,6 +84,16 @@ const RankNames: { [key in Rank]: string } = {
   adamant: 'Adamant',
   rune: 'Rune',
   dragon: 'Dragon',
+};
+
+const RankColors: { [key in Rank]: HexColorString } = {
+  bronze: '#795d38',
+  iron: '#8f8f8f',
+  steel: '#adadad',
+  mithril: '#6f70a0',
+  adamant: '#588658',
+  rune: '#3d93bb',
+  dragon: '#d81d06',
 };
 
 const LeagueDiscordColumn: { [key in League]: keyof DiscordUserAttributes } = {
@@ -105,6 +116,10 @@ export const getRank = (points: number, league: League): Rank => {
 
 export const getRankName = (rank: Rank) => {
   return RankNames[rank];
+};
+
+export const getRankColor = (rank: Rank) => {
+  return RankColors[rank];
 };
 
 export const getLeagueName = (league?: League) => {

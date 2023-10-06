@@ -11,7 +11,11 @@ const getRegionRoleMessage = ({
 }: RegionRoleMessageParams): MessageEmbed => {
   return new MessageEmbed()
     .setColor(role.color)
-    .setTitle(`${member.nickname} has set their region role to ${role.name}`);
+    .setTitle(
+      `${member.nickname ?? member.displayName} has set their region role to ${
+        role.name
+      }`,
+    );
 };
 
 export default getRegionRoleMessage;
