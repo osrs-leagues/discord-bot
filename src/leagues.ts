@@ -36,13 +36,13 @@ const LeagueRankings: Leagues = {
     dragon: 56310,
   },
   shattered_relics: {
-    bronze: 0,
-    iron: 0,
-    steel: 0,
-    mithril: 0,
-    adamant: 0,
-    rune: 0,
-    dragon: 0,
+    bronze: 100,
+    iron: 480,
+    steel: 1660,
+    mithril: 5475,
+    adamant: 15575,
+    rune: 31980,
+    dragon: 52545,
   },
 };
 
