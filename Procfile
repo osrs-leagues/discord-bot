@@ -1,1 +1,1 @@
-worker: yarn commands && yarn start
+worker: yarn build && yarn commands && yarn start:node

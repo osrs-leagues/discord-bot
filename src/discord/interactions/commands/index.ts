@@ -10,13 +10,14 @@ import fetchLeagueRanksCommand from './fetch_league_ranks';
 import hiscoresCommand from './hiscores';
 import leagueNameCommand from './league_name';
 import leagueRanksCommand from './league_ranks';
-import removeRolesCommand from './remove_roles';
+import removeLeagueRolesCommand from './remove_league_roles';
 import updateAllRanksCommand from './update_all_ranks';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
 import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../../leagues';
 import regionCommand from './regions';
+import removeRegionRoleCommand from './remove_region_role';
 
 const commandData = [
   pingCommand,
@@ -29,7 +30,8 @@ const commandData = [
   leagueNameRemote(CURRENT_LEAGUE),
   leagueRanksCommand,
   regionCommand,
-  removeRolesCommand,
+  removeLeagueRolesCommand,
+  removeRegionRoleCommand,
   updateAllRanksCommand,
 ];
 

@@ -11,7 +11,7 @@ const regionCommand: Command = {
     .setName('regions')
     .setDescription(`Set your ${getLeagueName(CURRENT_LEAGUE)} region`),
   execute: async (interaction) => {
-    const row = new MessageActionRow().addComponents(
+    const selectMenuRow = new MessageActionRow().addComponents(
       new MessageSelectMenu()
         .setCustomId('regions')
         .setPlaceholder('Select 3 regions')
@@ -19,42 +19,42 @@ const regionCommand: Command = {
         .setMaxValues(3)
         .addOptions([
           {
-            label: 'Asgarnia',
+            label: 'Asgarnia (A)',
             description: 'The asgarnia region',
             value: 'asgarnia',
           },
           {
-            label: 'Fremennik Isles',
+            label: 'Fremennik Isles (F)',
             description: 'The Fremennik region',
             value: 'fremennik',
           },
           {
-            label: 'Kandarin',
+            label: 'Kandarin (K)',
             description: 'The Kandarin region',
             value: 'kandarin',
           },
           {
-            label: 'Kharidian Desert',
+            label: 'Kharidian Desert (D)',
             description: 'The Desert region',
             value: 'desert',
           },
           {
-            label: 'Kourend & Kebos',
-            description: 'The Kourend & Kebos region',
-            value: 'kourend',
+            label: 'Kourend & Kebos (Z)',
+            description: 'The Kourend & Kebos (Zeah) region',
+            value: 'zeah',
           },
           {
-            label: 'Morytania',
+            label: 'Morytania (M)',
             description: 'The Morytania region',
             value: 'morytania',
           },
           {
-            label: 'Tirannwn',
+            label: 'Tirannwn (T)',
             description: 'The Tirannwn region',
             value: 'tirannwn',
           },
           {
-            label: 'Wilderness',
+            label: 'Wilderness (W)',
             description: 'The Wilderness region',
             value: 'wilderness',
           },
@@ -63,7 +63,8 @@ const regionCommand: Command = {
     await interaction.reply({
       content:
         'Choose your region roles by selecting 3 regions in the dropdown below: ',
-      components: [row],
+      components: [selectMenuRow],
+      ephemeral: true,
     });
   },
 };
