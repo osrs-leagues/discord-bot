@@ -4,7 +4,7 @@ import {
 } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser, ShatteredRelicsLeague } from '../../database/models';
+import { DiscordUser } from '../../database/models';
 import { getRank, League } from '../../leagues';
 import setLeagueRole from '../actions/setLeagueRole';
 import getRankedMessage from '../messages/ranked';
@@ -54,12 +54,7 @@ const shatteredRelicsNameCommand: Command = {
       const league: League = 'shattered_relics';
       const hiscoreResults = await fetchHiscoreUser.execute({ username });
       if (hiscoreResults) {
-        const leagueUserResult = await ShatteredRelicsLeague.upsert({
-          name: username,
-          points: hiscoreResults.league_points,
-        });
-        const leagueUser = leagueUserResult[0];
-        const rank = getRank(leagueUser.points, league);
+        const rank = getRank(hiscoreResults.league_points, league);
         const rankResult = await setLeagueRole({
           league,
           rank: rank,
