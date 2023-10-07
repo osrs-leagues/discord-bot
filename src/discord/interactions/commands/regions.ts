@@ -19,48 +19,58 @@ const regionCommand: Command = {
         )
         .setMinValues(3)
         .setMaxValues(3)
-        .addOptions([
-          {
-            label: 'Asgarnia (A)',
-            description: 'The asgarnia region',
-            value: 'asgarnia',
-          },
-          {
-            label: 'Fremennik Isles (F)',
-            description: 'The Fremennik region',
-            value: 'fremennik',
-          },
-          {
-            label: 'Kandarin (K)',
-            description: 'The Kandarin region',
-            value: 'kandarin',
-          },
-          {
-            label: 'Kharidian Desert (D)',
-            description: 'The Desert region',
-            value: 'desert',
-          },
-          {
-            label: 'Kourend & Kebos (Z)',
-            description: 'The Kourend & Kebos (Zeah) region',
-            value: 'zeah',
-          },
-          {
-            label: 'Morytania (M)',
-            description: 'The Morytania region',
-            value: 'morytania',
-          },
-          {
-            label: 'Tirannwn (T)',
-            description: 'The Tirannwn region',
-            value: 'tirannwn',
-          },
-          {
-            label: 'Wilderness (W)',
-            description: 'The Wilderness region',
-            value: 'wilderness',
-          },
-        ]),
+        .addOptions(
+          [
+            {
+              label: 'Asgarnia (A)',
+              description: 'The asgarnia region',
+              value: 'asgarnia',
+            },
+            {
+              label: 'Fremennik Isles (F)',
+              description: 'The Fremennik region',
+              value: 'fremennik',
+            },
+            {
+              label: 'Kandarin (K)',
+              description: 'The Kandarin region',
+              value: 'kandarin',
+            },
+            {
+              label: 'Kharidian Desert (D)',
+              description: 'The Desert region',
+              value: 'desert',
+            },
+            {
+              label: 'Kourend & Kebos (Z)',
+              description: 'The Kourend & Kebos (Zeah) region',
+              value: 'zeah',
+            },
+            {
+              label: 'Morytania (M)',
+              description: 'The Morytania region',
+              value: 'morytania',
+            },
+            {
+              label: 'Tirannwn (T)',
+              description: 'The Tirannwn region',
+              value: 'tirannwn',
+            },
+            {
+              label: 'Wilderness (W)',
+              description: 'The Wilderness region',
+              value: 'wilderness',
+            },
+          ].map((option) => {
+            const emoji = interaction.guild.emojis.cache.find(
+              (emoji) => emoji.name === `r_${option.value}`,
+            );
+            return {
+              ...option,
+              emoji: emoji ? `<:${emoji}>` : undefined,
+            };
+          }),
+        ),
     );
     await interaction.reply({
       content:
