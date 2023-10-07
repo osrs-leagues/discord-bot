@@ -3,11 +3,11 @@ import {
   SlashCommandStringOption,
 } from '@discordjs/builders';
 
-import { fetchHiscoreUser } from '../../tasks';
-import getHiscoreRankingMessage from '../messages/hiscoreRanking';
+import { fetchHiscoreUser } from '../../../tasks';
+import getHiscoreRankingMessage from '../../messages/hiscoreRanking';
 import { Command } from './types';
-import { getLeagueName } from '../../leagues';
-import { channelGroups } from '../Channel';
+import { getLeagueName } from '../../../leagues';
+import { channelGroups } from '../../Channel';
 
 const hiscoresCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,

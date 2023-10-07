@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { Command } from './types';
-import { channelGroups } from '../Channel';
-import Role from '../Role';
+import { channelGroups } from '../../Channel';
+import Role from '../../Role';
 
 const pingCommand: Command = {
   channels: channelGroups.TESTING,

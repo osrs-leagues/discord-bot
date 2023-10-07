@@ -1,16 +1,16 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser } from '../../database/models';
-import removeLeagueRoles from '../actions/removeLeagueRoles';
+import { DiscordUser } from '../../../database/models';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
+import { channelGroups } from '../../Channel';
+import { removeLeagueRoles } from '../../actions';
 
-const removeRolesCommand: Command = {
+const removeLeagueRolesCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
-    .setName('remove_roles')
-    .setDescription('Remove all of your league rank roles'),
+    .setName('remove_league_roles')
+    .setDescription('Remove all of your league rank roles.'),
   execute: async (interaction) => {
     const discordMember = interaction.member;
     const result = await DiscordUser.findByPk(discordMember.user.id);
@@ -25,8 +25,11 @@ const removeRolesCommand: Command = {
     await removeLeagueRoles({
       member: discordMember as GuildMember,
     });
-    await interaction.reply('All of your league rank roles have been removed.');
+    await interaction.reply({
+      content: 'Your league rank roles have been removed.',
+      ephemeral: true,
+    });
   },
 };
 
-export default removeRolesCommand;
+export default removeLeagueRolesCommand;

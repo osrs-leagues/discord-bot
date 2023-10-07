@@ -12,7 +12,7 @@ const removeLeagueRoles = async ({
 }: RemoveLeagueRolesParams): Promise<boolean> => {
   try {
     const allRoles = getAllRoles();
-    await member.roles.remove(allRoles);
+    await member.roles.remove(allRoles.filter((role) => role !== undefined));
     return true;
   } catch (error) {
     console.error(error);

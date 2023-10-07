@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import { CURRENT_LEAGUE } from '../../leagues';
-import getPointRankingsMessage from '../messages/pointRankings';
+import { CURRENT_LEAGUE } from '../../../leagues';
+import getPointRankingsMessage from '../../messages/pointRankings';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
+import { channelGroups } from '../../Channel';
 
 const leagueRanksCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,

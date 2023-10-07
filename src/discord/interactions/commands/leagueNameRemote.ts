@@ -4,7 +4,7 @@ import {
 } from '@discordjs/builders';
 import { GuildMember } from 'discord.js';
 
-import { DiscordUser } from '../../database/models';
+import { DiscordUser } from '../../../database/models';
 import {
   CURRENT_LEAGUE,
   getLeagueDiscordColumn,
@@ -12,14 +12,14 @@ import {
   getRank,
   insertLeagueName,
   League,
-} from '../../leagues';
-import setLeagueRole from '../actions/setLeagueRole';
-import getRankedMessage from '../messages/ranked';
-import getUnrankedMessage from '../messages/unranked';
-import { fetchHiscoreUser } from '../../tasks';
+} from '../../../leagues';
+import setLeagueRole from '../../actions/setLeagueRole';
+import getRankedMessage from '../../messages/ranked';
+import getUnrankedMessage from '../../messages/unranked';
+import { fetchHiscoreUser } from '../../../tasks';
 import { Command } from './types';
-import { channelGroups } from '../Channel';
-import Role from '../Role';
+import { channelGroups } from '../../Channel';
+import Role from '../../Role';
 
 const leagueNameRemote = (league: League): Command => {
   const leagueName = getLeagueName(league);
