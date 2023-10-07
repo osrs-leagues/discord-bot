@@ -1,5 +1,19 @@
 # @osrs-leagues/discord-bot
 
+## 2.3.0
+
+### Minor Changes
+
+- 3b9ab4b: Add support for multiple interaction types
+- 3b9ab4b: Update league rank command responses to use the rank colors
+- 3b9ab4b: Add a command to set region roles
+- 67c04c5: Add Trailblazer Reloaded hiscores lookup
+- 58fff9b: Update dependencies
+- 9629e1b: Update Github workflows to deploy stage and production heroku apps
+- d549493: Abstract league name commands into local and remote commands
+- 920f499: Standardize channels and roles for slash commands
+- 67c04c5: Migrate Shattered Relics league lookup to database
+
 ## 2.2.1
 
 ### Patch Changes
