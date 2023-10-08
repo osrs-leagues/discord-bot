@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.3.1
+
+### Patch Changes
+
+- 9828338: Test release
+
 ## 2.3.0
 
 ### Minor Changes
