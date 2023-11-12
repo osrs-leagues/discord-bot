@@ -1,13 +1,19 @@
 import { fetchHiscoreUser } from '.';
 import sequelize from '../database';
-import { DiscordUser, TrailblazerReloadedLeague } from '../database/models';
-import { getLeagueName } from '../leagues';
+import { DiscordUser } from '../database/models';
+import {
+  CURRENT_LEAGUE,
+  getLeagueDiscordColumn,
+  getLeagueName,
+  insertLeagueName,
+} from '../leagues';
 import { Task } from './types';
 
 const updateLeagueUsers: Task = {
   execute: async () => {
     console.log(`Running league users update task...`);
     try {
+      const leagueNameIdentifier = getLeagueDiscordColumn(CURRENT_LEAGUE);
       const discordUsers = await DiscordUser.findAll();
       const updateTransaction = await sequelize.transaction();
       console.log(
@@ -16,20 +22,17 @@ const updateLeagueUsers: Task = {
         } ${getLeagueName()} usernames.`,
       );
       for (const discordUser of discordUsers) {
-        if (
-          discordUser.trailblazer_reloaded_name &&
-          discordUser.trailblazer_reloaded_name.length > 0
-        ) {
+        const leagueUserName = discordUser[leagueNameIdentifier];
+        if (leagueUserName?.length > 0) {
           try {
             const hiscoreResult = await fetchHiscoreUser.execute({
-              username: discordUser.trailblazer_reloaded_name,
+              username: leagueUserName,
             });
             if (hiscoreResult) {
-              await TrailblazerReloadedLeague.upsert(
-                {
-                  name: discordUser.trailblazer_reloaded_name,
-                  points: hiscoreResult.league_points,
-                },
+              await insertLeagueName(
+                CURRENT_LEAGUE,
+                leagueUserName,
+                hiscoreResult.league_points,
                 {
                   transaction: updateTransaction,
                 },
