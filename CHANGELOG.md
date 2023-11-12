@@ -1,5 +1,12 @@
 # @osrs-leagues/discord-bot
 
+## 2.4.0
+
+### Minor Changes
+
+- 2c3a6b2: Update the updateDiscordRoles tasks to update tblr points
+- 2c3a6b2: Add command to set tblr name
+
 ## 2.3.1
 
 ### Patch Changes
