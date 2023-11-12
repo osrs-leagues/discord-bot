@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.4.1
+
+### Patch Changes
+
+- 94a0698: Remove role restrictions on league_name and trailblazer_reloaded_name
+
 ## 2.4.0
 
 ### Minor Changes
