@@ -19,14 +19,12 @@ import getUnrankedMessage from '../../messages/unranked';
 import { fetchHiscoreUser } from '../../../tasks';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
-import Role from '../../Role';
 
 const leagueNameRemote = (league: League): Command => {
   const leagueName = getLeagueName(league);
   const leagueNameIdentifier = getLeagueDiscordColumn(league);
   return {
     channels: channelGroups.BOT_COMMANDS,
-    roles: [Role.Administrator, Role.Moderator, Role.Tester],
     data: new SlashCommandBuilder()
       .setName(leagueNameIdentifier)
       .setDescription(

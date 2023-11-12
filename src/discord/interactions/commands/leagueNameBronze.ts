@@ -15,14 +15,12 @@ import setLeagueRole from '../../actions/setLeagueRole';
 import getRankedMessage from '../../messages/ranked';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
-import Role from '../../Role';
 
 const leagueNameBronze = (league: League): Command => {
   const leagueName = getLeagueName(league);
   const leagueNameIdentifier = getLeagueDiscordColumn(league);
   return {
     channels: channelGroups.BOT_COMMANDS,
-    roles: [Role.Administrator, Role.Moderator, Role.Tester],
     data: new SlashCommandBuilder()
       .setName(leagueNameIdentifier)
       .setDescription(
