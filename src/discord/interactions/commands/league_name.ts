@@ -6,12 +6,10 @@ import {
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import { CURRENT_LEAGUE } from '../../../leagues';
-import Role from '../../Role';
 import leagueNameBronze from './leagueNameBronze';
 
 const leagueNameCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
-  roles: [Role.Administrator, Role.Moderator, Role.Tester],
   data: new SlashCommandBuilder()
     .setName('league_name')
     .setDescription(
