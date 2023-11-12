@@ -5,9 +5,9 @@ import {
 
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
-import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../../leagues';
 import Role from '../../Role';
+import leagueNameBronze from './leagueNameBronze';
 
 const leagueNameCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
@@ -23,7 +23,7 @@ const leagueNameCommand: Command = {
         .setDescription('Enter your username for the current & active league.')
         .setRequired(true),
     ) as SlashCommandBuilder,
-  execute: leagueNameRemote(CURRENT_LEAGUE).execute,
+  execute: leagueNameBronze(CURRENT_LEAGUE).execute,
 };
 
 export default leagueNameCommand;

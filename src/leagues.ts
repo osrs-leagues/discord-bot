@@ -7,6 +7,7 @@ import {
 } from './database/models';
 import { DiscordUserAttributes } from './database/models/DiscordUser';
 import { LeagueAttributes } from './database/models/League/League';
+import { Attributes, UpsertOptions } from 'sequelize';
 
 export const CURRENT_LEAGUE: League = 'trailblazer_reloaded';
 
@@ -59,13 +60,13 @@ const LeagueRankings: Leagues = {
     dragon: 52545,
   },
   trailblazer_reloaded: {
-    bronze: 0,
-    iron: 0,
-    steel: 0,
-    mithril: 0,
-    adamant: 0,
-    rune: 0,
-    dragon: 0,
+    bronze: 100,
+    iron: 500,
+    steel: 2000,
+    mithril: 6000,
+    adamant: 20000,
+    rune: 30000,
+    dragon: 50000,
   },
 };
 
@@ -132,21 +133,13 @@ export const getLeagueAttributes = async (
 ): Promise<LeagueAttributes> => {
   switch (league) {
     case 'twisted':
-      return await TwistedLeague.findOne({
-        where: { name: username },
-      });
+      return await TwistedLeague.findByPk(username);
     case 'trailblazer':
-      return await TrailblazerLeague.findOne({
-        where: { name: username },
-      });
+      return await TrailblazerLeague.findByPk(username);
     case 'shattered_relics':
-      return await ShatteredRelicsLeague.findOne({
-        where: { name: username },
-      });
+      return await ShatteredRelicsLeague.findByPk(username);
     case 'trailblazer_reloaded':
-      return await TrailblazerReloadedLeague.findOne({
-        where: { name: username },
-      });
+      return await TrailblazerReloadedLeague.findByPk(username);
   }
 };
 
@@ -154,28 +147,41 @@ export const insertLeagueName = async (
   league: League,
   username: string,
   points: number,
+  options?: UpsertOptions<Attributes<any>>,
 ) => {
   switch (league) {
     case 'twisted':
-      return await TwistedLeague.upsert({
-        name: username,
-        points: points,
-      });
+      return await TwistedLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
     case 'trailblazer':
-      return await TrailblazerLeague.upsert({
-        name: username,
-        points: points,
-      });
+      return await TrailblazerLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
     case 'shattered_relics':
-      return await ShatteredRelicsLeague.upsert({
-        name: username,
-        points: points,
-      });
+      return await ShatteredRelicsLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
     case 'trailblazer_reloaded':
-      return await TrailblazerReloadedLeague.upsert({
-        name: username,
-        points: points,
-      });
+      return await TrailblazerReloadedLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
   }
 };
 

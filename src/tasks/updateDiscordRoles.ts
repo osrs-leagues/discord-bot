@@ -1,8 +1,14 @@
-import { DiscordUser, ShatteredRelicsLeague } from '../database/models';
+import { DiscordUser } from '../database/models';
 import { Task } from '.';
 import { client } from '../discord';
 import { setLeagueRole } from '../discord/actions';
-import { CURRENT_LEAGUE, getRank } from '../leagues';
+import {
+  CURRENT_LEAGUE,
+  getLeagueAttributes,
+  getLeagueDiscordColumn,
+  getLeagueName,
+  getRank,
+} from '../leagues';
 import config from '../config';
 
 const updateDiscordRoles: Task<undefined, number> = {
@@ -12,13 +18,15 @@ const updateDiscordRoles: Task<undefined, number> = {
       const guild = client.guilds.cache.get(config.guild_id);
       if (guild) {
         let amountUpdated = 0;
+        const leagueNameIdentifier = getLeagueDiscordColumn(CURRENT_LEAGUE);
         const discordUsers = await DiscordUser.findAll();
         for (const discordUser of discordUsers) {
           if (discordUser) {
             const guildMember = guild.members.cache.get(discordUser.user_id);
             if (guildMember) {
-              const leagueUser = await ShatteredRelicsLeague.findByPk(
-                discordUser.shattered_relics_name,
+              const leagueUser = await getLeagueAttributes(
+                CURRENT_LEAGUE,
+                discordUser[leagueNameIdentifier],
               );
               if (leagueUser) {
                 const rank = getRank(leagueUser.points, CURRENT_LEAGUE);
@@ -34,7 +42,9 @@ const updateDiscordRoles: Task<undefined, number> = {
           }
         }
         console.log(
-          `Updated ${amountUpdated} discord user's Shattered Relic roles.`,
+          `Updated ${amountUpdated} discord user's ${getLeagueName(
+            CURRENT_LEAGUE,
+          )}.`,
         );
         return amountUpdated;
       } else {
