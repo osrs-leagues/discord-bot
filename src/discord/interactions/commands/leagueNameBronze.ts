@@ -34,29 +34,31 @@ const leagueNameBronze = (league: League): Command => {
       ) as SlashCommandBuilder,
     execute: async (interaction) => {
       let username = interaction.options.getString('username');
-      if (!username) {
-        return interaction.reply('Please enter a valid username.');
-      }
-      username = username.toLocaleLowerCase();
-      const discordMember = interaction.member;
-      await DiscordUser.upsert({
-        user_id: discordMember.user.id,
-        trailblazer_reloaded_name: username,
-      });
-      const rankResult = await setLeagueRole({
-        league,
-        rank: Rank.BRONZE,
-        member: interaction.member as GuildMember,
-        guild: interaction.guild,
-      });
-      if (rankResult) {
-        const message = getRankedMessage({
-          guild: interaction.guild,
-          league,
-          rank: rankResult,
-          username,
+      if (interaction) {
+        if (!username) {
+          return interaction.reply('Please enter a valid username.');
+        }
+        username = username.toLocaleLowerCase();
+        const discordMember = interaction.member;
+        await DiscordUser.upsert({
+          user_id: discordMember.user.id,
+          trailblazer_reloaded_name: username,
         });
-        return interaction.reply({ embeds: [message] });
+        const rankResult = await setLeagueRole({
+          league,
+          rank: Rank.BRONZE,
+          member: interaction.member as GuildMember,
+          guild: interaction.guild,
+        });
+        if (rankResult) {
+          const message = getRankedMessage({
+            guild: interaction.guild,
+            league,
+            rank: rankResult,
+            username,
+          });
+          return interaction.reply({ embeds: [message] });
+        }
       }
     },
   };

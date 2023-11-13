@@ -44,7 +44,7 @@ commandData.forEach((command) => {
 const handleCommandInteraction = async (
   interaction: Interaction<CacheType>,
 ) => {
-  if (!interaction.isCommand()) return;
+  if (!interaction?.isCommand()) return;
 
   const command = commands.get(interaction.commandName);
 
@@ -76,10 +76,12 @@ const handleCommandInteraction = async (
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    return interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    });
+    if (interaction) {
+      return interaction.reply({
+        content: 'There was an error while executing this command!',
+        ephemeral: true,
+      });
+    }
   }
 };
 
