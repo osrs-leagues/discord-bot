@@ -17,7 +17,7 @@ selectMenuData.forEach((menu) => {
 const handleSelectMenuInteraction = async (
   interaction: Interaction<CacheType>,
 ) => {
-  if (!interaction.isSelectMenu()) return;
+  if (!interaction?.isSelectMenu()) return;
 
   const selectMenu = selectMenus.get(interaction.customId);
 
@@ -47,10 +47,12 @@ const handleSelectMenuInteraction = async (
     await selectMenu.execute(interaction);
   } catch (error) {
     console.error(error);
-    return interaction.reply({
-      content: 'There was an error while handling this interaction...',
-      ephemeral: true,
-    });
+    if (interaction) {
+      return interaction.reply({
+        content: 'There was an error while handling this interaction...',
+        ephemeral: true,
+      });
+    }
   }
 };
 

@@ -14,21 +14,23 @@ const regionsSelectMenu: SelectMenu = {
       member: interaction.member as GuildMember,
       values: interaction.values,
     });
-    if (role) {
-      return interaction.reply({
-        embeds: [
-          getRegionRoleMessage({
-            member: interaction.member as GuildMember,
-            role,
-          }),
-        ],
-      });
-    } else {
-      return interaction.reply({
-        content:
-          'There was a problem setting your region role. Please try again.',
-        ephemeral: true,
-      });
+    if (interaction) {
+      if (role) {
+        return interaction.reply({
+          embeds: [
+            getRegionRoleMessage({
+              member: interaction.member as GuildMember,
+              role,
+            }),
+          ],
+        });
+      } else {
+        return interaction.reply({
+          content:
+            'There was a problem setting your region role. Please try again.',
+          ephemeral: true,
+        });
+      }
     }
   },
 };
