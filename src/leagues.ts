@@ -60,13 +60,13 @@ const LeagueRankings: Leagues = {
     dragon: 52545,
   },
   trailblazer_reloaded: {
-    bronze: 100,
-    iron: 500,
-    steel: 2000,
-    mithril: 6000,
-    adamant: 20000,
-    rune: 30000,
-    dragon: 50000,
+    bronze: 2500,
+    iron: 5000,
+    steel: 10000,
+    mithril: 18000,
+    adamant: 28000,
+    rune: 42000,
+    dragon: 56000,
   },
 };
 
