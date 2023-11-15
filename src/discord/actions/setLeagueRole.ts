@@ -18,16 +18,20 @@ const setLeagueRole = async ({
 }: SetLeagueRoleParams): Promise<Rank> => {
   try {
     const discordRole = config.ranks[league][rank];
-    const others = Object.values(config.ranks[league]).filter(
-      (r) => r != discordRole,
-    );
-    const roles = await guild.roles.fetch();
-    const removeRoles = Array.from(roles.values()).filter((r) =>
-      others.includes(r.id),
-    );
-    await member.roles.remove(removeRoles);
     const roleToAdd = guild.roles.cache.get(discordRole);
-    await member.roles.add(roleToAdd);
+    if (!member.roles.cache.has(roleToAdd.id)) {
+      const others = Object.values(config.ranks[league]).filter(
+        (r) => r != discordRole,
+      );
+      const roles = await guild.roles.fetch();
+      const removeRoles = Array.from(roles.values()).filter((r) =>
+        others.includes(r.id),
+      );
+      if (removeRoles.length > 0) {
+        await member.roles.remove(removeRoles);
+      }
+      await member.roles.add(roleToAdd);
+    }
     return rank;
   } catch (error) {
     console.error(
