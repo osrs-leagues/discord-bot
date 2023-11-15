@@ -1,5 +1,13 @@
 # @osrs-leagues/discord-bot
 
+## 2.4.2
+
+### Patch Changes
+
+- 936a05b: Fix undefined interaction in commands and select menus
+- 05358a5: Add league static point threshold
+- 05358a5: Optimize setting league ranks
+
 ## 2.4.1
 
 ### Patch Changes
