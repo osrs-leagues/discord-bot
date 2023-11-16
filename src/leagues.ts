@@ -112,7 +112,7 @@ export const getRank = (points: number, league: League): Rank => {
   else if (points >= rankings.mithril) return Rank.MITHRIL;
   else if (points >= rankings.steel) return Rank.STEEL;
   else if (points >= rankings.iron) return Rank.IRON;
-  else if (points >= rankings.bronze) return Rank.BRONZE;
+  else return Rank.BRONZE;
 };
 
 export const getRankName = (rank: Rank) => {

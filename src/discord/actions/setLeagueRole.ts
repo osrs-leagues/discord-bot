@@ -18,8 +18,13 @@ const setLeagueRole = async ({
 }: SetLeagueRoleParams): Promise<Rank> => {
   try {
     const discordRole = config.ranks[league][rank];
-    const roleToAdd = guild.roles.cache.get(discordRole);
-    if (!member.roles.cache.has(roleToAdd.id)) {
+    let roleToAdd = guild.roles.cache.get(discordRole);
+    let roles;
+    if (!roleToAdd) {
+      roles = await guild.roles.fetch();
+      roleToAdd = roles.get(discordRole);
+    }
+    if (roleToAdd && !member.roles.cache.has(roleToAdd.id)) {
       const others = Object.values(config.ranks[league]).filter(
         (r) => r != discordRole,
       );
@@ -31,6 +36,12 @@ const setLeagueRole = async ({
         await member.roles.remove(removeRoles);
       }
       await member.roles.add(roleToAdd);
+    } else if (!roleToAdd) {
+      console.error(`Could not find role: ${discordRole}`);
+      console.error(
+        `Error setting discord role: `,
+        JSON.stringify({ league, rank, member_id: member.id, discordRole }),
+      );
     }
     return rank;
   } catch (error) {
