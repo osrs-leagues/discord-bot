@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.4.4
+
+### Patch Changes
+
+- b94e63e: Fetch discord roles if they are not in the cache
+
 ## 2.4.3
 
 ### Patch Changes
