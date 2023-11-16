@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.4.3
+
+### Patch Changes
+
+- ec8121b: Enable remote commands
+
 ## 2.4.2
 
 ### Patch Changes
