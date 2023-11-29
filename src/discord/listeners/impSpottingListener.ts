@@ -4,7 +4,7 @@ import config from '../../config';
 import { ChannelListener } from './types';
 import { setMessageExpiration } from './utils';
 
-const IMP_MESSAGE_REGEX = /^(.*) imp on w([0-9]{3})(.*)?$/;
+const IMP_MESSAGE_REGEX = /^(.*) imp(ling)* on w([0-9]{3})(.*)?$/;
 
 /**
  * Set messages to expire after X minutes.
@@ -42,10 +42,11 @@ const impSpottingListener: ChannelListener = {
     if (message.content.toLocaleLowerCase().match(IMP_MESSAGE_REGEX)) {
       setMessageExpiration(message, MESSAGE_LIFESPAN);
     } else {
-      await message.reply(
+      const response = await message.reply(
         'Please use the format: "X imp on w### description". Example: Lucky imp on w420 somewhere in Morytania.',
       );
       setMessageExpiration(message, 100);
+      setMessageExpiration(response, ERROR_LIFESPAN);
     }
   },
 };
