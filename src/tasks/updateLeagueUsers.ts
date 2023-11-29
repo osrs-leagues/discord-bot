@@ -15,12 +15,13 @@ const updateLeagueUsers: Task = {
     try {
       const leagueNameIdentifier = getLeagueDiscordColumn(CURRENT_LEAGUE);
       const discordUsers = await DiscordUser.findAll();
-      const updateTransaction = await sequelize.transaction();
       console.log(
         `Attempting update on ${
           discordUsers.length
         } ${getLeagueName()} usernames.`,
       );
+
+      const updatedUsers: { name: string; points: number }[] = [];
       for (const discordUser of discordUsers) {
         const leagueUserName = discordUser[leagueNameIdentifier];
         if (leagueUserName?.length > 0) {
@@ -29,14 +30,10 @@ const updateLeagueUsers: Task = {
               username: leagueUserName,
             });
             if (hiscoreResult) {
-              await insertLeagueName(
-                CURRENT_LEAGUE,
-                leagueUserName,
-                hiscoreResult.league_points,
-                {
-                  transaction: updateTransaction,
-                },
-              );
+              updatedUsers.push({
+                name: leagueUserName,
+                points: hiscoreResult.league_points,
+              });
             }
           } catch (error) {
             console.error(
@@ -46,9 +43,17 @@ const updateLeagueUsers: Task = {
           }
         }
       }
-      await updateTransaction.commit();
+      if (updatedUsers.length > 0) {
+        const updateTransaction = await sequelize.transaction();
+        for (const user of updatedUsers) {
+          await insertLeagueName(CURRENT_LEAGUE, user.name, user.points, {
+            transaction: updateTransaction,
+          });
+        }
+        await updateTransaction.commit();
+      }
       console.log(
-        `Updated ${discordUsers.length} ${getLeagueName()} league users.`,
+        `Updated ${updatedUsers.length} ${getLeagueName()} league users.`,
       );
       return true;
     } catch (error) {
