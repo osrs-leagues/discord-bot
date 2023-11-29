@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.5.0
+
+### Minor Changes
+
+- f9363f8: Improvements to updating all league users
+
 ## 2.4.4
 
 ### Patch Changes
