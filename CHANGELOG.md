@@ -1,5 +1,15 @@
 # @osrs-leagues/discord-bot
 
+## 2.6.0
+
+### Minor Changes
+
+- a497ad9: Separate hiscore fetching and discord role updating jobs
+
+### Patch Changes
+
+- a497ad9: Add additional safeguards for interactions
+
 ## 2.5.0
 
 ### Minor Changes
