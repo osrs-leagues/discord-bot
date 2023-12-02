@@ -1,6 +1,6 @@
 {
   "name": "@osrs-leagues/discord-bot",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "The discord bot for the OSRS Leagues discord server.",
   "main": "./src/index.ts",
   "scripts": {
