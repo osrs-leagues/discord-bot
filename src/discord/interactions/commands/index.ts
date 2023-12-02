@@ -11,7 +11,8 @@ import hiscoresCommand from './hiscores';
 import leagueNameCommand from './league_name';
 import leagueRanksCommand from './league_ranks';
 import removeLeagueRolesCommand from './remove_league_roles';
-import updateAllRanksCommand from './update_all_ranks';
+import updateLeaguePointsCommand from './update_league_points';
+import updateAllRolesCommand from './update_all_roles';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
 import { CURRENT_LEAGUE } from '../../../leagues';
@@ -33,7 +34,8 @@ const commandData = [
   regionCommand,
   removeLeagueRolesCommand,
   removeRegionRoleCommand,
-  updateAllRanksCommand,
+  updateLeaguePointsCommand,
+  updateAllRolesCommand,
 ];
 
 const commands = new Collection<string, Command>();

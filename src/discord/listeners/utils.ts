@@ -10,11 +10,15 @@ export const setMessageExpiration = async (
   expiration: number,
 ) => {
   setTimeout(() => {
-    if (message) {
-      message.delete().catch((error) => {
-        console.warn(error);
-        return;
-      });
+    try {
+      if (message) {
+        message.delete().catch((error) => {
+          console.warn(error);
+          return;
+        });
+      }
+    } catch (error) {
+      console.error(`Error deleting message: ${error}`);
     }
   }, expiration);
 };

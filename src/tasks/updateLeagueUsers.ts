@@ -16,7 +16,7 @@ const updateLeagueUsers: Task = {
       const leagueNameIdentifier = getLeagueDiscordColumn(CURRENT_LEAGUE);
       const discordUsers = await DiscordUser.findAll();
       console.log(
-        `Attempting update on ${
+        `Attempting hiscores point fetch on ${
           discordUsers.length
         } ${getLeagueName()} usernames.`,
       );
@@ -53,7 +53,9 @@ const updateLeagueUsers: Task = {
         await updateTransaction.commit();
       }
       console.log(
-        `Updated ${updatedUsers.length} ${getLeagueName()} league users.`,
+        `Fetched ${
+          updatedUsers.length
+        } ${getLeagueName()} user's league points.`,
       );
       return true;
     } catch (error) {
