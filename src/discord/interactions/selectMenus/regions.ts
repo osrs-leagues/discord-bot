@@ -9,28 +9,32 @@ const regionsSelectMenu: SelectMenu = {
   identifier: 'regions',
   channels: channelGroups.BOT_COMMANDS,
   execute: async (interaction) => {
-    const role = await setRegionRole({
-      guild: interaction.guild,
-      member: interaction.member as GuildMember,
-      values: interaction.values,
-    });
-    if (interaction) {
-      if (role) {
-        return interaction.reply({
-          embeds: [
-            getRegionRoleMessage({
-              member: interaction.member as GuildMember,
-              role,
-            }),
-          ],
+    try {
+      if (interaction) {
+        const role = await setRegionRole({
+          guild: interaction.guild,
+          member: interaction.member as GuildMember,
+          values: interaction.values,
         });
-      } else {
-        return interaction.reply({
-          content:
-            'There was a problem setting your region role. Please try again.',
-          ephemeral: true,
-        });
+        if (role) {
+          return interaction.reply({
+            embeds: [
+              getRegionRoleMessage({
+                member: interaction.member as GuildMember,
+                role,
+              }),
+            ],
+          });
+        } else {
+          return interaction.reply({
+            content:
+              'There was a problem setting your region role. Please try again.',
+            ephemeral: true,
+          });
+        }
       }
+    } catch (error) {
+      console.error(`Error responding to region select menu: ${error}`);
     }
   },
 };

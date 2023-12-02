@@ -1,22 +1,22 @@
-import { updateLeagueUsers } from '../../tasks';
+import { updateDiscordRoles } from '../../tasks';
 import { Job } from '../types';
 
-const updateUsersJob: Job = {
+const updateRolesJob: Job = {
   enabled: true,
   interval: {
     testing: undefined,
     development: undefined, //'* * * * *',
     stage: undefined, // '* * *',
-    production: '2 */6 * * *',
+    production: '2 */1 * * *',
   },
   runOnStart: false,
   execute: async () => {
     try {
-      await updateLeagueUsers.execute();
+      await updateDiscordRoles.execute();
     } catch (error) {
-      console.error('Error executing updateUsersJob.', error);
+      console.error('Error executing updateRolesJob.', error);
     }
   },
 };
 
-export default updateUsersJob;
+export default updateRolesJob;

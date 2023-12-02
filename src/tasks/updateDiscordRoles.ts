@@ -10,6 +10,7 @@ import {
   getRank,
 } from '../leagues';
 import config from '../config';
+import { Op } from 'sequelize';
 
 const updateDiscordRoles: Task<undefined, number> = {
   execute: async () => {
@@ -19,7 +20,9 @@ const updateDiscordRoles: Task<undefined, number> = {
       if (guild) {
         let amountUpdated = 0;
         const leagueNameIdentifier = getLeagueDiscordColumn(CURRENT_LEAGUE);
-        const discordUsers = await DiscordUser.findAll();
+        const discordUsers = await DiscordUser.findAll({
+          where: { [leagueNameIdentifier]: { [Op.ne]: null } },
+        });
         for (const discordUser of discordUsers) {
           if (discordUser) {
             const guildMember = guild.members.cache.get(discordUser.user_id);

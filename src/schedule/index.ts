@@ -5,11 +5,13 @@ import {
   leaguePointRankingsJob,
   updateUsersJob,
   postLeagueRankingsJob,
+  updateRolesJob,
 } from './jobs';
 import { Job } from './types';
 
 const jobs: Job[] = [
   leaguePointRankingsJob,
+  updateRolesJob,
   updateUsersJob,
   postLeagueRankingsJob,
 ];
