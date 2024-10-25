@@ -86,7 +86,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
           type: DataTypes.STRING,
         },
         status: {
-          defaultValue: 'assigned',
+          defaultValue: 'started',
           type: DataTypes.ENUM<ChallengeCardStatus>(
             ChallengeCardStatus.STARTED,
             ChallengeCardStatus.APPROVAL,

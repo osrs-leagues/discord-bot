@@ -9,6 +9,7 @@ const challengeApprovalButton: Button = {
     const { customId } = interaction;
     const [action, userId, difficultyTier] = customId.split(' ');
 
+    const parsedDifficultyTier = parseInt(difficultyTier, 10);
     // Check if the interaction is from a guild and if the member is an admin
     if (
       !(
@@ -19,9 +20,9 @@ const challengeApprovalButton: Button = {
     }
     try {
       if (action === 'approve') {
-        const challengeMain = await challenges.loadChallengeMain(userId);
-        if (challengeMain) {
-          await challenges.updateChallengeMain(userId, {
+        const challengeCard = await challenges.loadChallengeCard(userId);
+        if (challengeCard) {
+          await challengeCard.update({
             status: ChallengeCardStatus.COMPLETED,
           });
 
@@ -29,11 +30,15 @@ const challengeApprovalButton: Button = {
           try {
             const targetUser = await interaction.client.users.fetch(userId);
             await targetUser.send(
-              `Your challenge card has been approved for the difficulty tier: ${difficultyTier}. Congratulations!`,
+              `Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
+                parsedDifficultyTier,
+              )}. Congratulations!`,
             );
           } catch (dmError) {
             await interaction.reply({
-              content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${difficultyTier}. Congratulations!`,
+              content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
+                parsedDifficultyTier,
+              )}. Congratulations!`,
               ephemeral: false,
             });
           }
@@ -48,9 +53,9 @@ const challengeApprovalButton: Button = {
           });
         }
       } else if (action === 'reject') {
-        const challengeMain = await challenges.loadChallengeMain(userId);
-        if (challengeMain) {
-          await challenges.updateChallengeMain(userId, {
+        const challengeCard = await challenges.loadChallengeCard(userId);
+        if (challengeCard) {
+          await challengeCard.update({
             status: ChallengeCardStatus.STARTED,
           });
           // Standard rejection reason
@@ -61,11 +66,15 @@ const challengeApprovalButton: Button = {
           try {
             const targetUser = await interaction.client.users.fetch(userId);
             await targetUser.send(
-              `Your challenge card has been rejected for the difficulty tier: ${difficultyTier}. Reason: ${standardReason}`,
+              `Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
+                parsedDifficultyTier,
+              )}. Reason: ${standardReason}`,
             );
           } catch (dmError) {
             await interaction.reply({
-              content: `<@${userId}> Your challenge card has been rejected for the difficulty tier: ${difficultyTier}. Reason: ${standardReason}`,
+              content: `<@${userId}> Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
+                parsedDifficultyTier,
+              )}. Reason: ${standardReason}`,
               ephemeral: false,
             });
           }

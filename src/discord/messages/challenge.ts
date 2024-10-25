@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 
-import { getChallengeCount } from '../../challenges';
+import { getChallengeCount, getDifficultyName } from '../../challenges';
 import { Challenge, ChallengeDifficulty } from '../../database';
 
 type GetChallengeCardMessageParams = {
@@ -19,7 +19,11 @@ const getChallengeCardMessage = ({
 
   return new MessageEmbed()
     .setColor(embedColour)
-    .setTitle(`Sage's ${difficulty} Challenge Card for ${userDisplayName}`)
+    .setTitle(
+      `Sage's ${getDifficultyName(
+        difficulty,
+      )} Challenge Card for ${userDisplayName}`,
+    )
     .setDescription(
       challenges
         .slice(0, challengeCount)

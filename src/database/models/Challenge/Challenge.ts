@@ -66,11 +66,11 @@ class Challenge extends InitializableModel<Challenge> {
   };
 
   static initializeAssociations() {
-    Challenge.hasOne(Region, {
+    Region.hasOne(Challenge, {
       foreignKey: 'regionOneId',
       as: 'regionOne',
     });
-    Challenge.hasOne(Region, {
+    Region.hasOne(Challenge, {
       foreignKey: 'regionTwoId',
       as: 'regionTwo',
     });

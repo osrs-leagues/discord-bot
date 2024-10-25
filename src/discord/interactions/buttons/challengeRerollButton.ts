@@ -2,11 +2,7 @@ import { ButtonInteraction, Message, GuildMember } from 'discord.js';
 import * as challenges from '../../../challenges';
 import getChallengeCardMessage from '../../messages/challenge';
 import { Button } from './types';
-import {
-  Challenge,
-  ChallengeCardStatus,
-  ChallengeDifficulty,
-} from '../../../database';
+import { ChallengeCardStatus } from '../../../database';
 
 const challengeRerollButton: Button = {
   buttons: ['reroll'],
@@ -28,16 +24,12 @@ const challengeRerollButton: Button = {
       const userDisplayName = member.displayName;
 
       // Fetch user's challenge main record
-      const challengeMain = await challenges.loadChallengeMain(userId);
-      let currentDifficultyTier: ChallengeDifficulty;
-      let currentChallengeStatus: ChallengeCardStatus;
-      let numberOfRerolls: number;
-      let challengeList: Challenge[] = [];
-      if (challengeMain) {
-        currentDifficultyTier = challengeMain.difficulty;
-        currentChallengeStatus = challengeMain.status;
-        numberOfRerolls = challengeMain.rerollsRemaining;
-        if (numberOfRerolls <= 0) {
+      const challengeCard = await challenges.loadChallengeCard(userId);
+      if (challengeCard) {
+        const currentDifficultyTier = challengeCard.difficulty;
+        const currentChallengeStatus = challengeCard.status;
+        let numberOfRerolls = await challenges.getRerollCount(userId);
+        if (numberOfRerolls >= 2) {
           await interaction.reply({
             content: `You do not have any rerolls remaining.`,
             ephemeral: true,
@@ -45,70 +37,55 @@ const challengeRerollButton: Button = {
           return;
         }
         if (currentChallengeStatus === ChallengeCardStatus.STARTED) {
-          const existingChallenges = await challenges.loadChallengeCard(
-            userId,
-            currentDifficultyTier,
-          );
-          if (existingChallenges) {
-            if (existingChallenges.rerollsRemaining === 0) {
-              // Region role requirement check based on difficulty
-              const regionRoleCount = challenges.getRegionRoleCount(userRoles);
-              const requiredRegionRoles =
-                challenges.getChallengeCardEligibility(currentDifficultyTier);
+          if (challengeCard.rerollsRemaining > 0) {
+            // Region role requirement check based on difficulty
+            const regionRoleCount = challenges.getRegionRoleCount(userRoles);
+            const requiredRegionRoles = challenges.getChallengeCardEligibility(
+              currentDifficultyTier,
+            );
 
-              if (regionRoleCount < requiredRegionRoles) {
-                await interaction.reply({
-                  content: `You need at least ${requiredRegionRoles} region role(s) to reroll challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
-                  ephemeral: true,
-                });
-                return;
-              }
-
-              // Reroll challenges
-              challengeList = challenges.generateNewChallenges(
-                currentDifficultyTier,
-                userRoles,
-              );
-
-              // Save rerolled challenge card
-              await challenges.saveChallengeCard(
-                userId,
-                currentDifficultyTier,
-                challengeList,
-                1,
-              );
-
-              // Decrement number of rerolls remaining
-              --numberOfRerolls;
-
-              // Update challengeMain's number of rerolls remaining
-              await challenges.updateChallengeMain(userId, {
-                rerollsRemaining: numberOfRerolls,
-              });
-
-              const challengeEmbed = getChallengeCardMessage({
-                difficulty: currentDifficultyTier,
-                userDisplayName: userDisplayName,
-                challenges: challengeList,
-              });
-
-              await interaction.reply({ embeds: [challengeEmbed] });
-
-              // Remove the buttons from the original message
-              if (interaction.message instanceof Message) {
-                await interaction.message.edit({ components: [] });
-              }
-            } else {
+            if (regionRoleCount < requiredRegionRoles) {
               await interaction.reply({
-                content: `You have already rerolled a challenge card for the ${currentDifficultyTier} tier. You can only reroll a challenge card once per difficulty tier.`,
+                content: `You need at least ${requiredRegionRoles} region role(s) to reroll challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
                 ephemeral: true,
               });
               return;
             }
-          } else {
-            throw new Error(
-              `Couldn't find challenge card attempting to be rerolled for: ${userId}`,
+
+            // Reroll challenges
+            const challengeList = challenges.generateNewChallenges(
+              currentDifficultyTier,
+              userRoles,
             );
+
+            // Decrement number of rerolls remaining
+            --numberOfRerolls;
+
+            // Save rerolled challenge card
+            await challenges.updateChallengeCard(
+              challengeCard,
+              challengeList,
+              numberOfRerolls,
+            );
+
+            const challengeEmbed = getChallengeCardMessage({
+              difficulty: currentDifficultyTier,
+              userDisplayName: userDisplayName,
+              challenges: challengeList,
+            });
+
+            await interaction.reply({ embeds: [challengeEmbed] });
+
+            // Remove the buttons from the original message
+            if (interaction.message instanceof Message) {
+              await interaction.message.edit({ components: [] });
+            }
+          } else {
+            await interaction.reply({
+              content: `You have already rerolled a challenge card for the ${currentDifficultyTier} tier. You can only reroll a challenge card once per difficulty tier.`,
+              ephemeral: true,
+            });
+            return;
           }
         } else {
           await interaction.reply({

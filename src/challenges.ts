@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import {
   Challenge,
   ChallengeCard,
@@ -23,6 +24,11 @@ export const loadChallengeCache = async () => {
   challengeCache.regions.forEach((region) => {
     challengeCache.regionNameMap[region.id] = region.name;
   });
+  console.info(
+    'Challenge cache loaded:',
+    challengeCache.challenges.length,
+    challengeCache.regions.length,
+  );
 };
 
 /**
@@ -55,41 +61,26 @@ export function getChallengeCardEligibility(
  * @param userId - The user's ID.
  * @returns The ChallengeMain record or null if not found.
  */
-export async function loadChallengeMain(
-  userId: string,
-): Promise<ChallengeCard | null> {
-  return await ChallengeCard.findOne({ where: { discordUserId: userId } });
-}
-
-/**
- * Updates the ChallengeMain record for a given user.
- * @param userId - The user's ID.
- * @param updateData - The data to update.
- */
-export async function updateChallengeMain(
-  userId: string,
-  updateData: Partial<ChallengeCard>,
-): Promise<void> {
-  const challengeMain = await loadChallengeMain(userId);
-  if (challengeMain) {
-    await challengeMain.update(updateData);
-  } else {
-    throw new Error(`ChallengeCard record not found for user ID: ${userId}`);
-  }
-}
-
-/**
- * Loads the ChallengeCard for a user based on difficulty.
- * @param difficulty - The difficulty tier.
- * @param userId - The user's ID.
- * @returns The ChallengeCard record or null if not found.
- */
 export async function loadChallengeCard(
   userId: string,
-  difficulty: ChallengeDifficulty,
 ): Promise<ChallengeCard | null> {
   return await ChallengeCard.findOne({
-    where: { discordUserId: userId, difficulty: difficulty },
+    where: {
+      discordUserId: userId,
+    },
+    order: [['difficulty', 'DESC']],
+    limit: 1,
+  });
+}
+
+/**
+ * Get the number of rerolls a user has used.
+ * @param userId The user's ID.
+ * @returns The number of times any user's ChallengeCard has been rerolled.
+ */
+export async function getRerollCount(userId: string): Promise<number> {
+  return await ChallengeCard.count({
+    where: { discordUserId: userId, rerollsRemaining: { [Op.lte]: 0 } },
   });
 }
 
@@ -99,12 +90,50 @@ export async function loadChallengeCard(
  * @param userId - The user's ID.
  * @param challenges - An array of challenge descriptions.
  */
-export async function saveChallengeCard(
+export async function updateChallengeCard(
+  challengeCard: ChallengeCard,
+  challenges: Challenge[],
+  rerollsRemaining: number,
+): Promise<void> {
+  const challengeOne = challenges[0];
+  const challengeTwo = challenges[1];
+  const challengeThree = challenges[2];
+  let challengeFour = undefined;
+  let challengeFive = undefined;
+
+  if (
+    challengeCard.difficulty === ChallengeDifficulty.EXPERIENCED ||
+    challengeCard.difficulty === ChallengeDifficulty.MASTER
+  ) {
+    challengeFour = challenges[3];
+  } else if (challengeCard.difficulty === ChallengeDifficulty.GRANDMASTER) {
+    challengeFour = challenges[3];
+    challengeFive = challenges[4];
+  }
+
+  // Upsert the challenge card (create or update)
+  await challengeCard.update({
+    challengeOneId: challengeOne.id,
+    challengeTwoId: challengeTwo.id,
+    challengeThreeId: challengeThree.id,
+    challengeFourId: challengeFour?.id,
+    challengeFiveId: challengeFive?.id,
+    rerollsRemaining: rerollsRemaining,
+  });
+}
+
+/**
+ * Saves or updates the ChallengeCard for a user.
+ * @param difficulty - The difficulty tier.
+ * @param userId - The user's ID.
+ * @param challenges - An array of challenge descriptions.
+ */
+export async function createChallengeCard(
   userId: string,
   difficulty: ChallengeDifficulty,
   challenges: Challenge[],
   rerolled: number,
-): Promise<void> {
+): Promise<ChallengeCard> {
   const challengeOne = challenges[0];
   const challengeTwo = challenges[1];
   const challengeThree = challenges[2];
@@ -122,7 +151,7 @@ export async function saveChallengeCard(
   }
 
   // Upsert the challenge card (create or update)
-  await ChallengeCard.upsert({
+  const results = await ChallengeCard.create({
     discordUserId: userId,
     difficulty: difficulty,
     challengeOneId: challengeOne.id,
@@ -132,6 +161,7 @@ export async function saveChallengeCard(
     challengeFiveId: challengeFive?.id,
     rerollsRemaining: rerolled,
   });
+  return results;
 }
 
 export function existingChallengesToList(
@@ -153,6 +183,7 @@ export function existingChallengesToList(
     challengeIdList[4] = existingChallenges.challengeFiveId;
   }
 
+  console.log(challengeCache.challenges.length);
   return challengeIdList.map((id) =>
     challengeCache.challenges.find((c) => c.id === id),
   );
@@ -245,5 +276,27 @@ export function getChallengeCount(difficulty: ChallengeDifficulty): number {
       return 5;
     default:
       return 3;
+  }
+}
+
+/**
+ * Get the name of the difficulty tier.
+ * @param difficulty The difficulty tier.
+ * @returns
+ */
+export function getDifficultyName(difficulty: ChallengeDifficulty): string {
+  switch (difficulty) {
+    case ChallengeDifficulty.NOVICE:
+      return 'Novice';
+    case ChallengeDifficulty.INTERMEDIATE:
+      return 'Intermediate';
+    case ChallengeDifficulty.EXPERIENCED:
+      return 'Experienced';
+    case ChallengeDifficulty.MASTER:
+      return 'Master';
+    case ChallengeDifficulty.GRANDMASTER:
+      return 'Grandmaster';
+    default:
+      return 'Unknown';
   }
 }

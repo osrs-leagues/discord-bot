@@ -31,50 +31,44 @@ const challengeApprovalMessageListener: ChannelListener = {
     const userId = message.author.id;
     const userDisplayName = message.author.username;
     try {
-      const challengeMain = await challenges.loadChallengeMain(userId);
+      const challengeMain = await challenges.loadChallengeCard(userId);
       if (challengeMain) {
         const currentDifficultyTier = challengeMain.difficulty;
         let currentChallengeStatus = challengeMain.status;
         if (currentChallengeStatus === ChallengeCardStatus.STARTED) {
-          const existingChallenges = await challenges.loadChallengeCard(
-            userId,
+          const challengeList = challenges.existingChallengesToList(
+            challengeMain,
             currentDifficultyTier,
           );
-          if (existingChallenges) {
-            const challengeList = challenges.existingChallengesToList(
-              existingChallenges,
-              currentDifficultyTier,
-            );
-            const challengeEmbed = getChallengeCardMessage({
-              difficulty: currentDifficultyTier,
-              userDisplayName: userDisplayName,
-              challenges: challengeList,
-            });
+          const challengeEmbed = getChallengeCardMessage({
+            difficulty: currentDifficultyTier,
+            userDisplayName: userDisplayName,
+            challenges: challengeList,
+          });
 
-            const approveButton = new MessageButton()
-              .setCustomId(`approve ${userId} ${currentDifficultyTier}`)
-              .setLabel('Approve')
-              .setStyle('SUCCESS'); // Green button
+          const approveButton = new MessageButton()
+            .setCustomId(`approve ${userId} ${currentDifficultyTier}`)
+            .setLabel('Approve')
+            .setStyle('SUCCESS'); // Green button
 
-            const rejectButton = new MessageButton()
-              .setCustomId(`reject ${userId} ${currentDifficultyTier}`)
-              .setLabel('Reject')
-              .setStyle('DANGER'); // Red button
+          const rejectButton = new MessageButton()
+            .setCustomId(`reject ${userId} ${currentDifficultyTier}`)
+            .setLabel('Reject')
+            .setStyle('DANGER'); // Red button
 
-            const row = new MessageActionRow().addComponents(
-              approveButton,
-              rejectButton,
-            );
+          const row = new MessageActionRow().addComponents(
+            approveButton,
+            rejectButton,
+          );
 
-            currentChallengeStatus = ChallengeCardStatus.APPROVAL;
-            await challenges.updateChallengeMain(userId, {
-              status: currentChallengeStatus,
-            });
-            await message.channel.send({
-              embeds: [challengeEmbed],
-              components: [row],
-            });
-          }
+          currentChallengeStatus = ChallengeCardStatus.APPROVAL;
+          await challengeMain.update({
+            status: currentChallengeStatus,
+          });
+          await message.channel.send({
+            embeds: [challengeEmbed],
+            components: [row],
+          });
         } else if (currentChallengeStatus === ChallengeCardStatus.APPROVAL) {
           const response = await message.reply(
             'Your Challenge Card is already awaiting approval. Please wait for a decision.',

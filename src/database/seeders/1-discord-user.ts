@@ -8,6 +8,8 @@ module.exports = {
         {
           user_id: '1234',
           twisted_name: 'test',
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
       ],
       {},

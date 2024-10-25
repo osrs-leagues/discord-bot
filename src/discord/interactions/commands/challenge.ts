@@ -4,7 +4,6 @@ import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import {
   Challenge,
-  ChallengeCard,
   ChallengeCardStatus,
   ChallengeDifficulty,
 } from '../../../database/models';
@@ -26,16 +25,16 @@ const challengeCommand: Command = {
       let rerolled = 0;
 
       // Fetch user's challenge main record
-      let challengeMain = await challenges.loadChallengeMain(userId);
+      let challengeCard = await challenges.loadChallengeCard(userId);
       let currentDifficultyTier: ChallengeDifficulty =
         ChallengeDifficulty.NOVICE;
       let currentChallengeStatus: ChallengeCardStatus =
         ChallengeCardStatus.STARTED;
       let challengeList: Challenge[] = [];
 
-      if (challengeMain) {
-        currentDifficultyTier = challengeMain.difficulty;
-        currentChallengeStatus = challengeMain.status;
+      if (challengeCard) {
+        currentDifficultyTier = challengeCard.difficulty;
+        currentChallengeStatus = challengeCard.status;
 
         // Check if user has completed Grandmaster
         if (
@@ -53,18 +52,11 @@ const challengeCommand: Command = {
           currentChallengeStatus === ChallengeCardStatus.STARTED ||
           currentChallengeStatus === ChallengeCardStatus.APPROVAL
         ) {
-          // Load existing challenges
-          const existingChallenges = await challenges.loadChallengeCard(
-            userId,
+          rerolled = await challenges.getRerollCount(userId);
+          challengeList = challenges.existingChallengesToList(
+            challengeCard,
             currentDifficultyTier,
           );
-          rerolled = existingChallenges.rerollsRemaining;
-          if (existingChallenges) {
-            challengeList = challenges.existingChallengesToList(
-              existingChallenges,
-              currentDifficultyTier,
-            );
-          }
         } else if (currentChallengeStatus === ChallengeCardStatus.COMPLETED) {
           // Promote to next tier
           const nextTier = challenges.getNextDifficultyTier(
@@ -93,19 +85,12 @@ const challengeCommand: Command = {
             userRoles,
           );
 
-          // Save new challenges
-          await challenges.saveChallengeCard(
+          challengeCard = await challenges.createChallengeCard(
             userId,
             currentDifficultyTier,
             challengeList,
-            rerolled,
+            1,
           );
-
-          // Update ChallengeMain with new tier and status
-          await challenges.updateChallengeMain(userId, {
-            difficulty: currentDifficultyTier,
-            status: currentChallengeStatus,
-          });
         }
       } else {
         // Region role requirement check based on difficulty
@@ -127,20 +112,12 @@ const challengeCommand: Command = {
           userRoles,
         );
 
-        // Create ChallengeMain entry
-        challengeMain = await ChallengeCard.create({
-          discordUserId: userId,
-          difficulty: ChallengeDifficulty.NOVICE,
-          status: ChallengeCardStatus.STARTED,
-          rerollsRemaining: 2,
-        });
-
         // Save Novice challenges
-        await challenges.saveChallengeCard(
+        challengeCard = await challenges.createChallengeCard(
           userId,
           ChallengeDifficulty.NOVICE,
           challengeList,
-          rerolled,
+          1,
         );
       }
 
@@ -152,19 +129,20 @@ const challengeCommand: Command = {
       });
 
       // Add "Reroll" button if rerolls are available and not already rerolled
-      if (challengeMain.rerollsRemaining > 0 && !rerolled) {
+      if (challengeCard.rerollsRemaining > 0 && rerolled < 2) {
         const rerollButton = new MessageButton()
           .setCustomId(`reroll ${userId} ${currentDifficultyTier}`)
-          .setLabel(`Reroll (${challengeMain.rerollsRemaining} remaining)`)
+          .setLabel(`Reroll (${challengeCard.rerollsRemaining} remaining)`)
           .setStyle('PRIMARY');
         const row = new MessageActionRow().addComponents(rerollButton);
 
         await interaction.reply({
           embeds: [challengeEmbed],
           components: [row],
+          ephemeral: true,
         });
       } else {
-        await interaction.reply({ embeds: [challengeEmbed] });
+        await interaction.reply({ embeds: [challengeEmbed], ephemeral: true });
       }
     } catch (error) {
       console.error('Error executing challenge command: ', error);
