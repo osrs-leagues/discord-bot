@@ -1,10 +1,14 @@
 import { Message } from 'discord.js';
-import impSpottingListener from './impSpottingListener';
+import impSpottingListener from './messageListeners/impSpottingListener';
+import challengeApprovalMessageListener from './messageListeners/challengeApprovalListener';
 
-const listeners = [impSpottingListener];
+const messageListeners = [
+  impSpottingListener,
+  challengeApprovalMessageListener,
+];
 
 export const handleMessageCreate = (message: Message) => {
-  const validChannels = listeners.filter((listener) =>
+  const validChannels = messageListeners.filter((listener) =>
     listener.channels.includes(message.channelId),
   );
   validChannels.forEach((channel) => channel.onChannelMessage(message));
