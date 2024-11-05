@@ -6,6 +6,7 @@ import TwistedLeague from './League/TwistedLeague';
 import Challenge from './Challenge/Challenge';
 import ChallengeCard from './Challenge/ChallengeCard';
 import Region from './Region';
+import RaffleTicket from './RaffleTicket';
 
 const models = [
   Challenge,
@@ -16,6 +17,7 @@ const models = [
   TrailblazerReloadedLeague,
   TwistedLeague,
   Region,
+  RaffleTicket,
 ];
 
 export {
@@ -27,6 +29,7 @@ export {
   TrailblazerReloadedLeague,
   TwistedLeague,
   Region,
+  RaffleTicket,
 };
 
 export * from './Challenge';

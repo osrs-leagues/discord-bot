@@ -1,7 +1,8 @@
 import { ButtonInteraction, Message, GuildMember } from 'discord.js';
 import * as challenges from '../../../challenges';
+import * as raffles from '../../../raffles';
 import { Button } from './types';
-import { ChallengeCardStatus } from '../../../database';
+import { ChallengeCardStatus, ChallengeDifficulty } from '../../../database';
 
 const challengeApprovalButton: Button = {
   buttons: ['approve', 'reject'],
@@ -12,9 +13,8 @@ const challengeApprovalButton: Button = {
     const parsedDifficultyTier = parseInt(difficultyTier, 10);
     // Check if the interaction is from a guild and if the member is an admin
     if (
-      !(
-        interaction.member instanceof GuildMember
-      ) /*|| !interaction.member.permissions.has('ADMINISTRATOR')*/
+      !(interaction.member instanceof GuildMember) ||
+      !interaction.member.permissions.has('ADMINISTRATOR')
     ) {
       return; // Do nothing if the user is not an admin
     }
@@ -25,32 +25,45 @@ const challengeApprovalButton: Button = {
           await challengeCard.update({
             status: ChallengeCardStatus.COMPLETED,
           });
-
+          raffles.saveRaffleTickets(
+            userId,
+            parsedDifficultyTier,
+            challengeCard.id,
+          );
+          if (
+            parsedDifficultyTier === ChallengeDifficulty.MASTER ||
+            parsedDifficultyTier === ChallengeDifficulty.GRANDMASTER
+          ) {
+            await challenges.assignSageRole(
+              interaction.guild,
+              userId,
+              parsedDifficultyTier,
+            );
+          }
           // Send a DM to the user
           try {
             const targetUser = await interaction.client.users.fetch(userId);
             await targetUser.send(
               `Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
                 parsedDifficultyTier,
-              )}. Congratulations!`,
+              )}. Congratulations!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel in the OSRS Leagues discord to generate your next Challenge Card.`,
             );
+            await interaction.reply({
+              content: 'Challenge approved and user notified.',
+              ephemeral: true,
+            });
           } catch (dmError) {
             await interaction.reply({
               content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
                 parsedDifficultyTier,
-              )}. Congratulations!`,
+              )}. Congratulations!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel to generate your next Challenge Card.`,
               ephemeral: false,
             });
           }
-
           // Remove the buttons from the original message
           if (interaction.message instanceof Message) {
             await interaction.message.edit({ components: [] });
           }
-          await interaction.reply({
-            content: 'Challenge approved and user notified.',
-            ephemeral: true,
-          });
         }
       } else if (action === 'reject') {
         const challengeCard = await challenges.loadChallengeCard(userId);
