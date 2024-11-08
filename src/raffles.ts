@@ -4,6 +4,7 @@ import {
   ChallengeDifficulty,
   DiscordUser,
 } from '../src/database/models';
+import sequelize from './database';
 
 /**
  * Saves raffle tickets based on the difficulty.
@@ -15,70 +16,74 @@ export async function saveRaffleTickets(
   difficulty: ChallengeDifficulty,
   challengeCardId: number,
 ) {
-  const ticketsToSave: {
-    raffleType: RaffleType;
-    discordUserId: string;
-    challengeCardId: number;
-  }[] = [];
+  return await sequelize.transaction(async (transaction) => {
+    const ticketsToSave: {
+      raffleType: RaffleType;
+      discordUserId: string;
+      challengeCardId: number;
+    }[] = [];
 
-  if (difficulty === ChallengeDifficulty.NOVICE) {
-    ticketsToSave.push({
-      raffleType: RaffleType.LOW_LEVEL,
-      discordUserId: discordUserId,
-      challengeCardId: challengeCardId,
-    });
-  } else if (difficulty === ChallengeDifficulty.INTERMEDIATE) {
-    ticketsToSave.push(
-      {
+    if (difficulty === ChallengeDifficulty.NOVICE) {
+      ticketsToSave.push({
         raffleType: RaffleType.LOW_LEVEL,
         discordUserId: discordUserId,
         challengeCardId: challengeCardId,
-      },
-      {
-        raffleType: RaffleType.LOW_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-    );
-  } else if (difficulty === ChallengeDifficulty.EXPERIENCED) {
-    ticketsToSave.push(
-      {
-        raffleType: RaffleType.LOW_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-      {
-        raffleType: RaffleType.LOW_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-      {
-        raffleType: RaffleType.HIGH_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-    );
-  } else if (
-    difficulty === ChallengeDifficulty.MASTER ||
-    difficulty === ChallengeDifficulty.GRANDMASTER
-  ) {
-    ticketsToSave.push(
-      {
-        raffleType: RaffleType.HIGH_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-      {
-        raffleType: RaffleType.HIGH_LEVEL,
-        discordUserId: discordUserId,
-        challengeCardId: challengeCardId,
-      },
-    );
-  }
+      });
+    } else if (difficulty === ChallengeDifficulty.INTERMEDIATE) {
+      ticketsToSave.push(
+        {
+          raffleType: RaffleType.LOW_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+        {
+          raffleType: RaffleType.LOW_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+      );
+    } else if (difficulty === ChallengeDifficulty.EXPERIENCED) {
+      ticketsToSave.push(
+        {
+          raffleType: RaffleType.LOW_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+        {
+          raffleType: RaffleType.LOW_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+        {
+          raffleType: RaffleType.HIGH_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+      );
+    } else if (
+      difficulty === ChallengeDifficulty.MASTER ||
+      difficulty === ChallengeDifficulty.GRANDMASTER
+    ) {
+      ticketsToSave.push(
+        {
+          raffleType: RaffleType.HIGH_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+        {
+          raffleType: RaffleType.HIGH_LEVEL,
+          discordUserId: discordUserId,
+          challengeCardId: challengeCardId,
+        },
+      );
+    }
 
-  await RaffleTicket.bulkCreate(
-    ticketsToSave.map((ticket) => ({ ...ticket, winner: false })),
-  );
+    // Save all raffle tickets in the database within the transaction
+    await RaffleTicket.bulkCreate(
+      ticketsToSave.map((ticket) => ({ ...ticket, winner: false })),
+      { transaction },
+    );
+  });
 }
 
 /**
@@ -136,12 +141,14 @@ export async function drawWinners(
  * @returns - Array of winners.
  */
 async function drawRandomWinners(tickets: RaffleTicket[], numWinners: number) {
-  const shuffled = tickets.sort(() => 0.5 - Math.random());
-  const winners = shuffled.slice(0, numWinners);
+  return await sequelize.transaction(async (transaction) => {
+    const shuffled = tickets.sort(() => 0.5 - Math.random());
+    const winners = shuffled.slice(0, numWinners);
 
-  // Mark each winning ticket in the database
-  for (const ticket of winners) {
-    await ticket.update({ winner: true });
-  }
-  return winners;
+    // Mark each winning ticket in the database within the transaction
+    for (const ticket of winners) {
+      await ticket.update({ winner: true }, { transaction });
+    }
+    return winners;
+  });
 }

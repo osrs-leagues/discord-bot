@@ -3,6 +3,7 @@ import * as challenges from '../../../challenges';
 import * as raffles from '../../../raffles';
 import { Button } from './types';
 import { ChallengeCardStatus, ChallengeDifficulty } from '../../../database';
+import { setSageRole } from '../../actions/setSageRole';
 
 const challengeApprovalButton: Button = {
   buttons: ['approve', 'reject'],
@@ -34,11 +35,7 @@ const challengeApprovalButton: Button = {
             parsedDifficultyTier === ChallengeDifficulty.MASTER ||
             parsedDifficultyTier === ChallengeDifficulty.GRANDMASTER
           ) {
-            await challenges.assignSageRole(
-              interaction.guild,
-              userId,
-              parsedDifficultyTier,
-            );
+            await setSageRole(interaction.guild, userId, parsedDifficultyTier);
           }
           // Send a DM to the user
           try {
