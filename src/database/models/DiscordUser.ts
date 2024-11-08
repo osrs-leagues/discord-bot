@@ -7,6 +7,7 @@ class DiscordUser extends InitializableModel<DiscordUser> {
   declare trailblazer_name?: CreationOptional<string>;
   declare shattered_relics_name?: CreationOptional<string>;
   declare trailblazer_reloaded_name?: CreationOptional<string>;
+  declare raging_echoes_name?: CreationOptional<string>;
 
   declare readonly createdAt: CreationOptional<Date>;
   declare readonly updatedAt: CreationOptional<Date>;
@@ -33,6 +34,10 @@ class DiscordUser extends InitializableModel<DiscordUser> {
           allowNull: true,
         },
         trailblazer_reloaded_name: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+        raging_echoes_name: {
           type: DataTypes.STRING,
           allowNull: true,
         },

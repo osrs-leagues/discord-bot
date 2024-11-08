@@ -18,8 +18,8 @@ import leagueNameLocal from './leagueNameLocal';
 import { CURRENT_LEAGUE } from '../../../leagues';
 import regionCommand from './regions';
 import removeRegionRoleCommand from './remove_region_role';
-import leagueNameRemote from './leagueNameRemote';
 import challengeCommand from './challenge';
+import leagueNameBronze from './leagueNameBronze';
 
 const commandData = [
   pingCommand,
@@ -29,8 +29,9 @@ const commandData = [
   leagueNameLocal('shattered_relics'),
   leagueNameLocal('trailblazer'),
   leagueNameLocal('twisted'),
-  leagueNameRemote(CURRENT_LEAGUE),
-  //leagueNameBronze(CURRENT_LEAGUE),
+  leagueNameLocal('trailblazer_reloaded'),
+  //leagueNameRemote(CURRENT_LEAGUE),
+  leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   regionCommand,
   removeLeagueRolesCommand,
