@@ -72,7 +72,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
           },
         },
         difficulty: {
-          type: DataTypes.NUMBER,
+          type: DataTypes.TINYINT,
           allowNull: false,
         },
         discordUserId: {

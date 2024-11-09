@@ -46,7 +46,7 @@ module.exports = {
           },
         },
         difficulty: {
-          type: DataTypes.NUMBER,
+          type: DataTypes.TINYINT,
           allowNull: false,
         },
         discordUserId: {

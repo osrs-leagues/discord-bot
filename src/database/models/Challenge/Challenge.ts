@@ -24,7 +24,7 @@ class Challenge extends InitializableModel<Challenge> {
     Challenge.init(
       {
         difficulty: {
-          type: DataTypes.NUMBER,
+          type: DataTypes.TINYINT,
           allowNull: false,
         },
         description: {
