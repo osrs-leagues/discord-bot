@@ -50,7 +50,7 @@ module.exports = {
           allowNull: false,
         },
         discordUserId: {
-          type: DataTypes.BIGINT,
+          type: DataTypes.STRING,
           allowNull: false,
           references: {
             model: 'DiscordUser',
@@ -71,6 +71,11 @@ module.exports = {
         },
         rerollsRemaining: {
           type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        rerolled: {
+          defaultValue: false,
+          type: DataTypes.BOOLEAN,
           allowNull: false,
         },
         /** Auto-generated */

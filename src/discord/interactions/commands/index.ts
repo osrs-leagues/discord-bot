@@ -20,6 +20,7 @@ import regionCommand from './regions';
 import removeRegionRoleCommand from './remove_region_role';
 import challengeCommand from './challenge';
 import leagueNameBronze from './leagueNameBronze';
+import raffleDrawCommand from './draw_raffle';
 
 const commandData = [
   pingCommand,
@@ -39,6 +40,7 @@ const commandData = [
   updateLeaguePointsCommand,
   updateAllRolesCommand,
   challengeCommand,
+  raffleDrawCommand,
 ];
 
 const commands = new Collection<string, Command>();

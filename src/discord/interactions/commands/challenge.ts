@@ -22,7 +22,6 @@ const challengeCommand: Command = {
       const userId = member.id;
       const userDisplayName = member.displayName;
       const userRoles = member.roles.cache.map((role) => role.name);
-      let rerolled = 0;
 
       // Fetch user's challenge main record
       let challengeCard = await challenges.loadChallengeCard(userId);
@@ -31,6 +30,7 @@ const challengeCommand: Command = {
       let currentChallengeStatus: ChallengeCardStatus =
         ChallengeCardStatus.STARTED;
       let challengeList: Challenge[] = [];
+      let rerollsRemaining = 0;
 
       if (challengeCard) {
         currentDifficultyTier = challengeCard.difficulty;
@@ -52,7 +52,7 @@ const challengeCommand: Command = {
           currentChallengeStatus === ChallengeCardStatus.STARTED ||
           currentChallengeStatus === ChallengeCardStatus.APPROVAL
         ) {
-          rerolled = await challenges.getRerollCount(userId);
+          rerollsRemaining = challengeCard.rerollsRemaining;
           challengeList = challenges.existingChallengesToList(
             challengeCard,
             currentDifficultyTier,
@@ -62,6 +62,7 @@ const challengeCommand: Command = {
           const nextTier = challenges.getNextDifficultyTier(
             currentDifficultyTier,
           );
+          rerollsRemaining = challengeCard.rerollsRemaining;
           currentDifficultyTier = nextTier;
           currentChallengeStatus = ChallengeCardStatus.STARTED;
 
@@ -89,7 +90,7 @@ const challengeCommand: Command = {
             userId,
             currentDifficultyTier,
             challengeList,
-            1,
+            rerollsRemaining,
           );
         }
       } else {
@@ -111,13 +112,13 @@ const challengeCommand: Command = {
           ChallengeDifficulty.NOVICE,
           userRoles,
         );
-
+        rerollsRemaining = 2;
         // Save Novice challenges
         challengeCard = await challenges.createChallengeCard(
           userId,
           ChallengeDifficulty.NOVICE,
           challengeList,
-          1,
+          rerollsRemaining,
         );
       }
 
@@ -129,7 +130,7 @@ const challengeCommand: Command = {
       });
 
       // Add "Reroll" button if rerolls are available and not already rerolled
-      if (challengeCard.rerollsRemaining > 0 && rerolled < 2) {
+      if (rerollsRemaining > 0 && challengeCard.rerolled === false) {
         const rerollButton = new MessageButton()
           .setCustomId(`reroll ${userId} ${currentDifficultyTier}`)
           .setLabel(`Reroll (${challengeCard.rerollsRemaining} remaining)`)
@@ -139,10 +140,9 @@ const challengeCommand: Command = {
         await interaction.reply({
           embeds: [challengeEmbed],
           components: [row],
-          ephemeral: true,
         });
       } else {
-        await interaction.reply({ embeds: [challengeEmbed], ephemeral: true });
+        await interaction.reply({ embeds: [challengeEmbed] });
       }
     } catch (error) {
       console.error('Error executing challenge command: ', error);
