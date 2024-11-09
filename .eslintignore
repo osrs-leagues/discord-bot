@@ -7,3 +7,5 @@ dist
 .eslintrc.js
 jest.config.js
 tsconfig.json
+
+src/database/sequelize.js

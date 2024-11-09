@@ -9,7 +9,7 @@ module.exports = {
     storage: './.sqlite/test.db',
   },
   stage: {
-    use_env_variable: 'DATABASE_URL',
+    use_env_variable: 'JAWSDB_URL',
     dialect: 'mysql',
     protocol: 'mysql',
     ssl: true,
@@ -21,7 +21,7 @@ module.exports = {
     },
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
+    use_env_variable: 'JAWSDB_URL',
     dialect: 'mysql',
     protocol: 'mysql',
     ssl: true,
