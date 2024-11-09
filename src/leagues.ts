@@ -199,6 +199,14 @@ export const insertLeagueName = async (
         },
         options,
       );
+    case 'raging_echoes':
+      return await RagingEchoesLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
   }
 };
 
