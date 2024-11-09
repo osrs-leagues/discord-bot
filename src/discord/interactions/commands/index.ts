@@ -15,12 +15,13 @@ import updateLeaguePointsCommand from './update_league_points';
 import updateAllRolesCommand from './update_all_roles';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
-import { CURRENT_LEAGUE } from '../../../leagues';
+import { CURRENT_LEAGUE, CURRENT_LEAGUE_STARTED } from '../../../leagues';
 import regionCommand from './regions';
 import removeRegionRoleCommand from './remove_region_role';
 import challengeCommand from './challenge';
 import leagueNameBronze from './leagueNameBronze';
 import raffleDrawCommand from './draw_raffle';
+import leagueNameRemote from './leagueNameRemote';
 
 const commandData = [
   pingCommand,
@@ -31,8 +32,9 @@ const commandData = [
   leagueNameLocal('trailblazer'),
   leagueNameLocal('twisted'),
   leagueNameLocal('trailblazer_reloaded'),
-  //leagueNameRemote(CURRENT_LEAGUE),
-  leagueNameBronze(CURRENT_LEAGUE),
+  CURRENT_LEAGUE_STARTED
+    ? leagueNameRemote(CURRENT_LEAGUE)
+    : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   regionCommand,
   removeLeagueRolesCommand,

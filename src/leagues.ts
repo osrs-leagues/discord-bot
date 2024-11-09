@@ -11,6 +11,7 @@ import { LeagueAttributes } from './database/models/League/League';
 import { Attributes, UpsertOptions } from 'sequelize';
 
 export const CURRENT_LEAGUE: League = 'raging_echoes';
+export const CURRENT_LEAGUE_STARTED = false;
 
 export enum Rank {
   BRONZE = 'bronze',
