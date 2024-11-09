@@ -14,6 +14,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
   declare proof: string;
   declare status: ChallengeCardStatus;
   declare rerollsRemaining: number;
+  declare rerolled: boolean;
 
   declare readonly challengeOneId: ForeignKey<Challenge['id']>;
   declare readonly challengeTwoId: ForeignKey<Challenge['id']>;
@@ -75,7 +76,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
           allowNull: false,
         },
         discordUserId: {
-          type: DataTypes.BIGINT,
+          type: DataTypes.STRING,
           allowNull: false,
           references: {
             model: 'DiscordUser',
@@ -96,6 +97,11 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
         },
         rerollsRemaining: {
           type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        rerolled: {
+          defaultValue: false,
+          type: DataTypes.BOOLEAN,
           allowNull: false,
         },
         /** Auto-generated */

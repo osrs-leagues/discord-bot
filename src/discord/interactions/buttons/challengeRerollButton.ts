@@ -28,8 +28,8 @@ const challengeRerollButton: Button = {
       if (challengeCard) {
         const currentDifficultyTier = challengeCard.difficulty;
         const currentChallengeStatus = challengeCard.status;
-        let numberOfRerolls = await challenges.getRerollCount(userId);
-        if (numberOfRerolls >= 2) {
+        let numberOfRerolls = challengeCard.rerollsRemaining;
+        if (numberOfRerolls <= 0) {
           await interaction.reply({
             content: `You do not have any rerolls remaining.`,
             ephemeral: true,
@@ -37,7 +37,7 @@ const challengeRerollButton: Button = {
           return;
         }
         if (currentChallengeStatus === ChallengeCardStatus.STARTED) {
-          if (challengeCard.rerollsRemaining > 0) {
+          if (challengeCard.rerolled === false) {
             // Region role requirement check based on difficulty
             const regionRoleCount = challenges.getRegionRoleCount(userRoles);
             const requiredRegionRoles = challenges.getChallengeCardEligibility(
@@ -66,6 +66,7 @@ const challengeRerollButton: Button = {
               challengeCard,
               challengeList,
               numberOfRerolls,
+              true,
             );
 
             const challengeEmbed = getChallengeCardMessage({
