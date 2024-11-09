@@ -1,5 +1,6 @@
 import { HexColorString } from 'discord.js';
 import {
+  RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,
   TrailblazerReloadedLeague,
@@ -9,7 +10,8 @@ import DiscordUser from './database/models/DiscordUser';
 import { LeagueAttributes } from './database/models/League/League';
 import { Attributes, UpsertOptions } from 'sequelize';
 
-export const CURRENT_LEAGUE: League = 'trailblazer_reloaded';
+export const CURRENT_LEAGUE: League = 'raging_echoes';
+export const CURRENT_LEAGUE_STARTED = false;
 
 export enum Rank {
   BRONZE = 'bronze',
@@ -25,7 +27,8 @@ export type League =
   | 'twisted'
   | 'trailblazer'
   | 'shattered_relics'
-  | 'trailblazer_reloaded';
+  | 'trailblazer_reloaded'
+  | 'raging_echoes';
 
 export type PointRankings = { [key in Rank]: number };
 
@@ -68,6 +71,15 @@ const LeagueRankings: Leagues = {
     rune: 42000,
     dragon: 56000,
   },
+  raging_echoes: {
+    bronze: 2500,
+    iron: 5000,
+    steel: 10000,
+    mithril: 18000,
+    adamant: 28000,
+    rune: 42000,
+    dragon: 56000,
+  },
 };
 
 const LeagueNames: { [key in League]: string } = {
@@ -75,6 +87,7 @@ const LeagueNames: { [key in League]: string } = {
   trailblazer: 'Trailblazer',
   shattered_relics: 'Shattered Relics',
   trailblazer_reloaded: 'Trailblazer Reloaded',
+  raging_echoes: 'Raging Echoes',
 };
 
 const RankNames: { [key in Rank]: string } = {
@@ -102,6 +115,7 @@ const LeagueDiscordColumn: { [key in League]: keyof DiscordUser } = {
   trailblazer: 'trailblazer_name',
   shattered_relics: 'shattered_relics_name',
   trailblazer_reloaded: 'trailblazer_reloaded_name',
+  raging_echoes: 'raging_echoes_name',
 };
 
 export const getRank = (points: number, league: League): Rank => {
@@ -140,6 +154,8 @@ export const getLeagueAttributes = async (
       return await ShatteredRelicsLeague.findByPk(username);
     case 'trailblazer_reloaded':
       return await TrailblazerReloadedLeague.findByPk(username);
+    case 'raging_echoes':
+      return await RagingEchoesLeague.findByPk(username);
   }
 };
 
@@ -177,6 +193,14 @@ export const insertLeagueName = async (
       );
     case 'trailblazer_reloaded':
       return await TrailblazerReloadedLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
+    case 'raging_echoes':
+      return await RagingEchoesLeague.upsert(
         {
           name: username,
           points: points,

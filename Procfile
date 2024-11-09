@@ -1,1 +1,1 @@
-worker: yarn commands && yarn start:node
+worker: yarn migrate && yarn commands && yarn start:node

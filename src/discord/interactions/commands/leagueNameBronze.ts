@@ -42,7 +42,7 @@ const leagueNameBronze = (league: League): Command => {
         const discordMember = interaction.member;
         await DiscordUser.upsert({
           user_id: discordMember.user.id,
-          trailblazer_reloaded_name: username,
+          [leagueNameIdentifier]: username,
         });
         const rankResult = await setLeagueRole({
           league,

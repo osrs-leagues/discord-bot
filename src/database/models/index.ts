@@ -6,12 +6,14 @@ import TwistedLeague from './League/TwistedLeague';
 import Challenge from './Challenge/Challenge';
 import ChallengeCard from './Challenge/ChallengeCard';
 import Region from './Region';
+import RagingEchoesLeague from './League/RagingEchoesLeague';
 import RaffleTicket from './RaffleTicket';
 
 const models = [
   Challenge,
   ChallengeCard,
   DiscordUser,
+  RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,
   TrailblazerReloadedLeague,
@@ -24,6 +26,7 @@ export {
   Challenge,
   ChallengeCard,
   DiscordUser,
+  RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,
   TrailblazerReloadedLeague,

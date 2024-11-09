@@ -37,7 +37,7 @@ const updateLeagueUsers: Task = {
             }
           } catch (error) {
             console.error(
-              `Error fetching hiscores for ${discordUser.trailblazer_reloaded_name}: `,
+              `Error fetching hiscores for ${leagueUserName}: `,
               error,
             );
           }

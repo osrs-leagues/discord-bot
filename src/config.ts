@@ -83,6 +83,15 @@ const config: BotConfig = {
       rune: process.env.TRAILBLAZER_RELOADED_RUNE,
       dragon: process.env.TRAILBLAZER_RELOADED_DRAGON,
     },
+    raging_echoes: {
+      bronze: process.env.RAGING_ECHOES_BRONZE,
+      iron: process.env.RAGING_ECHOES_IRON,
+      steel: process.env.RAGING_ECHOES_STEEL,
+      mithril: process.env.RAGING_ECHOES_MITHRIL,
+      adamant: process.env.RAGING_ECHOES_ADAMANT,
+      rune: process.env.RAGING_ECHOES_RUNE,
+      dragon: process.env.RAGING_ECHOES_DRAGON,
+    },
   },
 };
 

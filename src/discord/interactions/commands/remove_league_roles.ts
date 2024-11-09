@@ -20,6 +20,7 @@ const removeLeagueRolesCommand: Command = {
         trailblazer_name: null,
         shattered_relics_name: null,
         trailblazer_reloaded_name: null,
+        raging_echoes_name: null,
       });
     }
     await removeLeagueRoles({

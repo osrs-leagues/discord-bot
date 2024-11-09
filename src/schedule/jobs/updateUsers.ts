@@ -2,7 +2,7 @@ import { updateLeagueUsers } from '../../tasks';
 import { Job } from '../types';
 
 const updateUsersJob: Job = {
-  enabled: true,
+  enabled: false,
   interval: {
     test: undefined,
     development: undefined, //'* * * * *',
