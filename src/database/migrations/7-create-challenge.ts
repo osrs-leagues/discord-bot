@@ -6,7 +6,7 @@ module.exports = {
   async up(queryInterface: QueryInterface) {
     await queryInterface.createTable<Challenge>('Challenge', {
       difficulty: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.TINYINT,
         allowNull: false,
       },
       description: {
