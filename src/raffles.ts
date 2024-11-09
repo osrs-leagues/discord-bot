@@ -1,10 +1,9 @@
 import { RaffleType } from './database/models/RaffleTicket';
-import {
+import sequelize, {
   RaffleTicket,
   ChallengeDifficulty,
   DiscordUser,
-} from '../src/database/models';
-import sequelize from './database';
+} from './database';
 
 /**
  * Saves raffle tickets based on the difficulty.

@@ -3,7 +3,7 @@ import {
   ChallengeCard,
   ChallengeDifficulty,
   Region,
-} from '../src/database/models';
+} from './database/';
 
 type ChallengeCache = {
   challenges: Challenge[];
