@@ -9,56 +9,67 @@ const regionCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
     .setName('regions')
-    .setDescription(`Set your ${getLeagueName(CURRENT_LEAGUE)} regions.`),
+    .setDescription(
+      `Set your ${getLeagueName(
+        CURRENT_LEAGUE,
+      )} regions. Note: your selection will override any existing region roles`,
+    ),
   execute: async (interaction) => {
     try {
       const selectMenuRow = new MessageActionRow().addComponents(
         new MessageSelectMenu()
           .setCustomId('regions')
           .setPlaceholder(
-            `Select your 3 ${getLeagueName(CURRENT_LEAGUE)} regions.`,
+            `Select the ${getLeagueName(
+              CURRENT_LEAGUE,
+            )} region roles to set. Note: your selection will override any existing region roles.`,
           )
-          .setMinValues(3)
+          .setMinValues(1)
           .setMaxValues(3)
           .addOptions(
             [
               {
-                label: 'Asgarnia (A)',
+                label: 'Asgarnia',
                 description: 'The asgarnia region',
                 value: 'asgarnia',
               },
               {
-                label: 'Fremennik Isles (F)',
+                label: 'Fremennik Isles',
                 description: 'The Fremennik region',
                 value: 'fremennik',
               },
               {
-                label: 'Kandarin (K)',
+                label: 'Kandarin',
                 description: 'The Kandarin region',
                 value: 'kandarin',
               },
               {
-                label: 'Kharidian Desert (D)',
+                label: 'Kharidian Desert',
                 description: 'The Desert region',
                 value: 'desert',
               },
               {
-                label: 'Kourend & Kebos (Z)',
+                label: 'Kourend & Kebos',
                 description: 'The Kourend & Kebos (Zeah) region',
-                value: 'zeah',
+                value: 'kourend',
               },
               {
-                label: 'Morytania (M)',
+                label: 'Morytania',
                 description: 'The Morytania region',
                 value: 'morytania',
               },
               {
-                label: 'Tirannwn (T)',
+                label: 'Tirannwn',
                 description: 'The Tirannwn region',
                 value: 'tirannwn',
               },
               {
-                label: 'Wilderness (W)',
+                label: 'Varlamore',
+                description: 'The Varlamore region',
+                value: 'varlamore',
+              },
+              {
+                label: 'Wilderness',
                 description: 'The Wilderness region',
                 value: 'wilderness',
               },

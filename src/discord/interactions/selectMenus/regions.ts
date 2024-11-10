@@ -2,8 +2,9 @@ import { GuildMember } from 'discord.js';
 
 import { SelectMenu } from './types';
 import { channelGroups } from '../../Channel';
-import { setRegionRole } from '../../actions';
+import { setRegionRoles } from '../../actions';
 import getRegionRoleMessage from '../../messages/regionRole';
+import { capitalize } from '../../../utils/strings';
 
 const regionsSelectMenu: SelectMenu = {
   identifier: 'regions',
@@ -11,17 +12,19 @@ const regionsSelectMenu: SelectMenu = {
   execute: async (interaction) => {
     try {
       if (interaction) {
-        const role = await setRegionRole({
+        const success = await setRegionRoles({
           guild: interaction.guild,
           member: interaction.member as GuildMember,
-          values: interaction.values,
+          regions: interaction.values,
         });
-        if (role) {
+        if (success) {
           return interaction.reply({
             embeds: [
               getRegionRoleMessage({
                 member: interaction.member as GuildMember,
-                role,
+                role: interaction.values
+                  .map((value) => capitalize(value))
+                  .join(', '),
               }),
             ],
           });

@@ -1,17 +1,20 @@
 import { Guild, GuildMember, Role } from 'discord.js';
-import { getRegionCombination, getRegionRoles } from './setRegionRole.utils';
+import {
+  getRegionCombination,
+  getRegionRoles,
+} from './setRegionComboRole.utils';
 
-export type SetRegionRoleParams = {
+export type SetRegionComboRoleParams = {
   member: GuildMember;
   guild: Guild;
   values?: string[];
 };
 
-const setRegionRole = async ({
+const setRegionComboRole = async ({
   member,
   guild,
   values,
-}: SetRegionRoleParams): Promise<Role> => {
+}: SetRegionComboRoleParams): Promise<Role> => {
   try {
     if (values === undefined || values.length === 0) {
       const roles = await guild.roles.fetch();
@@ -50,4 +53,4 @@ const setRegionRole = async ({
   }
 };
 
-export default setRegionRole;
+export default setRegionComboRole;
