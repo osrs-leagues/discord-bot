@@ -9,7 +9,10 @@ const approveChallenge = async (
   interaction: CommandInteraction | ButtonInteraction,
   userId: string,
 ) => {
-  const challengeCard = await challenges.loadChallengeCard(userId);
+  const challengeCard = await challenges.loadChallengeCardByStatus(
+    userId,
+    ChallengeCardStatus.APPROVAL,
+  );
   if (challengeCard) {
     await challengeCard.update({
       status: ChallengeCardStatus.COMPLETED,

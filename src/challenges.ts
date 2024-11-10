@@ -1,6 +1,7 @@
 import {
   Challenge,
   ChallengeCard,
+  ChallengeCardStatus,
   ChallengeDifficulty,
   Region,
 } from './database';
@@ -58,7 +59,7 @@ export function getChallengeCardEligibility(
 /**
  * Loads the ChallengeMain record for a given user.
  * @param userId - The user's ID.
- * @returns The ChallengeMain record or null if not found.
+ * @returns The ChallengeCard record or null if not found.
  */
 export async function loadChallengeCard(
   userId: string,
@@ -66,6 +67,26 @@ export async function loadChallengeCard(
   return await ChallengeCard.findOne({
     where: {
       discordUserId: userId,
+    },
+    order: [['difficulty', 'DESC']],
+    limit: 1,
+  });
+}
+
+/**
+ * Loads the ChallengeCard record for a given user with a specific status.
+ * @param userId The user's ID.
+ * @param status The status of the challenge card.
+ * @returns The ChallengeCard record or null if not found.
+ */
+export async function loadChallengeCardByStatus(
+  userId: string,
+  status: ChallengeCardStatus,
+): Promise<ChallengeCard | null> {
+  return await ChallengeCard.findOne({
+    where: {
+      discordUserId: userId,
+      status,
     },
     order: [['difficulty', 'DESC']],
     limit: 1,

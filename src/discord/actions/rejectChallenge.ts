@@ -8,7 +8,10 @@ const rejectChallenge = async (
   userId: string,
   reason?: string,
 ) => {
-  const challengeCard = await challenges.loadChallengeCard(userId);
+  const challengeCard = await challenges.loadChallengeCardByStatus(
+    userId,
+    ChallengeCardStatus.APPROVAL,
+  );
   if (challengeCard) {
     await challengeCard.update({
       status: ChallengeCardStatus.STARTED,
