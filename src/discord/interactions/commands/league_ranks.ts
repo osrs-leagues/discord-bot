@@ -12,7 +12,7 @@ const leagueRanksCommand: Command = {
     .setDescription('Display the current League point ranking!'),
   execute: async (interaction) => {
     const message = getPointRankingsMessage({ league: CURRENT_LEAGUE });
-    await interaction.reply({ embeds: [message] });
+    interaction.reply({ embeds: [message] });
   },
 };
 

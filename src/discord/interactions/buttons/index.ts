@@ -23,7 +23,7 @@ export const handleButtonInteraction = async (
   );
 
   // Trigger the valid button's handler functions
-  await Promise.all(
+  Promise.all(
     validListeners.map((listener) => listener.onButtonInteraction(interaction)),
   );
 };

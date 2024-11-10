@@ -22,6 +22,8 @@ import challengeCommand from './challenge';
 import leagueNameBronze from './leagueNameBronze';
 import raffleDrawCommand from './draw_raffle';
 import leagueNameRemote from './leagueNameRemote';
+import approveChallengeCommand from './approveChallenge';
+import rejectChallengeCommand from './rejectChallenge';
 
 const commandData = [
   pingCommand,
@@ -43,6 +45,8 @@ const commandData = [
   updateAllRolesCommand,
   challengeCommand,
   raffleDrawCommand,
+  approveChallengeCommand,
+  rejectChallengeCommand,
 ];
 
 const commands = new Collection<string, Command>();
@@ -82,7 +86,7 @@ const handleCommandInteraction = async (
   }
 
   try {
-    await command.execute(interaction);
+    command.execute(interaction);
   } catch (error) {
     console.error(error);
     if (interaction) {

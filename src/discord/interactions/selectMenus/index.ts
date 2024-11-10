@@ -46,7 +46,7 @@ const handleSelectMenuInteraction = async (
       }
     }
 
-    await selectMenu.execute(interaction);
+    selectMenu.execute(interaction);
   } catch (error) {
     console.error(error);
     if (interaction?.isSelectMenu()) {

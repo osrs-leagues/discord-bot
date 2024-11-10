@@ -26,7 +26,7 @@ const removeLeagueRolesCommand: Command = {
     await removeLeagueRoles({
       member: discordMember as GuildMember,
     });
-    await interaction.reply({
+    interaction.reply({
       content: 'Your league rank roles have been removed.',
       ephemeral: true,
     });

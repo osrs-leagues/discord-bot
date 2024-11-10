@@ -174,7 +174,6 @@ export function existingChallengesToList(
     challengeIdList[4] = existingChallenges.challengeFiveId;
   }
 
-  console.log(challengeCache.challenges.length);
   return challengeIdList.map((id) =>
     challengeCache.challenges.find((c) => c.id === id),
   );
