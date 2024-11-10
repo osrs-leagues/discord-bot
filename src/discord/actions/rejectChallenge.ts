@@ -1,15 +1,17 @@
 import { ButtonInteraction, CommandInteraction } from 'discord.js';
 
 import * as challenges from '../../challenges';
-import { ChallengeCardStatus } from '../../database';
+import { ChallengeCardStatus, ChallengeDifficulty } from '../../database';
 
 const rejectChallenge = async (
   interaction: CommandInteraction | ButtonInteraction,
   userId: string,
+  difficulty: ChallengeDifficulty,
   reason?: string,
 ) => {
   const challengeCard = await challenges.loadChallengeCardByStatus(
     userId,
+    difficulty,
     ChallengeCardStatus.APPROVAL,
   );
   if (challengeCard) {
@@ -42,7 +44,9 @@ const rejectChallenge = async (
     });
   } else {
     interaction.reply({
-      content: 'User does not have a challenge card.',
+      content: `User does not have a challenge card pending approval with ${challenges.getDifficultyName(
+        difficulty,
+      )} difficulty.`,
       ephemeral: true,
     });
   }

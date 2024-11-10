@@ -81,11 +81,13 @@ export async function loadChallengeCard(
  */
 export async function loadChallengeCardByStatus(
   userId: string,
+  difficulty: ChallengeDifficulty,
   status: ChallengeCardStatus,
 ): Promise<ChallengeCard | null> {
   return await ChallengeCard.findOne({
     where: {
       discordUserId: userId,
+      difficulty,
       status,
     },
     order: [['difficulty', 'DESC']],

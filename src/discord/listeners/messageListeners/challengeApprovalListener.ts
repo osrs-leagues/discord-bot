@@ -1,4 +1,4 @@
-import { Message, MessageActionRow, MessageButton } from 'discord.js';
+import { Message } from 'discord.js';
 import * as challenges from '../../../challenges';
 import { ChannelListener } from '../types';
 import { setMessageExpiration } from '../utils';
@@ -46,28 +46,12 @@ const challengeApprovalMessageListener: ChannelListener = {
             challenges: challengeList,
           });
 
-          const approveButton = new MessageButton()
-            .setCustomId(`approve ${userId} ${currentDifficultyTier}`)
-            .setLabel('Approve')
-            .setStyle('SUCCESS'); // Green button
-
-          const rejectButton = new MessageButton()
-            .setCustomId(`reject ${userId} ${currentDifficultyTier}`)
-            .setLabel('Reject')
-            .setStyle('DANGER'); // Red button
-
-          const row = new MessageActionRow().addComponents(
-            approveButton,
-            rejectButton,
-          );
-
           currentChallengeStatus = ChallengeCardStatus.APPROVAL;
           await challengeMain.update({
             status: currentChallengeStatus,
           });
           await message.channel.send({
             embeds: [challengeEmbed],
-            components: [row],
           });
         } else if (currentChallengeStatus === ChallengeCardStatus.APPROVAL) {
           const response = await message.reply(

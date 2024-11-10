@@ -8,9 +8,11 @@ import { setSageRole } from './setSageRole';
 const approveChallenge = async (
   interaction: CommandInteraction | ButtonInteraction,
   userId: string,
+  difficulty: ChallengeDifficulty,
 ) => {
   const challengeCard = await challenges.loadChallengeCardByStatus(
     userId,
+    difficulty,
     ChallengeCardStatus.APPROVAL,
   );
   if (challengeCard) {
@@ -51,7 +53,9 @@ const approveChallenge = async (
     return true;
   } else {
     interaction.reply({
-      content: 'User does not have a challenge card.',
+      content: `User does not have a challenge card pending approval with ${challenges.getDifficultyName(
+        difficulty,
+      )} difficulty.`,
       ephemeral: true,
     });
     return false;

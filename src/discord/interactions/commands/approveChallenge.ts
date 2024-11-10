@@ -4,6 +4,8 @@ import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
 import { approveChallenge } from '../../actions';
+import { ChallengeDifficulty } from '../../../database';
+import { getDifficultyName } from '../../../challenges';
 
 const approveChallengeCommand: Command = {
   channels: channelGroups.SAGE_CHALLENGE_APPROVAL,
@@ -16,11 +18,29 @@ const approveChallengeCommand: Command = {
         .setName('user')
         .setDescription('The user to approve')
         .setRequired(true),
+    )
+    .addStringOption((option) =>
+      option
+        .setName('difficulty')
+        .setDescription('The difficulty of the challenge to approve')
+        .addChoices(
+          Object.values(ChallengeDifficulty)
+            .map((difficulty) => [
+              getDifficultyName(difficulty as ChallengeDifficulty),
+              difficulty.toString(),
+            ])
+            .filter<[name: string, value: string]>(
+              (difficulty): difficulty is [string, string] =>
+                difficulty[0] !== 'Unknown',
+            ),
+        )
+        .setRequired(true),
     ),
   execute: async (interaction) => {
     const userId = interaction.options.getUser('user')?.id;
+    const difficulty = parseInt(interaction.options.getString('difficulty'));
     if (userId) {
-      approveChallenge(interaction, userId);
+      approveChallenge(interaction, userId, difficulty);
     } else {
       interaction.reply({
         content: 'User not found.',
