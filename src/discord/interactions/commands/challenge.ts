@@ -74,7 +74,9 @@ const challengeCommand: Command = {
 
           if (regionRoleCount < requiredRegionRoles) {
             interaction.reply({
-              content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
+              content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for ${challenges.getDifficultyName(
+                nextTier,
+              )} difficulty. Please acquire the necessary region roles and try again.`,
               ephemeral: true,
             });
             return;
