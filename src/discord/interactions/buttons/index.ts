@@ -1,12 +1,8 @@
 import { ButtonInteraction } from 'discord.js';
-import challengeApprovalButtonListener from './challengeApprovalButton';
 import challengeRerollButtonListener from './challengeRerollButton';
 import { Button } from './types';
 
-const buttons: Button[] = [
-  challengeApprovalButtonListener,
-  challengeRerollButtonListener,
-];
+const buttons: Button[] = [challengeRerollButtonListener];
 
 export const handleButtonInteraction = async (
   interaction: ButtonInteraction,
@@ -23,7 +19,7 @@ export const handleButtonInteraction = async (
   );
 
   // Trigger the valid button's handler functions
-  await Promise.all(
+  Promise.all(
     validListeners.map((listener) => listener.onButtonInteraction(interaction)),
   );
 };

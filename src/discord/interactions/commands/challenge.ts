@@ -41,7 +41,7 @@ const challengeCommand: Command = {
           currentDifficultyTier === ChallengeDifficulty.GRANDMASTER &&
           currentChallengeStatus === ChallengeCardStatus.COMPLETED
         ) {
-          await interaction.reply({
+          interaction.reply({
             content:
               "You have completed the Sage's Challenge event! There's nothing left to do.",
             ephemeral: true,
@@ -73,8 +73,10 @@ const challengeCommand: Command = {
           );
 
           if (regionRoleCount < requiredRegionRoles) {
-            await interaction.reply({
-              content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
+            interaction.reply({
+              content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for ${challenges.getDifficultyName(
+                nextTier,
+              )} difficulty. Please acquire the necessary region roles and try again.`,
               ephemeral: true,
             });
             return;
@@ -101,7 +103,7 @@ const challengeCommand: Command = {
         );
 
         if (regionRoleCount < requiredRegionRoles) {
-          await interaction.reply({
+          interaction.reply({
             content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for Novice difficulty. Please acquire the necessary region roles and try again.`,
             ephemeral: true,
           });
@@ -137,16 +139,16 @@ const challengeCommand: Command = {
           .setStyle('PRIMARY');
         const row = new MessageActionRow().addComponents(rerollButton);
 
-        await interaction.reply({
+        interaction.reply({
           embeds: [challengeEmbed],
           components: [row],
         });
       } else {
-        await interaction.reply({ embeds: [challengeEmbed] });
+        interaction.reply({ embeds: [challengeEmbed] });
       }
     } catch (error) {
       console.error('Error executing challenge command: ', error);
-      await interaction.reply({
+      interaction.reply({
         content:
           'There was an error processing your challenge. Please try again later.',
         ephemeral: true,

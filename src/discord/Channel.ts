@@ -12,6 +12,10 @@ enum Channel {
    */
   BotCommandsServer = '931963036896464946',
   /**
+   * #challenge-approval-test
+   */
+  BotCommandsSageApproval = '1287884980386529300',
+  /**
    * #staff-admin
    */
   StaffAdmin = '931930206225178724',
@@ -19,6 +23,11 @@ enum Channel {
    * #staff-casual
    */
   StaffCasual = '763899863280648252',
+
+  /**
+   * #challenge-approval
+   */
+  SageChallengeApproval = '1292966146894467177',
 
   /**
    * #challenge-commands
@@ -51,6 +60,10 @@ export const channelGroups = {
     Channel.BotCommandsTest,
   ],
   TESTING: [Channel.BotCommandsServer, Channel.BotCommandsTest],
+  SAGE_CHALLENGE_APPROVAL: [
+    Channel.BotCommandsSageApproval,
+    Channel.SageChallengeApproval,
+  ],
   SAGE_CHALLENGE: [
     Channel.BotCommandsTest,
     Channel.BotCommandsServer,
