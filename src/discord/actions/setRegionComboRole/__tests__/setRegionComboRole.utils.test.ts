@@ -1,6 +1,9 @@
-import { getRegionCombination, getRegionRoles } from '../setRegionRole.utils';
+import {
+  getRegionCombination,
+  getRegionRoles,
+} from '../setRegionComboRole.utils';
 
-describe('setRegionRole.utils', () => {
+describe('setRegionComboRole.utils', () => {
   test('getRegionCombination basic', () => {
     expect(getRegionCombination(['Asgarnia', 'Desert', 'Zeah'])).toBe('A/D/Z');
   });

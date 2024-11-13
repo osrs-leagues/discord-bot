@@ -3,7 +3,7 @@ import { GuildMember } from 'discord.js';
 
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
-import { setRegionRole } from '../../actions';
+import { setRegionComboRole } from '../../actions';
 
 const removeRegionRoleCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
@@ -11,7 +11,7 @@ const removeRegionRoleCommand: Command = {
     .setName('remove_region_role')
     .setDescription('Remove you region role.'),
   execute: async (interaction) => {
-    await setRegionRole({
+    await setRegionComboRole({
       guild: interaction.guild,
       member: interaction.member as GuildMember,
       values: undefined,
