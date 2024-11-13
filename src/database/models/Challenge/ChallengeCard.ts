@@ -136,6 +136,16 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
       },
     });
   }
+
+  getChallengeIds() {
+    return [
+      this.challengeOneId,
+      this.challengeTwoId,
+      this.challengeThreeId,
+      this.challengeFourId,
+      this.challengeFiveId,
+    ].filter((id) => id !== undefined) as number[];
+  }
 }
 
 export default ChallengeCard;
