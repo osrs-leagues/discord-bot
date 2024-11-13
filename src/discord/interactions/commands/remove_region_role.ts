@@ -16,7 +16,7 @@ const removeRegionRoleCommand: Command = {
       member: interaction.member as GuildMember,
       values: undefined,
     });
-    await interaction.reply({
+    interaction.reply({
       content: 'Your region role has been removed.',
       ephemeral: true,
     });

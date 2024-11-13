@@ -13,7 +13,7 @@ const fetchLeagueRanksCommand: Command = {
     .setDescription('Refetch the current league point ranking.'),
   execute: async (interaction) => {
     fetchLeaguePointRankings.execute();
-    await interaction.reply('League points ranking fetch began!');
+    interaction.reply('League points ranking fetch began!');
   },
 };
 

@@ -11,7 +11,7 @@ const pingCommand: Command = {
     .setName('ping')
     .setDescription('Replies with Pong!'),
   execute: async (interaction) => {
-    await interaction.reply('Pong!');
+    interaction.reply('Pong!');
   },
 };
 

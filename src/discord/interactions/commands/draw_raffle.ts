@@ -34,7 +34,7 @@ const raffleDrawCommand: Command = {
       interaction.options.getInteger('high_level_winners');
 
     if (lowLevelWinnersCount === null || highLevelWinnersCount === null) {
-      await interaction.reply({
+      interaction.reply({
         content: 'Please specify valid numbers for the winners count.',
         ephemeral: true,
       });
@@ -51,10 +51,10 @@ const raffleDrawCommand: Command = {
         highLevelWinners: highLevelWinners,
       });
 
-      await interaction.reply({ embeds: [raffleEmbed] });
+      interaction.reply({ embeds: [raffleEmbed] });
     } catch (error) {
       console.error('Error drawing raffle winners:', error);
-      await interaction.reply({
+      interaction.reply({
         content:
           'An error occurred while drawing raffle winners. Please try again later.',
         ephemeral: true,

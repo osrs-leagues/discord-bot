@@ -84,7 +84,7 @@ const regionCommand: Command = {
             }),
           ),
       );
-      await interaction.reply({
+      interaction.reply({
         content:
           'Choose your region roles by selecting 3 regions in the dropdown below: ',
         components: [selectMenuRow],

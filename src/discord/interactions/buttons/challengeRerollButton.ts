@@ -30,7 +30,7 @@ const challengeRerollButton: Button = {
         const currentChallengeStatus = challengeCard.status;
         let numberOfRerolls = challengeCard.rerollsRemaining;
         if (numberOfRerolls <= 0) {
-          await interaction.reply({
+          interaction.reply({
             content: `You do not have any rerolls remaining.`,
             ephemeral: true,
           });
@@ -45,7 +45,7 @@ const challengeRerollButton: Button = {
             );
 
             if (regionRoleCount < requiredRegionRoles) {
-              await interaction.reply({
+              interaction.reply({
                 content: `You need at least ${requiredRegionRoles} region role(s) to reroll challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
                 ephemeral: true,
               });
@@ -75,21 +75,21 @@ const challengeRerollButton: Button = {
               challenges: challengeList,
             });
 
-            await interaction.reply({ embeds: [challengeEmbed] });
+            interaction.reply({ embeds: [challengeEmbed] });
 
             // Remove the buttons from the original message
             if (interaction.message instanceof Message) {
-              await interaction.message.edit({ components: [] });
+              interaction.message.edit({ components: [] });
             }
           } else {
-            await interaction.reply({
+            interaction.reply({
               content: `You have already rerolled a challenge card for the ${currentDifficultyTier} tier. You can only reroll a challenge card once per difficulty tier.`,
               ephemeral: true,
             });
             return;
           }
         } else {
-          await interaction.reply({
+          interaction.reply({
             content: `You cannot reroll challenge cards that are completed or pending approval`,
             ephemeral: true,
           });
@@ -98,7 +98,7 @@ const challengeRerollButton: Button = {
       }
     } catch (error) {
       console.error('Error in Challenge Reroll Button listener: ', error);
-      await interaction.reply({
+      interaction.reply({
         content: 'An error occurred while processing your request.',
         ephemeral: true,
       });
