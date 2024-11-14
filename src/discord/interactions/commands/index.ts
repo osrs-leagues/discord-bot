@@ -24,6 +24,7 @@ import raffleDrawCommand from './draw_raffle';
 import leagueNameRemote from './leagueNameRemote';
 import approveChallengeCommand from './approveChallenge';
 import rejectChallengeCommand from './rejectChallenge';
+import challengeStatisticsCommand from './challengeStatistics';
 
 const commandData = [
   pingCommand,
@@ -47,6 +48,7 @@ const commandData = [
   raffleDrawCommand,
   approveChallengeCommand,
   rejectChallengeCommand,
+  challengeStatisticsCommand,
 ];
 
 const commands = new Collection<string, Command>();
