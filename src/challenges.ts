@@ -252,10 +252,7 @@ const getEligibleChallenges = (
   userRoles: string[],
   excludedChallengeIds: number[] = [],
 ): Challenge[] => {
-  return challengeCache.challenges.filter((challenge) => {
-    if (excludedChallengeIds.includes(challenge.id)) {
-      return false;
-    }
+  let eligibleChallenges = challengeCache.challenges.filter((challenge) => {
     const regionOneName = challengeCache.regionNameMap[challenge.regionOneId];
     const regionTwoName = challengeCache.regionNameMap[challenge.regionTwoId];
     if (challenge.difficulty !== difficulty) {
@@ -271,6 +268,18 @@ const getEligibleChallenges = (
     }
     return userRoles.includes(regionOneName);
   });
+
+  if (
+    excludedChallengeIds.length > 0 &&
+    eligibleChallenges.length - excludedChallengeIds.length >=
+      getChallengeCount(difficulty)
+  ) {
+    eligibleChallenges = eligibleChallenges.filter((challenge) =>
+      excludedChallengeIds.includes(challenge.id),
+    );
+  }
+
+  return eligibleChallenges;
 };
 
 /**
