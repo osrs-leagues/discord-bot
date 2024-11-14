@@ -274,8 +274,8 @@ const getEligibleChallenges = (
     eligibleChallenges.length - excludedChallengeIds.length >=
       getChallengeCount(difficulty)
   ) {
-    eligibleChallenges = eligibleChallenges.filter((challenge) =>
-      excludedChallengeIds.includes(challenge.id),
+    eligibleChallenges = eligibleChallenges.filter(
+      (challenge) => !excludedChallengeIds.includes(challenge.id),
     );
   }
 
