@@ -136,6 +136,14 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
       },
     });
   }
+
+  incrementRerolls() {
+    if (this.rerollsRemaining < 2) {
+      this.rerollsRemaining += 1;
+      this.rerolled = false;
+      return this.save();
+    }
+  }
 }
 
 export default ChallengeCard;

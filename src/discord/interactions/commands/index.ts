@@ -25,6 +25,7 @@ import leagueNameRemote from './leagueNameRemote';
 import approveChallengeCommand from './approveChallenge';
 import rejectChallengeCommand from './rejectChallenge';
 import challengeStatisticsCommand from './challengeStatistics';
+import incrementRerollCommand from './incrementReroll';
 
 const commandData = [
   pingCommand,
@@ -49,6 +50,7 @@ const commandData = [
   approveChallengeCommand,
   rejectChallengeCommand,
   challengeStatisticsCommand,
+  incrementRerollCommand,
 ];
 
 const commands = new Collection<string, Command>();
