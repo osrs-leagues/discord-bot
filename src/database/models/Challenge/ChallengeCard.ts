@@ -146,6 +146,14 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
       this.challengeFiveId,
     ].filter((id) => id !== undefined) as number[];
   }
+
+  incrementRerolls() {
+    if (this.rerollsRemaining < 2) {
+      this.rerollsRemaining += 1;
+      this.rerolled = false;
+      return this.save();
+    }
+  }
 }
 
 export default ChallengeCard;
