@@ -46,7 +46,7 @@ const challengeStatisticsCommand: Command = {
       }
       interaction.reply({
         content: [
-          `**Completed Challenges**`,
+          `**Completed Challenge Cards**`,
           Object.entries(countDifficultyMap)
             .map(
               ([difficulty, count]) =>
@@ -55,7 +55,7 @@ const challengeStatisticsCommand: Command = {
                 )}: ${count}`,
             )
             .join('\n'),
-          `**Raffle Counts**`,
+          `**Raffle Ticket Counts**`,
           Object.entries(raffleTypeMap)
             .map(([raffleType, count]) => `${capitalize(raffleType)}: ${count}`)
             .join('\n'),
