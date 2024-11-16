@@ -24,6 +24,7 @@ import raffleDrawCommand from './draw_raffle';
 import leagueNameRemote from './leagueNameRemote';
 import approveChallengeCommand from './approveChallenge';
 import rejectChallengeCommand from './rejectChallenge';
+import challengeStatisticsCommand from './challengeStatistics';
 import incrementRerollCommand from './incrementReroll';
 
 const commandData = [
@@ -48,6 +49,7 @@ const commandData = [
   raffleDrawCommand,
   approveChallengeCommand,
   rejectChallengeCommand,
+  challengeStatisticsCommand,
   incrementRerollCommand,
 ];
 
