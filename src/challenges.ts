@@ -238,6 +238,10 @@ export function generateNewChallenges(
     userRoles,
     excludedChallengeIds,
   );
+  const challengeCount = getChallengeCount(difficulty);
+  if (eligibleChallenges.length === challengeCount) {
+    return eligibleChallenges;
+  }
   return getRandomChallenges(eligibleChallenges, getChallengeCount(difficulty));
 }
 
@@ -253,6 +257,9 @@ const getEligibleChallenges = (
   excludedChallengeIds: number[] = [],
 ): Challenge[] => {
   let eligibleChallenges = challengeCache.challenges.filter((challenge) => {
+    if (excludedChallengeIds.includes(challenge.id)) {
+      return false;
+    }
     const regionOneName = challengeCache.regionNameMap[challenge.regionOneId];
     const regionTwoName = challengeCache.regionNameMap[challenge.regionTwoId];
     if (challenge.difficulty !== difficulty) {
@@ -269,13 +276,20 @@ const getEligibleChallenges = (
     return userRoles.includes(regionOneName);
   });
 
+  const challengeCount = getChallengeCount(difficulty);
   if (
     excludedChallengeIds.length > 0 &&
-    eligibleChallenges.length - excludedChallengeIds.length >=
-      getChallengeCount(difficulty)
+    eligibleChallenges.length < challengeCount
   ) {
-    eligibleChallenges = eligibleChallenges.filter(
-      (challenge) => !excludedChallengeIds.includes(challenge.id),
+    const excludedChallenges = challengeCache.challenges.filter((challenge) =>
+      excludedChallengeIds.includes(challenge.id),
+    );
+    const randomlySelectedExcludedChallenges = getRandomChallenges(
+      excludedChallenges,
+      challengeCount - eligibleChallenges.length,
+    );
+    eligibleChallenges = eligibleChallenges.concat(
+      randomlySelectedExcludedChallenges,
     );
   }
 
