@@ -56,6 +56,7 @@ const challengeRerollButton: Button = {
             const challengeList = challenges.generateNewChallenges(
               currentDifficultyTier,
               userRoles,
+              challengeCard.getChallengeIds(),
             );
 
             // Decrement number of rerolls remaining

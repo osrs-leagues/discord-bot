@@ -475,12 +475,6 @@
       "region2": ""
     },
     {
-      "description": "By liasing with the other team, spell out ''I <3 CW'' within the Castle Wars map using barricades.",
-      "difficulty": "Intermediate",
-      "region1": "Kandarin",
-      "region2": ""
-    },
-    {
       "description": "Heal at least 12 hitpoints using a single Castle Wars bandage",
       "difficulty": "Intermediate",
       "region1": "Kandarin",
@@ -811,13 +805,13 @@
       "region2": ""
     },
     {
-      "description": "Complete the Fight Caves. The only time you are allowed to click is if your character is stuck. Otherwise you must let Auto Retaliate do the work for you",
+      "description": "Defeat the Soul Wars Avatar. You must be the only person on your team and must stand in melee distance of the Avatar at all times during the fight. You must not use Banker's Note",
       "difficulty": "Experienced",
       "region1": "General",
       "region2": ""
     },
     {
-      "description": "Defeat the Soul Wars Avatar. You must be the only person on your team and must stand in melee distance of the Avatar at all times during the fight. You must not use Banker's Note",
+      "description": "Defeat 3 Tormented Demons at the same time. You must kill one Tormented demon using melee demonbane, one using Scorching Bow and the other using the Purging Staff. You must get every tormented demon down to less than 5% hitpoints before you can finish any of them off. You must not hide behind walls or use any tactic to cheese.",
       "difficulty": "Experienced",
       "region1": "General",
       "region2": ""
@@ -842,12 +836,6 @@
     },
     {
       "description": "Defeat Commander Zilyana. You may only use chinchompas and you may only directly attack the bodyguards. You must change the bodyguard you are attacking after every throw and must target them in this order: Melee Minion, Magic Minion, Range Minion. Once a minion dies you must wait for it to respawn the next time you are due to hit that minion.",
-      "difficulty": "Experienced",
-      "region1": "Asgarnia",
-      "region2": ""
-    },
-    {
-      "description": "Defeat 3 Tormented Demons at the same time. You must kill one Tormented demon using melee demonbane, one using Scorching Bow and the other using the Purging Staff",
       "difficulty": "Experienced",
       "region1": "Asgarnia",
       "region2": ""
@@ -883,12 +871,6 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Thermonuclear Smoke Devil using only range",
-      "difficulty": "Experienced",
-      "region1": "Kandarin",
-      "region2": ""
-    },
-    {
       "description": "Talk to the Monkey Minder in the Ardougne Zoo whilst wearing a Maniacial Monkey Backpack",
       "difficulty": "Experienced",
       "region1": "Kandarin",
@@ -902,12 +884,6 @@
     },
     {
       "description": "Defeat all Dagannoth Kings at the same time using the bouncing effect of the Venator Bow",
-      "difficulty": "Experienced",
-      "region1": "Fremennik",
-      "region2": ""
-    },
-    {
-      "description": "Defeat Dagannoth Rex without using magic, Dagannoth Prime without using range and Dagannoth Surpreme without using melee. All 3 kills must be done one after the other",
       "difficulty": "Experienced",
       "region1": "Fremennik",
       "region2": ""
@@ -949,7 +925,25 @@
       "region2": ""
     },
     {
+      "description": "Defeat Zebak solo in the Tombs of Amascut Expert Mode. During waves, you must not pass through waves by going through the safe gap.",
+      "difficulty": "Experienced",
+      "region1": "Desert",
+      "region2": ""
+    },
+    {
+      "description": "Defeat Kephri solo in the Tombs of Amascut Expert Mode. You must have all Kephri invocations enabled and must not kill any Spitting or Soldier scarabs. You must not use Banker's Note",
+      "difficulty": "Experienced",
+      "region1": "Desert",
+      "region2": ""
+    },
+    {
       "description": "Defeat the Kalphite Queen. The only items you may use are items that were available before the 7th September 2004. You must not use Banker's Note",
+      "difficulty": "Experienced",
+      "region1": "Desert",
+      "region2": ""
+    },
+    {
+      "description": "Defeat the Echo Kalphite Queen. You must not take any avoidable damage. You must not use Banker's Note",
       "difficulty": "Experienced",
       "region1": "Desert",
       "region2": ""
@@ -968,12 +962,6 @@
     },
     {
       "description": "Complete all 5 floors of the Hallowed Sepulchre whilst listenening to Rick Astley - Never Gonna Give You Up on loop. You must complete the 5th floor before the song has fully completed twice and you must not make any mistakes.",
-      "difficulty": "Experienced",
-      "region1": "Morytania",
-      "region2": ""
-    },
-    {
-      "description": "Complete a Barrows run. You may only use a Halberd and can not freeze or stun any brother. You must meet the requirements for the CA task ''Can't Touch Me'' ",
       "difficulty": "Experienced",
       "region1": "Morytania",
       "region2": ""
@@ -1177,7 +1165,7 @@
       "region2": "Kourend"
     },
     {
-      "description": "Complete a Pillarless Inferno. You must not use Banker's Note",
+      "description": "Complete an Inferno without hiding behind any pillars. You must not use Banker's Note",
       "difficulty": "Master",
       "region1": "General",
       "region2": ""
@@ -1189,7 +1177,7 @@
       "region2": ""
     },
     {
-      "description": "Complete the Fight Caves and Inferno back to back without banking or changing your gear/resupplying in any way. You must not use Bankers Note.",
+      "description": "Complete the Fight Caves and Inferno back to back without banking or changing your gear/resupplying in any way. Your inventory and worn equipment must not exceed a GE value of more than 500k. The GE value of any raw material used for an untradeable item or any items held within containers counts towards this total. Echo items cannot be used. You must not use Bankers Note.",
       "difficulty": "Master",
       "region1": "General",
       "region2": ""
@@ -1207,37 +1195,31 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Abyssal Sire. You may not move at all during P3.",
-      "difficulty": "Master",
-      "region1": "General",
-      "region2": ""
-    },
-    {
       "description": "Defeat three Tormented Demons at the same time. The only method of damage you are allowed is off shield using Elemental spells, Heavy Ranged or Crush weapons. You must not use any thralls or status effects to deal damage. You must meet the requirements for the CA task ''Three Times The Thrashing''",
       "difficulty": "Master",
       "region1": "General",
       "region2": ""
     },
     {
-      "description": "Complete the 5th Jad Challenge. You must use a different godsword for each Jad and only damage Jad and its healers with that godsword.",
+      "description": "Complete the 6th Jad Challenge. You must use a different godsword for each Jad and only damage Jad and its healers with that godsword. The Dogsword is included as the 6th godsword for this challenge.",
       "difficulty": "Master",
       "region1": "Asgarnia",
       "region2": ""
     },
     {
-      "description": "Defeat General Graardor using the 7:0 method. You must not use any tile markers or any references which shows you the correct tiles to stand. You must not be attacked by General Graardor at any point.",
+      "description": "Defeat General Graardor without being hit by him or his bodyguards. You must cap your maximum hit at 25 and you must not use any tile markers or any references which shows you the correct tiles to stand. You must not use anything that can freeze his movement.",
       "difficulty": "Master",
       "region1": "Asgarnia",
       "region2": ""
     },
     {
-      "description": "Defeat Commander Zilyana using the GeChallengeM energy efficient method. You must not use any tile markers or any references which shows you the correct tiles to stand. You must not be attacked by Commander Zilyana at any point.",
+      "description": "Defeat Commander Zilyana without being hit by her or her bodyguards. You must cap your maximum hit at 25 and you must not use any tile markers or any references which shows you the correct tiles to stand. You must not use anything that can freeze her movement",
       "difficulty": "Master",
       "region1": "Asgarnia",
       "region2": ""
     },
     {
-      "description": "Defeat K'ril Tsutsaroth using the 8:0 method. You must not use any tile markers or any references which shows you the correct tiles to stand. You must not be attacked by K'ril Tsutsaroth at any point. You must not use the Scorching Bow special attack.",
+      "description": "Defeat K'ril Tsutsaroth without being hit by him or his bodyguards. You must cap your maximum hit at 25 and you must not use any tile markers or any references which shows you the correct tiles to stand. You can not use anything that can freeze his movement.",
       "difficulty": "Master",
       "region1": "Asgarnia",
       "region2": ""
@@ -1273,7 +1255,7 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Thermonuclear Smoke Devil. At the start of the fight you must take off your facemask/slayer helmet have your stats reduced. Without restoring your stats or enabling any prayers you must then finish the fight without using Banker's Note",
+      "description": "Defeat the Thermonuclear Smoke Devil. At the start of the fight you must take off your facemask/slayer helmet to have your stats reduced. Immediately re-equip and then without restoring your stats or enabling any prayers you must then finish the fight without using Banker's Note",
       "difficulty": "Master",
       "region1": "Kandarin",
       "region2": ""
@@ -1297,49 +1279,55 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Leviathan. Your monitor must be set to black and white mode and you must not take any damage off prayer",
+      "description": "Defeat the Leviathan. You must set your display to black and white mode via your Graphics Card settings and you must not take any damage off prayer",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat Zebak solo at Path Level 4 or higher in a 400 Raid Level TOA or higher. All Zebak invocations and Hardcore Deaths must be enabled and no Blazing Tombs invocation must be enabled. Your protect from range and protect from magic prayers must be located on the opposite diagonal corners of your prayer book. You must not take any damage off prayer",
+      "description": "Defeat Zebak solo at Path Level 4 or higher in a 600 Raid Level TOA or higher. All Zebak invocations and Hardcore Deaths must be enabled and Blazing Tombs 2 invocation must not be enabled. Your protect from range and protect from magic prayers must be located on the opposite diagonal corners of your prayer book. You must not take any damage off prayer",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat Zebak solo at Path Level 4 or Higher in a 400 Raid Level TOA or higher. All Zebak invocations and Hardcore Deaths must be enabled and no Blazing Tombs invocation must be enabled. You must only use melee and you must move tiles every single tick that you are not able to attack and cannot move back to any tile you was standing in, over the last 6 ticks. You must not take any damage off prayer.",
+      "description": "Defeat Zebak solo at Path Level 4 or Higher in a 600 Raid Level TOA or higher. All Zebak invocations and Hardcore Deaths must be enabled and Blazing Tombs 2 invocation must not be enabled. You must only use melee and you must move tiles every single tick that you are not able to attack and cannot move back to any tile you was standing on, over the last 6 ticks. You must not take any damage off prayer.",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat Kephri solo at Path Level 4 or higher in a 400 Raid Level TOA or higher. All Kephri invocations and Hardcore Deaths must be enabled and no Blazing Tombs invocation must be enabled. You must have the Tileman plugin enabled and must not step on a tile you have already stood on. ",
+      "description": "Defeat Kephri solo at Path Level 4 or higher in a 600 Raid Level TOA or higher. All Kephri invocations except for Medic must be enabled and no Blazing Tombs invocation must be enabled. You must fill the room with at least 180 tiles of dung before killing it.",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Complete the Tombs of Amascut solo at 300 Raid Level or higher. You must not bring any of your own supplies or use any supplies provided by the ghost. The Hardcore Deaths, Overly Draining, Deadly Prayers and Silent Prayers invocations must be enabled",
+      "description": "Complete the Tombs of Amascut at 400 RL+ solo. You must not bring any of your own supplies or use any supplies provided by the ghost. The Overly Draining, Deadly Prayers, Silent Prayers, Hardcore Deaths invocations must be enabled and no Blazing Tombs invocations must be enabled.",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat Akkha solo at Path Level 4 or higher in a 400 Raid Level TOA or higher. You must have Feeling Special, Double Trouble and Hardcore Deaths enabled and no Blazing Tombs invocation must be enabled. You must stay within a single quadrant during Simon Says and not cross over into any other quadrant. You must not take any damage.",
+      "description": "Defeat Akkha solo at Path Level 4 or higher in a 600 Raid Level TOA or higher. You must have Feeling Special, Double Trouble and Hardcore Deaths enabled and Blazing Tombs 2 invocation must not be enabled. You must stay within a single quadrant during Simon Says and not cross over into any other quadrant. You must not take any damage.",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat Baba solo at Path Level 4 or higher in a 400 Raid Level TOA or higher. You must have Mind the Gap and Hardcore Deaths enabled and no Blazing Tombs invocation must be enabled. You must stand in the central segment of the room at all times. The only exceptions to this rule are that you may only cross to the sides of the room for a single tick before Baba pushes you before the rolling boulders phase and for a single tick to dodge the boulder smash attack and only if there is no rocks in the centre for you to use.",
+      "description": "Defeat Baba solo at Path Level 4 or higher in a 600 Raid Level TOA or higher. You must have Mind the Gap and Hardcore Deaths enabled and Blazing Tombs 2 invocation must not be enabled. You must stand in the central segment of the room at all times. The only exceptions to this rule are that you may only cross to the sides of the room for a single tick before Baba pushes you before the rolling boulders phase and for a single tick to dodge the boulder smash attack and only if there is no rocks in the centre for you to use.",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
     },
     {
-      "description": "Defeat the Echo Kalphite Queen. You must not take any avoidable damage. You must not use Banker's Note",
+      "description": "Defeat the Wardens solo in a 700 Raid Level TOA raid or higher. You must have Insanity and Hardcore Deaths enabled and must not have Blazing Tombs 2 invocation enabled. You must not attack or target any skulls during P3",
+      "difficulty": "Master",
+      "region1": "Desert",
+      "region2": ""
+    },
+    {
+      "description": "Defeat the Echo Kalphite Queen. The only items you are allowed to use are items that were available before the 7th September 2004. You must not take any avoidable damage. You must not use Banker's Note",
       "difficulty": "Master",
       "region1": "Desert",
       "region2": ""
@@ -1351,7 +1339,7 @@
       "region2": ""
     },
     {
-      "description": "Reach and beat the Nylocas room in NM Theatre of Blood solo raid. You must not let any pillars fall and must meet the requirements for the Perfect Nylocas CA task",
+      "description": "Reach and beat the Nylocas room in HM Theatre of Blood solo raid. You must meet the requirements for the Perfect Nylocas CA task",
       "difficulty": "Master",
       "region1": "Morytania",
       "region2": ""
@@ -1363,7 +1351,7 @@
       "region2": ""
     },
     {
-      "description": "Defeat Araxxor 5 times in one trip. You must not use any form of antipoison or antivenom and use any items that provide an immunity to poison/venom. If you have a relic/combat mastery that provides venom immunity then you must instead defeat Araxxor 5 times in one trip whilst dropping a vial of nitroglycrin every 20 seconds. You must not use Bankers Note",
+      "description": "Defeat Araxxor 5 times in one trip. You must not use any form of antipoison or antivenom and use any items that provide an immunity to poison/venom. You may not use Bankers Note.",
       "difficulty": "Master",
       "region1": "Morytania",
       "region2": ""
@@ -1372,12 +1360,6 @@
       "description": "Complete 5 Barrows runs in a row without taking any damage from any brother, monster in the tunnels or by the falling rocks after you loot the chest.",
       "difficulty": "Master",
       "region1": "Morytania",
-      "region2": ""
-    },
-    {
-      "description": "Defeat the Corporeal Beast. You must not use magic or any corpbane weapon.  You may only use supplies that you can hold within a single inventory and must not use Bankers Note",
-      "difficulty": "Master",
-      "region1": "Wilderness",
       "region2": ""
     },
     {
@@ -1495,33 +1477,33 @@
       "region2": ""
     },
     {
+      "description": "Complete the 6th Jad Challenge without losing a prayer point and with the in game sounds turned off.",
+      "difficulty": "Grandmaster",
+      "region1": "General",
+      "region2": ""
+    },
+    {
       "description": "Complete the Fight Caves without taking any damage",
       "difficulty": "Grandmaster",
       "region1": "General",
       "region2": ""
     },
     {
-      "description": "Complete a Pillarless Inferno without losing any prayer points. You must only attack each Jal-MejJak once and must not kill any. You must not kill Jad during Zuk. You must not let your hitpoints fall below 50 at any point during Zuk. You must not use Banker's Note",
+      "description": "Complete an Inferno without hiding behind any pillars. You must not let your prayer points go below 98 at any point throughout the run. You may only restore your prayer points twice and you cannot boost your prayer above 99. You must only attack each Jal-MejJak once and must not kill any. You must not kill Jad during Zuk. You must not let your hitpoints fall below 20 at any point during Zuk. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "General",
       "region2": ""
     },
     {
-      "description": "Complete the Inferno. Throughout the entire run, you must only move [2,1] or [1,2] tiles in a single tick whereas your movement resembles a Knight in Chess.",
+      "description": "Complete the Inferno. Throughout the entire run, you must only move [2,1] or [1,2] tiles in a single tick whereas your movement resembles a Knight in Chess. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "General",
       "region2": ""
     },
     {
-      "description": "Defeat three Tormented Demons at the same time with your entire screen rotated by 180 degrees. You must not take any damage and you must meet the requirements for the CA task ''Three Time's The Trashing''.",
+      "description": "Complete the Inferno two times in a row in less than 1 hour. Time spent resupplying in between runs counts towards this time.",
       "difficulty": "Grandmaster",
       "region1": "General",
-      "region2": ""
-    },
-    {
-      "description": "Solo Nex. Every time you take damage from any source you must type in chat, a word where all the characters mapped to the traditional alphabet equals the damage that you took. You will fail the challenge if you do not say a word equal to the correct value before Nex damages you again. A word is only acceptable if it can be found within the Oxford Dictionary and you must not say the same word twice.",
-      "difficulty": "Grandmaster",
-      "region1": "Asgarnia",
       "region2": ""
     },
     {
@@ -1531,15 +1513,9 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Awakened Whisperer using only Melee.",
+      "description": "Defeat the Awakened Whisperer. If you have the melee relic, you must only use melee. Otherwise you must only deal damage whilst in melee distance. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "Asgarnia",
-      "region2": ""
-    },
-    {
-      "description": "Defeat three Demonic Gorillas at the same time with your entire screen rotated by 180 degrees. You must not take any damage and all three demonic gorillas must be killed in consecutive hits.",
-      "difficulty": "Grandmaster",
-      "region1": "Kandarin",
       "region2": ""
     },
     {
@@ -1549,19 +1525,13 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Awakened Duke Sucellus. You must not use melee, run and must get a perfect kill.",
+      "description": "Defeat the Awakened Duke Sucellus. You must attack on the same tick that Duke attacks each time and not miss any attacks you could have gotten. You must get a perfect kill.",
       "difficulty": "Grandmaster",
       "region1": "Fremennik",
       "region2": ""
     },
     {
-      "description": "Defeat the Awakened Duke Sucellus. You must not run, must attack on the same tick that Duke attacks each time and not miss any attacks you could have gotten. You must get a perfect kill.",
-      "difficulty": "Grandmaster",
-      "region1": "Fremennik",
-      "region2": ""
-    },
-    {
-      "description": "Defeat the Awakened Leviathan. Your monitor must be set to black and white mode and you must not take any damage off prayer",
+      "description": "Defeat the Awakened Leviathan. You must set your display to black and white mode via your Graphics Card settings and you must not take any damage off prayer. You must go through at least two rotations of regular attacks in between stunning with Shadow Spells.",
       "difficulty": "Grandmaster",
       "region1": "Desert",
       "region2": ""
@@ -1585,25 +1555,13 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Wardens solo in a 700 Raid Level TOA raid or higher. You must have Insanity and Hardcore Deaths enabled and must not have Blazing Tombs 2 invocation enabled. You must not attack or target any skulls during P3",
-      "difficulty": "Grandmaster",
-      "region1": "Desert",
-      "region2": ""
-    },
-    {
-      "description": "Defeat the Elidinis Warden (The Warden which summons Akkha and Kephri) solo in a 700 Raid Level TOA or higher. You must have Insanity, Stay Vigilant, Aerial Assault and Hardcore Deaths enabled and Blazing Tombs 2 invocation must not be enabled. At the end of P2 Wardens before you spawn into P3 Wardens, you must enable the Blindfold plugin. You must keep the plugin on until the raid is completed. You must not use Banker's Note or use any tile markers or NPC indicators to get around the restriction",
+      "description": "Defeat the Elidinis Warden (The Warden which summons Akkha and Kephri) solo in a 700 Raid Level TOA or higher. You must have all Warden invocations, Aerial Assault, Dehydration, On a Diet and Hardcore Deaths enabled and Blazing Tombs 2 invocation must not be enabled. At the start of P3 Wardens, you must enable the Blindfold plugin. The Blindfold plugin should have show UI turned on and all other checkboxes disabled. You must keep the plugin on until the raid is completed. You must not use tile markers, NPC indicators or any other method of getting around the restriction.",
       "difficulty": "Grandmaster",
       "region1": "Desert",
       "region2": ""
     },
     {
       "description": "Complete a full run of the Tombs of Amascut in a 700 Raid Level or higher. You must have all boss invocations enabled and must not have Blazing Tombs 2 Invocation enabled. You must meet the requirements of ''Perfection of Crondis'', ''Perfection of Apmeken'', ''Perfection of Het'', ''Perfection of Scabras'' and ''Perfect Wardens'' in a single run.",
-      "difficulty": "Grandmaster",
-      "region1": "Desert",
-      "region2": ""
-    },
-    {
-      "description": "Defeat the Echo Kalphite Queen. The only items you are allowed to use are items that were available before the 7th September 2004. You must not take any avoidable damage. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "Desert",
       "region2": ""
@@ -1621,13 +1579,7 @@
       "region2": ""
     },
     {
-      "description": "Solo the Theatre of Blood: Normal Mode. You must meet the requirements for the Morytania Only CA Task and you must not use any items that cannot be obtained on a Morytania locked account. You must not use Banker's Note",
-      "difficulty": "Grandmaster",
-      "region1": "Morytania",
-      "region2": ""
-    },
-    {
-      "description": "Complete all 5 floors of the Hallowed Sepulchre. At the end of Floor 2 and at the end of every floor thereafter you must fully rotate your screen clockwise by 90 degrees. You must not make any mistakes and complete within the target time.",
+      "description": "Solo the Theatre of Blood: Normal Mode. You must meet the requirements for the Morytania Only CA Task and nobody must use any items or cast any spells that cannot be obtained on a Morytania locked account. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "Morytania",
       "region2": ""
@@ -1657,7 +1609,7 @@
       "region2": ""
     },
     {
-      "description": "Defeat the Corrupted Gauntlet in less than 3 minutes.",
+      "description": "Complete the Corrupted Gauntlet 3 times in a row in less than 5:45",
       "difficulty": "Grandmaster",
       "region1": "Tirannwn",
       "region2": ""
@@ -1699,7 +1651,7 @@
       "region2": ""
     },
     {
-      "description": "Defeat Sol Heredit. You must not hide behind any pillar at any point throughout the Colloseum run.",
+      "description": "Defeat Sol Heredit. You must not hide behind any pillar at any point throughout the Colloseum run. You must not use Banker's Note",
       "difficulty": "Grandmaster",
       "region1": "Varlamore",
       "region2": ""
@@ -1711,19 +1663,25 @@
       "region2": ""
     },
     {
-      "description": "Defeat Sol Heredit. During the fight you must not move diagonally and you may only move using a Red X action.",
+      "description": "Defeat Sol Heredit. Once you spawn in, you must drop items around the room. You must not drop any more than 2 items per column or per row. Once you attack Sol for the first time, you must not move diagonally or in an L shape and you must only move using a Red X action. You must not drop any further items, take any damage and you must not use Banker's Note.",
       "difficulty": "Grandmaster",
       "region1": "Varlamore",
       "region2": ""
     },
     {
-      "description": "Defeat the Awakened Vardorvis. You must meet the requirements for the CA task ''Axe Enthusiast''",
+      "description": "Defeat Sol Heredit. When the fight starts, you must enable the Blindfold plugin. The Blindfold plugin should have show UI turned on and all other checkboxes disabled. You must not use tile markers, NPC indicators or any other method to get around the restriction. Whilst having Doom 2 enabled, you must not take any more than 6 instances of damage. If you take more than 2 instances of damage in the same or in a consecutive tick, that will only count as 1 instance of damage. You must not use Banker's Note.",
       "difficulty": "Grandmaster",
       "region1": "Varlamore",
       "region2": ""
     },
     {
-      "description": "Defeat the Awakened Vardorvis. Your inventory and worn equipment must not exceed a GE value of 100k going into the fight. You must abide by the following restrictions:\n- You must only deal damage via one of the following sources: Blisterwood Flail, Silver Bolts (with a Rune Crossbow or lower), Earth spells (Wave or lower) with Ivandis Flail and Tome of Earth equipped. For Magic users the price of the Tome of Earth and runes are exempt from the total\n- The GE value of any raw material used for an untradeable item or any items held within containers counts towards this total.\n- You must not use Banker's Note\n- The value of the Awakened Orb does not count towards this total",
+      "description": "Defeat the Awakened Vardorvis. You must meet the requirements for the CA task ''Axe Enthusiast''. You must not use Banker's Note",
+      "difficulty": "Grandmaster",
+      "region1": "Varlamore",
+      "region2": ""
+    },
+    {
+      "description": "Defeat the Awakened Vardorvis. Your inventory and worn equipment must not exceed a GE value of 100k going into the fight. Echo items cannot be used. You must abide by the following restrictions:\n- You must only deal damage via one of the following sources: Blisterwood Flail, Silver Bolts (with a Rune Crossbow or lower), Earth spells (Wave or lower) with Ivandis Flail and Tome of Earth equipped. For Magic users the price of the Tome of Earth and runes are exempt from the total\n- The GE value of any raw material used for an untradeable item or any items held within containers counts towards this total.\n- You must not use Banker's Note\n- The value of the Awakened Orb does not count towards this total",
       "difficulty": "Grandmaster",
       "region1": "Varlamore",
       "region2": "Morytania"

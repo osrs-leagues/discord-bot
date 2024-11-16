@@ -3,6 +3,7 @@ import {
   ChallengeCard,
   ChallengeCardStatus,
   ChallengeDifficulty,
+  DiscordUser,
   Region,
 } from './database';
 
@@ -164,9 +165,14 @@ export async function createChallengeCard(
     challengeFive = challenges[4];
   }
 
+  let discordUser = await DiscordUser.findByPk(userId);
+  if (!discordUser) {
+    discordUser = await DiscordUser.create({ user_id: userId });
+  }
+
   // Upsert the challenge card (create or update)
   const results = await ChallengeCard.create({
-    discordUserId: userId,
+    discordUserId: discordUser.user_id,
     difficulty: difficulty,
     challengeOneId: challengeOne.id,
     challengeTwoId: challengeTwo.id,
@@ -225,9 +231,18 @@ export function getNextDifficultyTier(
 export function generateNewChallenges(
   difficulty: ChallengeDifficulty,
   userRoles: string[],
+  excludedChallengeIds: number[] = [],
 ): Challenge[] {
-  const allChallenges = getEligibleChallenges(difficulty, userRoles);
-  return getRandomChallenges(allChallenges, getChallengeCount(difficulty));
+  const eligibleChallenges = getEligibleChallenges(
+    difficulty,
+    userRoles,
+    excludedChallengeIds,
+  );
+  const challengeCount = getChallengeCount(difficulty);
+  if (eligibleChallenges.length === challengeCount) {
+    return eligibleChallenges;
+  }
+  return getRandomChallenges(eligibleChallenges, getChallengeCount(difficulty));
 }
 
 /**
@@ -239,8 +254,12 @@ export function generateNewChallenges(
 const getEligibleChallenges = (
   difficulty: ChallengeDifficulty,
   userRoles: string[],
+  excludedChallengeIds: number[] = [],
 ): Challenge[] => {
-  return challengeCache.challenges.filter((challenge) => {
+  let eligibleChallenges = challengeCache.challenges.filter((challenge) => {
+    if (excludedChallengeIds.includes(challenge.id)) {
+      return false;
+    }
     const regionOneName = challengeCache.regionNameMap[challenge.regionOneId];
     const regionTwoName = challengeCache.regionNameMap[challenge.regionTwoId];
     if (challenge.difficulty !== difficulty) {
@@ -256,6 +275,25 @@ const getEligibleChallenges = (
     }
     return userRoles.includes(regionOneName);
   });
+
+  const challengeCount = getChallengeCount(difficulty);
+  if (
+    excludedChallengeIds.length > 0 &&
+    eligibleChallenges.length < challengeCount
+  ) {
+    const excludedChallenges = challengeCache.challenges.filter((challenge) =>
+      excludedChallengeIds.includes(challenge.id),
+    );
+    const randomlySelectedExcludedChallenges = getRandomChallenges(
+      excludedChallenges,
+      challengeCount - eligibleChallenges.length,
+    );
+    eligibleChallenges = eligibleChallenges.concat(
+      randomlySelectedExcludedChallenges,
+    );
+  }
+
+  return eligibleChallenges;
 };
 
 /**
