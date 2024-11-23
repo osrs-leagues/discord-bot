@@ -20,7 +20,7 @@ export const getChallenges: RequestHandler<
   GetChallengesResponse,
   GetChallengesRequest
 > = async (req, res) => {
-  const { count, rows: administrators } = await Challenge.findAndCountAll({
+  const { count, rows: challenges } = await Challenge.findAndCountAll({
     ...paginateRequest<Challenge>(req.query),
     ...filterRequest<Challenge>(req.query),
   });
@@ -28,9 +28,7 @@ export const getChallenges: RequestHandler<
   res.status(200).json(
     paginateResponse<SerializerResponse<Challenge>>(
       req.body,
-      administrators.map((administrator) =>
-        challengeSerializer.serialize(administrator),
-      ),
+      challenges.map((challenge) => challengeSerializer.serialize(challenge)),
       count,
     ),
   );
