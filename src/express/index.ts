@@ -1,7 +1,7 @@
 import app from './app';
 import config from '../config';
 
-export const startApp = () => {
+export const startExpressApi = () => {
   if (config.environment !== 'test') {
     app.listen(config.port, () => {
       console.log(
