@@ -1,8 +1,9 @@
 import express from 'express';
-import challenges from './challenges';
+
+import { getChallenges } from './challenges.controller';
 
 const router = express.Router();
 
-router.use('/challenges', challenges);
+router.get('/', getChallenges);
 
 export default router;

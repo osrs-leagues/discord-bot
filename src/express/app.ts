@@ -4,6 +4,8 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 
+import apis from './apis';
+
 const app = express();
 
 // enable CORS - Cross Origin Resource Sharing
