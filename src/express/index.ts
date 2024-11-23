@@ -5,7 +5,7 @@ export const startApp = () => {
   if (config.environment !== 'test') {
     app.listen(config.port, () => {
       console.log(
-        `Running Fire API on port ${config.port} in ${config.environment}.`,
+        `Running League-Discord API on port ${config.port} in ${config.environment}.`,
       );
     });
   }
