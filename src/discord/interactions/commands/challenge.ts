@@ -52,6 +52,7 @@ const challengeCommand: Command = {
           currentChallengeStatus === ChallengeCardStatus.STARTED ||
           currentChallengeStatus === ChallengeCardStatus.APPROVAL
         ) {
+          await challenges.verifyCardChallenges(challengeCard, userRoles);
           rerollsRemaining = challengeCard.rerollsRemaining;
           challengeList = challenges.existingChallengesToList(
             challengeCard,

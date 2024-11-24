@@ -16,9 +16,9 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
   declare rerollsRemaining: number;
   declare rerolled: boolean;
 
-  declare readonly challengeOneId: ForeignKey<Challenge['id']>;
-  declare readonly challengeTwoId: ForeignKey<Challenge['id']>;
-  declare readonly challengeThreeId: ForeignKey<Challenge['id']>;
+  declare readonly challengeOneId?: ForeignKey<Challenge['id']>;
+  declare readonly challengeTwoId?: ForeignKey<Challenge['id']>;
+  declare readonly challengeThreeId?: ForeignKey<Challenge['id']>;
   declare readonly challengeFourId?: CreationOptional<
     ForeignKey<Challenge['id']>
   >;
@@ -35,7 +35,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
       {
         challengeOneId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -43,7 +43,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
         },
         challengeTwoId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -51,7 +51,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
         },
         challengeThreeId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -59,6 +59,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
         },
         challengeFourId: {
           type: DataTypes.BIGINT,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -66,6 +67,7 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
         },
         challengeFiveId: {
           type: DataTypes.BIGINT,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -133,6 +135,46 @@ class ChallengeCard extends InitializableModel<ChallengeCard> {
       foreignKey: {
         allowNull: false,
         name: 'discordUserId',
+      },
+    });
+    ChallengeCard.belongsTo(Challenge, {
+      as: 'challengeOne',
+      onDelete: 'SET NULL',
+      foreignKey: {
+        name: 'challengeOneId',
+        allowNull: true,
+      },
+    });
+    ChallengeCard.belongsTo(Challenge, {
+      as: 'challengeTwo',
+      onDelete: 'SET NULL',
+      foreignKey: {
+        name: 'challengeTwoId',
+        allowNull: true,
+      },
+    });
+    ChallengeCard.belongsTo(Challenge, {
+      as: 'challengeThree',
+      onDelete: 'SET NULL',
+      foreignKey: {
+        name: 'challengeThreeId',
+        allowNull: true,
+      },
+    });
+    ChallengeCard.belongsTo(Challenge, {
+      as: 'challengeFour',
+      onDelete: 'SET NULL',
+      foreignKey: {
+        name: 'challengeFourId',
+        allowNull: true,
+      },
+    });
+    ChallengeCard.belongsTo(Challenge, {
+      as: 'challengeFive',
+      onDelete: 'SET NULL',
+      foreignKey: {
+        name: 'challengeFiveId',
+        allowNull: true,
       },
     });
   }
