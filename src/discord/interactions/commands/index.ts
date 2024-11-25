@@ -27,11 +27,13 @@ import rejectChallengeCommand from './rejectChallenge';
 import challengeStatisticsCommand from './challengeStatistics';
 import incrementRerollCommand from './incrementReroll';
 import deleteChallengeCommand from './deleteChallenge';
+import createChallengeCommand from './createChallenge';
 
 const commandData = [
   approveChallengeCommand,
   challengeCommand,
   challengeStatisticsCommand,
+  createChallengeCommand,
   deleteChallengeCommand,
   pingCommand,
   fetchLeagueRanksCommand,
