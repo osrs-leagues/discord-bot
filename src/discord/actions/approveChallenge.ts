@@ -29,20 +29,22 @@ const approveChallenge = async (
       challengeCard.difficulty === ChallengeDifficulty.GRANDMASTER
     ) {
       await setSageRole(interaction.guild, userId, challengeCard.difficulty);
-    }
-    // Send a DM to the user
-    try {
-      const targetUser = await interaction.client.users.fetch(userId);
-      targetUser.send(
-        `Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
-          challengeCard.difficulty,
-        )}. Congratulations!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel in the OSRS Leagues discord to generate your next Challenge Card.`,
-      );
-      interaction.reply({
-        content: 'Challenge approved and user notified.',
-        ephemeral: true,
-      });
-    } catch (dmError) {
+      if (challengeCard.difficulty === ChallengeDifficulty.MASTER) {
+        interaction.reply({
+          content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
+            challengeCard.difficulty,
+          )}. Congratulations! You have become a Sage's Master!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel to generate your next Challenge Card.`,
+          ephemeral: false,
+        });
+      } else if (challengeCard.difficulty === ChallengeDifficulty.GRANDMASTER) {
+        interaction.reply({
+          content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
+            challengeCard.difficulty,
+          )}. Congratulations! You have become a Sage's Grandmaster and have completed the Sage's Challenge!\nYour raffle tickets have been added to the draw.\nThere is nothing left for you to do`,
+          ephemeral: false,
+        });
+      }
+    } else {
       interaction.reply({
         content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
           challengeCard.difficulty,

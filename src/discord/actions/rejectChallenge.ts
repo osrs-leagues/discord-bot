@@ -21,26 +21,11 @@ const rejectChallenge = async (
     // Standard rejection reason
     const standardReason =
       'Your evidence did not meet the requirements for the challenges set in your Challenge Card.';
-
-    // Send a DM to the user with the standard rejection reason
-    try {
-      const targetUser = await interaction.client.users.fetch(userId);
-      targetUser.send(
-        `Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
-          challengeCard.difficulty,
-        )}. Reason: ${reason ?? standardReason}`,
-      );
-    } catch (dmError) {
-      interaction.reply({
-        content: `<@${userId}> Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
-          challengeCard.difficulty,
-        )}. Reason: ${reason ?? standardReason}`,
-        ephemeral: false,
-      });
-    }
     interaction.reply({
-      content: 'Challenge rejected and user notified.',
-      ephemeral: true,
+      content: `<@${userId}> Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
+        challengeCard.difficulty,
+      )}. Reason: ${reason ?? standardReason}`,
+      ephemeral: false,
     });
   } else {
     interaction.reply({
