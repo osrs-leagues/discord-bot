@@ -26,11 +26,17 @@ import approveChallengeCommand from './approveChallenge';
 import rejectChallengeCommand from './rejectChallenge';
 import challengeStatisticsCommand from './challengeStatistics';
 import incrementRerollCommand from './incrementReroll';
+import deleteChallengeCommand from './deleteChallenge';
 
 const commandData = [
+  approveChallengeCommand,
+  challengeCommand,
+  challengeStatisticsCommand,
+  deleteChallengeCommand,
   pingCommand,
   fetchLeagueRanksCommand,
   hiscoresCommand,
+  incrementRerollCommand,
   leagueNameCommand,
   leagueNameLocal('shattered_relics'),
   leagueNameLocal('trailblazer'),
@@ -40,17 +46,13 @@ const commandData = [
     ? leagueNameRemote(CURRENT_LEAGUE)
     : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
+  raffleDrawCommand,
   regionCommand,
+  rejectChallengeCommand,
   removeLeagueRolesCommand,
   removeRegionRoleCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
-  challengeCommand,
-  raffleDrawCommand,
-  approveChallengeCommand,
-  rejectChallengeCommand,
-  challengeStatisticsCommand,
-  incrementRerollCommand,
 ];
 
 const commands = new Collection<string, Command>();

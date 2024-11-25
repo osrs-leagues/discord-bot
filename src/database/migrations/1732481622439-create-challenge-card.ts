@@ -9,7 +9,7 @@ module.exports = {
       .createTable<ChallengeCard>('ChallengeCard', {
         challengeOneId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -17,7 +17,7 @@ module.exports = {
         },
         challengeTwoId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -25,7 +25,7 @@ module.exports = {
         },
         challengeThreeId: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -33,6 +33,7 @@ module.exports = {
         },
         challengeFourId: {
           type: DataTypes.BIGINT,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',
@@ -40,6 +41,7 @@ module.exports = {
         },
         challengeFiveId: {
           type: DataTypes.BIGINT,
+          onDelete: 'SET NULL',
           references: {
             model: 'Challenge',
             key: 'id',

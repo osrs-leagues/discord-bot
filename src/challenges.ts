@@ -184,6 +184,36 @@ export async function createChallengeCard(
   return results;
 }
 
+export async function verifyCardChallenges(
+  challengeCard: ChallengeCard,
+  userRoles: string[],
+): Promise<void> {
+  const excludedTasksIds = challengeCard.getChallengeIds();
+  const challengeCouint = getChallengeCount(challengeCard.difficulty);
+  if (excludedTasksIds.length !== challengeCouint) {
+    const challenges = excludedTasksIds.map((id) =>
+      challengeCache.challenges.find((c) => c.id === id),
+    );
+    const newChallenges = generateNewChallenges(
+      challengeCard.difficulty,
+      userRoles,
+      excludedTasksIds,
+    );
+    const updatedChallenges = challenges.map((challenge, index) => {
+      if (!challenge) {
+        return newChallenges[index];
+      }
+      return challenge;
+    });
+    await updateChallengeCard(
+      challengeCard,
+      updatedChallenges,
+      challengeCard.rerollsRemaining,
+      challengeCard.rerolled,
+    );
+  }
+}
+
 export function existingChallengesToList(
   existingChallenges: ChallengeCard,
   difficulty: ChallengeDifficulty,
