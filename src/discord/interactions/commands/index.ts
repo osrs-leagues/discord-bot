@@ -27,6 +27,7 @@ import rejectChallengeCommand from './rejectChallenge';
 import challengeStatisticsCommand from './challengeStatistics';
 import incrementRerollCommand from './incrementReroll';
 import deleteChallengeCommand from './deleteChallenge';
+import randomRegionsCommand from './randomRegions';
 import createChallengeCommand from './createChallenge';
 import refreshChallengeCacheCommand from './refreshChallengeCache';
 import editChallengeCommand from './editChallenge';
@@ -51,6 +52,7 @@ const commandData = [
     : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   raffleDrawCommand,
+  randomRegionsCommand,
   refreshChallengeCacheCommand,
   regionCommand,
   rejectChallengeCommand,
