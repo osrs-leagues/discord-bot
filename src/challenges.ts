@@ -341,6 +341,21 @@ function getRandomChallenges(
 }
 
 /**
+ * Select 3 random regions from the cache.
+ * @returns An array of 3 random regions.
+ */
+export function getRandomRegions() {
+  const filteredRegions = challengeCache.regions.filter(
+    (region) =>
+      region.name !== 'General' &&
+      region.name !== 'Karamja' &&
+      region.name !== 'Misthalin',
+  );
+  const shuffled = filteredRegions.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 3);
+}
+
+/**
  * Determines the number of challenges based on difficulty.
  * @param difficulty - The difficulty tier.
  * @returns The number of challenges.
