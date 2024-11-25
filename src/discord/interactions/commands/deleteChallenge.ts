@@ -3,6 +3,7 @@ import { channelGroups } from '../../Channel';
 import Role from '../../Role';
 import { Command } from './types';
 import { Challenge } from '../../../database';
+import { deleteChallenge } from '../../../challenges';
 
 const deleteChallengeCommand: Command = {
   channels: channelGroups.STAFF,
@@ -22,7 +23,7 @@ const deleteChallengeCommand: Command = {
       if (challengeId) {
         const challenge = await Challenge.findByPk(challengeId);
         if (challenge) {
-          await challenge.destroy();
+          await deleteChallenge(challenge);
           interaction.reply({
             content: `Deleted challenge with ID ${challengeId}.`,
             ephemeral: true,

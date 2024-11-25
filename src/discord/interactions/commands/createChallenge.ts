@@ -2,8 +2,12 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
 import { Command } from './types';
-import { Challenge, ChallengeDifficulty, Region } from '../../../database';
-import { challengeCache, getDifficultyName } from '../../../challenges';
+import { ChallengeDifficulty, Region } from '../../../database';
+import {
+  challengeCache,
+  createChallenge,
+  getDifficultyName,
+} from '../../../challenges';
 
 const createChallengeCommand: Command = {
   channels: channelGroups.STAFF,
@@ -77,12 +81,12 @@ const createChallengeCommand: Command = {
           return;
         }
       }
-      const challenge = await Challenge.create({
+      const challenge = await createChallenge(
         description,
         difficulty,
-        regionOneId: regionOne?.id,
-        regionTwoId: regionTwo?.id,
-      });
+        regionOne?.id,
+        regionTwo?.id,
+      );
       interaction.reply({
         content: `Challenge created with ID: ${challenge.id}`,
         ephemeral: true,
