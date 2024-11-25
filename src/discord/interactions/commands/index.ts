@@ -28,11 +28,14 @@ import challengeStatisticsCommand from './challengeStatistics';
 import incrementRerollCommand from './incrementReroll';
 import deleteChallengeCommand from './deleteChallenge';
 import randomRegionsCommand from './randomRegions';
+import createChallengeCommand from './createChallenge';
+import refreshChallengeCacheCommand from './refreshChallengeCache';
 
 const commandData = [
   approveChallengeCommand,
   challengeCommand,
   challengeStatisticsCommand,
+  createChallengeCommand,
   deleteChallengeCommand,
   pingCommand,
   fetchLeagueRanksCommand,
@@ -49,6 +52,7 @@ const commandData = [
   leagueRanksCommand,
   raffleDrawCommand,
   randomRegionsCommand,
+  refreshChallengeCacheCommand,
   regionCommand,
   rejectChallengeCommand,
   removeLeagueRolesCommand,

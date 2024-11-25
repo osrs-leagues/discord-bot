@@ -189,8 +189,8 @@ export async function verifyCardChallenges(
   userRoles: string[],
 ): Promise<void> {
   const excludedTasksIds = challengeCard.getChallengeIds();
-  const challengeCouint = getChallengeCount(challengeCard.difficulty);
-  if (excludedTasksIds.length !== challengeCouint) {
+  const challengeCount = getChallengeCount(challengeCard.difficulty);
+  if (excludedTasksIds.length !== challengeCount) {
     const challenges = excludedTasksIds.map((id) =>
       challengeCache.challenges.find((c) => c.id === id),
     );
@@ -198,13 +198,18 @@ export async function verifyCardChallenges(
       challengeCard.difficulty,
       userRoles,
       excludedTasksIds,
-    );
-    const updatedChallenges = challenges.map((challenge, index) => {
+    ).filter((challenge) => !excludedTasksIds.includes(challenge.id));
+    const updatedChallenges = challenges.map((challenge) => {
       if (!challenge) {
-        return newChallenges[index];
+        return newChallenges.pop();
       }
       return challenge;
     });
+    if (updatedChallenges.length < challengeCount) {
+      console.error(
+        `Not enough challenges to update card: ${challengeCard.id}. Difficulty: ${challengeCard.difficulty}`,
+      );
+    }
     await updateChallengeCard(
       challengeCard,
       updatedChallenges,
@@ -212,6 +217,41 @@ export async function verifyCardChallenges(
       challengeCard.rerolled,
     );
   }
+}
+
+/**
+ * Creates a new challenge in the database.
+ * @param description - The challenge description.
+ * @param difficulty - The difficulty tier.
+ * @param regionOneId - The first region ID.
+ * @param regionTwoId - The second region ID.
+ * @returns The newly created challenge.
+ */
+export async function createChallenge(
+  description: string,
+  difficulty: ChallengeDifficulty,
+  regionOneId?: number,
+  regionTwoId?: number,
+): Promise<Challenge> {
+  const challenge = await Challenge.create({
+    description,
+    difficulty,
+    regionOneId,
+    regionTwoId,
+  });
+  challengeCache.challenges.push(challenge);
+  return challenge;
+}
+
+/**
+ * Deletes a challenge from the database.
+ * @param challengeId - The ID of the challenge to delete.
+ */
+export async function deleteChallenge(challenge: Challenge): Promise<void> {
+  await challenge.destroy();
+  challengeCache.challenges = challengeCache.challenges.filter(
+    (c) => c.id !== challenge.id,
+  );
 }
 
 export function existingChallengesToList(
