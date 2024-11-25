@@ -14,7 +14,7 @@ const createChallengeCommand: Command = {
   roles: [Role.Administrator, Role.Tester],
   data: new SlashCommandBuilder()
     .setName('create_challenge')
-    .setDescription('Delete a challenge.')
+    .setDescription('Create a challenge.')
     .addStringOption((option) =>
       option
         .setName('description')
