@@ -91,4 +91,31 @@ describe('challenges', () => {
       expect(challenges.challengeCache.challenges).toContainEqual(challenge);
     });
   });
+
+  describe('deleteChallenge', () => {
+    test('deleteChallenge should delete an existing challenge', async () => {
+      const challenge = challenges.challengeCache.challenges[0];
+      await challenges.deleteChallenge(challenge);
+      expect(challenges.challengeCache.challenges).not.toContainEqual(
+        challenge,
+      );
+    });
+  });
+
+  describe('updateChallenge', () => {
+    test('updateChallenge should update an existing challenge', async () => {
+      const challenge = challenges.challengeCache.challenges[0];
+      const updatedDescription = 'Updated description';
+      const updatedChallenge = await challenges.updateChallenge(
+        challenge,
+        updatedDescription,
+      );
+      const cachedChallenge = challenges.challengeCache.challenges.find(
+        (c) => c.id === updatedChallenge.id,
+      );
+
+      expect(updatedChallenge.description).toBe(updatedDescription);
+      expect(cachedChallenge.description).toBe(updatedDescription);
+    });
+  });
 });
