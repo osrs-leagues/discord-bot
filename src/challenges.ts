@@ -254,6 +254,23 @@ export async function deleteChallenge(challenge: Challenge): Promise<void> {
   );
 }
 
+/**
+ * Updates a challenge in the database.
+ * @param description - The new description.
+ * @param challenge - The challenge to update.
+ * @returns The updated challenge.
+ */
+export async function updateChallenge(
+  challenge: Challenge,
+  description: string,
+): Promise<Challenge> {
+  const updatedChallenge = await challenge.update({ description });
+  challengeCache.challenges = challengeCache.challenges.map((c) =>
+    c.id === updatedChallenge.id ? updatedChallenge : c,
+  );
+  return updatedChallenge;
+}
+
 export function existingChallengesToList(
   existingChallenges: ChallengeCard,
   difficulty: ChallengeDifficulty,

@@ -29,6 +29,7 @@ import incrementRerollCommand from './incrementReroll';
 import deleteChallengeCommand from './deleteChallenge';
 import createChallengeCommand from './createChallenge';
 import refreshChallengeCacheCommand from './refreshChallengeCache';
+import editChallengeCommand from './editChallenge';
 
 const commandData = [
   approveChallengeCommand,
@@ -55,6 +56,7 @@ const commandData = [
   rejectChallengeCommand,
   removeLeagueRolesCommand,
   removeRegionRoleCommand,
+  editChallengeCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
 ];
