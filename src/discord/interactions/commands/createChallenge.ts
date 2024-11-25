@@ -51,7 +51,9 @@ const createChallengeCommand: Command = {
     ),
   execute: async (interaction) => {
     try {
-      const description = interaction.options.getString('description');
+      const description = interaction.options
+        .getString('description')
+        .replace(/\\n/g, '\n');
       const difficulty = parseInt(interaction.options.getString('difficulty'));
       const regionOneName = interaction.options.getString('region_one');
       const regionTwoName = interaction.options.getString('region_two');
