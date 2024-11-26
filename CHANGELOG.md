@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.9.1
+
+### Patch Changes
+
+- 4cf29a4: Change Challenge description column to TEXT
+
 ## 2.9.0
 
 ### Minor Changes
