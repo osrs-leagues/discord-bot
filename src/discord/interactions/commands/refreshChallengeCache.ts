@@ -18,8 +18,8 @@ const refreshChallengeCacheCommand: Command = {
         ephemeral: true,
       });
     } catch (error) {
-      console.error(error);
-      interaction.reply({
+      console.error(`Error refreshing challenge cache: ${error}`);
+      interaction?.reply({
         content: 'An error occurred while refreshing the challenge cache.',
         ephemeral: true,
       });

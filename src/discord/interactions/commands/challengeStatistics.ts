@@ -62,8 +62,8 @@ const challengeStatisticsCommand: Command = {
         ].join('\n\n'),
       });
     } catch (error) {
-      console.error(error);
-      interaction.reply({
+      console.error(`Error fetching challenge statistics: ${error}`);
+      interaction?.reply({
         content: 'An error occurred while fetching challenge statistics.',
         ephemeral: true,
       });

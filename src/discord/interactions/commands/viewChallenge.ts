@@ -34,8 +34,8 @@ const viewChallengeCommand: Command = {
         });
       }
     } catch (error) {
-      console.error(error);
-      interaction.reply({
+      console.error(`Error viewing challenge: ${error}`);
+      interaction?.reply({
         content: 'An error occurred while viewing the challenge.',
         ephemeral: true,
       });

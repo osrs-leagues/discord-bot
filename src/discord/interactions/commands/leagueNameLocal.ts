@@ -35,45 +35,53 @@ const leagueNameLocal = (league: League): Command => {
           .setRequired(true),
       ) as SlashCommandBuilder,
     execute: async (interaction) => {
-      let username = interaction.options.getString('username');
-      if (!username) {
-        return interaction.reply('Please enter a valid username.');
-      }
-      username = username.toLocaleLowerCase();
-      const discordMember = interaction.member;
-      const result = await DiscordUser.upsert({
-        user_id: discordMember.user.id,
-        [leagueNameIdentifier]: username,
-      });
-      const discordUser = result[0];
-      if (discordUser) {
-        const leagueUser = await getLeagueAttributes(league, username);
-        if (leagueUser) {
-          const rank = getRank(leagueUser.points, league);
-          const rankResult = await setLeagueRole({
-            league,
-            rank: rank,
-            member: interaction.member as GuildMember,
-            guild: interaction.guild,
-          });
-          if (rankResult) {
-            const message = getRankedMessage({
-              guild: interaction.guild,
+      try {
+        let username = interaction.options.getString('username');
+        if (!username) {
+          return interaction.reply('Please enter a valid username.');
+        }
+        username = username.toLocaleLowerCase();
+        const discordMember = interaction.member;
+        const result = await DiscordUser.upsert({
+          user_id: discordMember.user.id,
+          [leagueNameIdentifier]: username,
+        });
+        const discordUser = result[0];
+        if (discordUser) {
+          const leagueUser = await getLeagueAttributes(league, username);
+          if (leagueUser) {
+            const rank = getRank(leagueUser.points, league);
+            const rankResult = await setLeagueRole({
               league,
-              rank: rankResult,
+              rank: rank,
+              member: interaction.member as GuildMember,
+              guild: interaction.guild,
+            });
+            if (rankResult) {
+              const message = getRankedMessage({
+                guild: interaction.guild,
+                league,
+                rank: rankResult,
+                username,
+              });
+              interaction.reply({ embeds: [message] });
+            }
+          } else {
+            const message = getUnrankedMessage({
+              league,
               username,
             });
-            return interaction.reply({ embeds: [message] });
+            interaction.reply({ embeds: [message] });
           }
         } else {
-          const message = getUnrankedMessage({
-            league,
-            username,
+          interaction.reply({
+            content: 'There was an error setting your username, try again.',
+            ephemeral: true,
           });
-          return interaction.reply({ embeds: [message] });
         }
-      } else {
-        return interaction.reply({
+      } catch (error) {
+        console.error(`Error setting ${leagueName} League username: `, error);
+        interaction?.reply({
           content: 'There was an error setting your username, try again.',
           ephemeral: true,
         });

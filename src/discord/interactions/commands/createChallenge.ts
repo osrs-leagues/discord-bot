@@ -94,9 +94,9 @@ const createChallengeCommand: Command = {
         ephemeral: true,
       });
     } catch (error) {
-      console.error(error);
-      interaction.reply({
-        content: 'An error occurred while deleting the challenge.',
+      console.error(`Error creating challenge: ${error}`);
+      interaction?.reply({
+        content: 'An error occurred while creating the challenge.',
         ephemeral: true,
       });
     }

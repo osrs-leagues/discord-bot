@@ -44,8 +44,8 @@ const editChallengeCommand: Command = {
         });
       }
     } catch (error) {
-      console.error(error);
-      interaction.reply({
+      console.error(`Error updating challenge: ${error}`);
+      interaction?.reply({
         content: 'An error occurred while updating the challenge.',
         ephemeral: true,
       });

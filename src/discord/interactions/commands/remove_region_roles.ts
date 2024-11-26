@@ -23,7 +23,7 @@ const removeRegionRolesCommand: Command = {
       });
     } catch (error) {
       console.error(`Error responding to remove region role command: ${error}`);
-      interaction.reply({
+      interaction?.reply({
         content:
           'There was a problem removing your region role(s). Please try again.',
         ephemeral: true,

@@ -45,7 +45,7 @@ const randomCombatMasteriesCommand: Command = {
       });
     } catch (error) {
       console.error(`Error responding to random relics command: ${error}`);
-      interaction.reply({
+      interaction?.reply({
         content:
           'There was a problem generating your random relics. Please try again.',
         ephemeral: true,

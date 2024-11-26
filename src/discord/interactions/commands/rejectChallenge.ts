@@ -43,14 +43,23 @@ const rejectChallengeCommand: Command = {
         .setRequired(false),
     ),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
-    const reason = interaction.options.getString('reason');
-    const difficulty = parseInt(interaction.options.getString('difficulty'));
-    if (userId) {
-      rejectChallenge(interaction, userId, difficulty, reason);
-    } else {
-      interaction.reply({
-        content: 'User not found.',
+    try {
+      const userId = interaction.options.getUser('user')?.id;
+      const reason = interaction.options.getString('reason');
+      const difficulty = parseInt(interaction.options.getString('difficulty'));
+      if (userId) {
+        rejectChallenge(interaction, userId, difficulty, reason);
+      } else {
+        interaction.reply({
+          content: 'User not found.',
+          ephemeral: true,
+        });
+      }
+    } catch (error) {
+      console.error(`Error rejecting challenge: ${error}`);
+      interaction?.reply({
+        content:
+          'There was a problem rejecting the challenge. Please try again.',
         ephemeral: true,
       });
     }
