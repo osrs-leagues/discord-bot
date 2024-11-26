@@ -20,6 +20,7 @@ const challengeStatisticsCommand: Command = {
     .setName('challenge_statistics')
     .setDescription('View completed challenges and raffle counts.'),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const countDifficultyMap: Record<ChallengeDifficulty, number> = {
         [ChallengeDifficulty.NOVICE]: 0,
@@ -44,7 +45,7 @@ const challengeStatisticsCommand: Command = {
         const count = await RaffleTicket.count({ where: { raffleType } });
         raffleTypeMap[raffleType as RaffleType] = count;
       }
-      interaction.reply({
+      interaction.editReply({
         content: [
           `**Completed Challenge Cards**`,
           Object.entries(countDifficultyMap)
@@ -63,10 +64,9 @@ const challengeStatisticsCommand: Command = {
       });
     } catch (error) {
       console.error(`Error fetching challenge statistics: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while fetching challenge statistics.',
-        ephemeral: true,
-      });
+      interaction?.editReply(
+        'An error occurred while fetching challenge statistics.',
+      );
     }
   },
 };

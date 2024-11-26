@@ -23,7 +23,7 @@ const randomRelicsCommand: Command = {
         );
         return emoji ? `${emoji}` : undefined;
       });
-      return interaction.reply({
+      interaction.reply({
         embeds: [
           getRelicsMessage({
             member: interaction.member as GuildMember,

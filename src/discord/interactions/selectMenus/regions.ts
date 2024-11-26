@@ -12,29 +12,21 @@ const regionsSelectMenu: SelectMenu = {
   execute: async (interaction) => {
     try {
       if (interaction) {
-        const success = await setRegionRoles({
+        setRegionRoles({
           guild: interaction.guild,
           member: interaction.member as GuildMember,
           regions: interaction.values,
         });
-        if (success) {
-          return interaction.reply({
-            embeds: [
-              getRegionRoleMessage({
-                member: interaction.member as GuildMember,
-                role: interaction.values
-                  .map((value) => capitalize(value))
-                  .join(', '),
-              }),
-            ],
-          });
-        } else {
-          return interaction.reply({
-            content:
-              'There was a problem setting your region role. Please try again.',
-            ephemeral: true,
-          });
-        }
+        interaction.reply({
+          embeds: [
+            getRegionRoleMessage({
+              member: interaction.member as GuildMember,
+              role: interaction.values
+                .map((value) => capitalize(value))
+                .join(', '),
+            }),
+          ],
+        });
       }
     } catch (error) {
       console.error(`Error responding to region select menu: ${error}`);

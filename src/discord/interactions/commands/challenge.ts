@@ -17,6 +17,7 @@ const challengeCommand: Command = {
     .setDescription("Creates and displays the Sage's Challenge Card!"),
 
   execute: async (interaction) => {
+    await interaction.deferReply();
     try {
       const member = interaction.member as GuildMember;
       const userId = member.id;
@@ -41,11 +42,9 @@ const challengeCommand: Command = {
           currentDifficultyTier === ChallengeDifficulty.GRANDMASTER &&
           currentChallengeStatus === ChallengeCardStatus.COMPLETED
         ) {
-          interaction.reply({
-            content:
-              "You have completed the Sage's Challenge event! There's nothing left to do.",
-            ephemeral: true,
-          });
+          interaction.editReply(
+            "You have completed the Sage's Challenge event! There's nothing left to do.",
+          );
           return;
         }
         if (
@@ -74,11 +73,10 @@ const challengeCommand: Command = {
           );
 
           if (regionRoleCount < requiredRegionRoles) {
-            interaction.reply({
+            interaction.editReply({
               content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for ${challenges.getDifficultyName(
                 nextTier,
               )} difficulty. Please acquire the necessary region roles and try again.`,
-              ephemeral: true,
             });
             return;
           }
@@ -104,10 +102,9 @@ const challengeCommand: Command = {
         );
 
         if (regionRoleCount < requiredRegionRoles) {
-          interaction.reply({
-            content: `You need at least ${requiredRegionRoles} region role(s) to generate challenges for Novice difficulty. Please acquire the necessary region roles and try again.`,
-            ephemeral: true,
-          });
+          interaction.editReply(
+            `You need at least ${requiredRegionRoles} region role(s) to generate challenges for Novice difficulty. Please acquire the necessary region roles and try again.`,
+          );
           return;
         }
         // New user: Create Novice challenges and ChallengeMain entry
@@ -140,20 +137,18 @@ const challengeCommand: Command = {
           .setStyle('PRIMARY');
         const row = new MessageActionRow().addComponents(rerollButton);
 
-        interaction.reply({
+        interaction.editReply({
           embeds: [challengeEmbed],
           components: [row],
         });
       } else {
-        interaction.reply({ embeds: [challengeEmbed] });
+        interaction.editReply({ embeds: [challengeEmbed] });
       }
     } catch (error) {
       console.error('Error executing challenge command: ', error);
-      interaction?.reply({
-        content:
-          'There was an error processing your challenge. Please try again later.',
-        ephemeral: true,
-      });
+      interaction?.editReply(
+        'There was an error processing your challenge. Please try again later.',
+      );
     }
   },
 };

@@ -24,41 +24,38 @@ const approveChallenge = async (
       challengeCard.difficulty,
       challengeCard.id,
     );
+    await interaction.editReply('Successfully approved the challenge card.');
     if (
       challengeCard.difficulty === ChallengeDifficulty.MASTER ||
       challengeCard.difficulty === ChallengeDifficulty.GRANDMASTER
     ) {
       await setSageRole(interaction.guild, userId, challengeCard.difficulty);
       if (challengeCard.difficulty === ChallengeDifficulty.MASTER) {
-        interaction.reply({
+        interaction.followUp({
           content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
             challengeCard.difficulty,
           )}. Congratulations! You have become a Sage's Master!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel to generate your next Challenge Card.`,
-          ephemeral: false,
         });
       } else if (challengeCard.difficulty === ChallengeDifficulty.GRANDMASTER) {
-        interaction.reply({
+        interaction.followUp({
           content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
             challengeCard.difficulty,
           )}. Congratulations! You have become a Sage's Grandmaster and have completed the Sage's Challenge!\nYour raffle tickets have been added to the draw.\nThere is nothing left for you to do`,
-          ephemeral: false,
         });
       }
     } else {
-      interaction.reply({
+      interaction.followUp({
         content: `<@${userId}> Your challenge card has been approved for the difficulty tier: ${challenges.getDifficultyName(
           challengeCard.difficulty,
         )}. Congratulations!\nYour raffle tickets have been added to the draw.\nPlease use the /challenge command in the #challenge-commands channel to generate your next Challenge Card.`,
-        ephemeral: false,
       });
     }
     return true;
   } else {
-    interaction.reply({
+    interaction.editReply({
       content: `User does not have a challenge card pending approval with ${challenges.getDifficultyName(
         difficulty,
       )} difficulty.`,
-      ephemeral: true,
     });
     return false;
   }

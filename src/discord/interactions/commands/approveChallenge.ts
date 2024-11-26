@@ -37,23 +37,20 @@ const approveChallengeCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const userId = interaction.options.getUser('user')?.id;
       const difficulty = parseInt(interaction.options.getString('difficulty'));
       if (userId) {
         approveChallenge(interaction, userId, difficulty);
       } else {
-        interaction.reply({
-          content: 'User not found.',
-          ephemeral: true,
-        });
+        interaction.editReply('User not found.');
       }
     } catch (error) {
       console.error(`Error approving challenge: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while approving the challenge.',
-        ephemeral: true,
-      });
+      interaction?.editReply(
+        'An error occurred while approving the challenge.',
+      );
     }
   },
 };
