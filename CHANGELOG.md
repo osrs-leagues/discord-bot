@@ -1,5 +1,15 @@
 # @osrs-leagues/discord-bot
 
+## 2.9.0
+
+### Minor Changes
+
+- 5158544: Use deferred reply for all interactions that use await
+
+### Patch Changes
+
+- 5158544: Fix remove league roles crashing if role does not exist
+
 ## 2.8.3
 
 ### Patch Changes
