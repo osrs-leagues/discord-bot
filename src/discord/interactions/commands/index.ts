@@ -32,6 +32,8 @@ import createChallengeCommand from './createChallenge';
 import refreshChallengeCacheCommand from './refreshChallengeCache';
 import editChallengeCommand from './editChallenge';
 import viewChallengeCommand from './viewChallenge';
+import randomRelicsCommand from './randomRelics';
+import randomCombatMasteriesCommand from './randomCombatMasteries';
 
 const commandData = [
   approveChallengeCommand,
@@ -53,7 +55,9 @@ const commandData = [
     : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   raffleDrawCommand,
+  randomCombatMasteriesCommand,
   randomRegionsCommand,
+  randomRelicsCommand,
   refreshChallengeCacheCommand,
   regionCommand,
   rejectChallengeCommand,
