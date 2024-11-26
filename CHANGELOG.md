@@ -1,5 +1,12 @@
 # @osrs-leagues/discord-bot
 
+## 2.8.0
+
+### Minor Changes
+
+- 4b0096f: Add random_relics command
+- 4b0096f: Add random_combat_masteries command
+
 ## 2.7.1
 
 ### Patch Changes
