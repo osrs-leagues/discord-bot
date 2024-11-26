@@ -1,5 +1,12 @@
 # @osrs-leagues/discord-bot
 
+## 2.7.1
+
+### Patch Changes
+
+- e2f7e36: league_name should use leagueNameBronze executor if the league has not started
+- d67f994: Fix production deployments on Github release publishes.
+
 ## 2.7.0
 
 ### Minor Changes
