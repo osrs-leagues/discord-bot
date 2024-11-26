@@ -96,7 +96,7 @@ const createChallengeCommand: Command = {
     } catch (error) {
       console.error(`Error creating challenge: ${error}`);
       interaction?.reply({
-        content: 'An error occurred while deleting the challenge.',
+        content: 'An error occurred while creating the challenge.',
         ephemeral: true,
       });
     }
