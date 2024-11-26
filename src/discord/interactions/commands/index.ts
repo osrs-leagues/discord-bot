@@ -17,7 +17,7 @@ import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
 import { CURRENT_LEAGUE, CURRENT_LEAGUE_STARTED } from '../../../leagues';
 import regionCommand from './regions';
-import removeRegionRoleCommand from './remove_region_role';
+import removeRegionRolesCommand from './remove_region_roles';
 import challengeCommand from './challenge';
 import leagueNameBronze from './leagueNameBronze';
 import raffleDrawCommand from './draw_raffle';
@@ -57,7 +57,7 @@ const commandData = [
   regionCommand,
   rejectChallengeCommand,
   removeLeagueRolesCommand,
-  removeRegionRoleCommand,
+  removeRegionRolesCommand,
   editChallengeCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
