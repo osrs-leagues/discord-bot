@@ -24,14 +24,32 @@ export function getRandomRelics(): string[] {
   }
 
   if (randomRelics[3] === 'Reloaded') {
-    const randomTier = Math.floor(Math.random() * 3);
+    const randomTier = Math.floor(Math.random() * 2);
+    const elibleEarlyTierRelics = getElibleEarlyTierRelics(randomRelics);
     const randomRelicIndex = Math.floor(
-      Math.random() * EARLY_TIER_RELICS[randomTier].length,
+      Math.random() * elibleEarlyTierRelics[randomTier].length,
     );
-    randomRelics[3] = EARLY_TIER_RELICS[randomTier][randomRelicIndex];
+    randomRelics[3] = elibleEarlyTierRelics[randomTier][randomRelicIndex];
   }
 
   return randomRelics;
+}
+
+/**
+ * Get the relics that are not already selected.
+ * @param selectedRelics The relics that are already selected.
+ * @returns The relics that are not already selected.
+ */
+export function getElibleEarlyTierRelics(selectedRelics: string[]): string[][] {
+  const eligibleEarlyTierRelics: string[][] = [];
+  for (const tier of EARLY_TIER_RELICS) {
+    const eligibleRelics = tier.filter(
+      (relic) => !selectedRelics.includes(relic),
+    );
+    eligibleEarlyTierRelics.push(eligibleRelics);
+  }
+
+  return eligibleEarlyTierRelics;
 }
 
 /**

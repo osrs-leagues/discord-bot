@@ -1,4 +1,8 @@
-import { getRandomRelics, getRelicEmoji } from '../relics';
+import {
+  getElibleEarlyTierRelics,
+  getRandomRelics,
+  getRelicEmoji,
+} from '../relics';
 
 describe('relics', () => {
   describe('getRelicEmoji', () => {
@@ -15,6 +19,18 @@ describe('relics', () => {
     it('should return 8 random relics', () => {
       const relics = getRandomRelics();
       expect(relics).toHaveLength(8);
+    });
+  });
+
+  describe('getElibleEarlyTierRelics', () => {
+    it('should return the relics that are not already selected', () => {
+      const selectedRelics = ['Power Miner', 'Corner Cutter', 'Bank Heist'];
+      const elibleEarlyTierRelics = getElibleEarlyTierRelics(selectedRelics);
+      expect(elibleEarlyTierRelics).toEqual([
+        ['Lumberjack', 'Animal Wrangler'],
+        ['Friendly Forager', 'Dodgy Deals'],
+        ["Fairy's Flight", 'Clue Compass'],
+      ]);
     });
   });
 });
