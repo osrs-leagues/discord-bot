@@ -31,6 +31,7 @@ import randomRegionsCommand from './randomRegions';
 import createChallengeCommand from './createChallenge';
 import refreshChallengeCacheCommand from './refreshChallengeCache';
 import editChallengeCommand from './editChallenge';
+import viewChallengeCommand from './viewChallenge';
 
 const commandData = [
   approveChallengeCommand,
@@ -61,6 +62,7 @@ const commandData = [
   editChallengeCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
+  viewChallengeCommand,
 ];
 
 const commands = new Collection<string, Command>();
