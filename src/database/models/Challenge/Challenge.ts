@@ -28,7 +28,7 @@ class Challenge extends InitializableModel<Challenge> {
           allowNull: false,
         },
         description: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
         },
         regionOneId: {
