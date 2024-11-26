@@ -1,5 +1,40 @@
 # @osrs-leagues/discord-bot
 
+## 2.7.0
+
+### Minor Changes
+
+- 8cf0304: Add edit_challenge command
+- 8d5338c: Add view_challenge command
+- 45562dc: Update regions command to add individial region roles rather than combo roles
+- 4e8d28d: Add Raging Echoes League
+- b7a5395: Add support for Sage's challenges
+- 822561f: Add refresh_challenge_cache command
+- 3310e9a: Add delete_challenge command
+- 822561f: Add create_challenge command
+- 3e782a2: Add challenge_statistics command to show totals for completed challenge cards and raffles
+- b7a5395: Add support for database migration and seeding
+- 95d2949: Add random regions command
+- a7bfeec: Added raffle support for Sage's Challenge
+- b7a5395: Add support for database tests
+- b3d0273: Add accept and reject challenge commands
+- 16f81ad: approveChallenge and rejectChallenge will now just @ the user in the approval channel instead of DMing them. Personalised messages for Master and Grandmaster tiers when approved.
+- a166b6d: Add increment_reroll command
+
+### Patch Changes
+
+- ca492cb: Fix the variable used for stage and production database urls in sequelize config
+- 02a0e69: Create a DiscordUser entry if it does not exist during ChallengeCard creation
+- 4e8d28d: Add current league started boolean to choose remote vs bronze command
+- 79a4ff6: Update remove region roles command to remove individual roles rather than combo
+- 822561f: Remove challenge from cache when deleting
+- 02a0e69: Disallow duplicate challenge selection during challenge card rerolls.
+- 6d28ad8: Replace NUMBER type with TINYINT to support MySQL
+- b3d0273: Remove all awaits from interaction responses
+- eacd06c: Fix imports in challenges and raffles
+- 4e8d28d: Replace hard-coded discord league colummn in league name commands
+- 4e8d28d: Add migrate to Procfile
+
 ## 2.6.0
 
 ### Minor Changes
