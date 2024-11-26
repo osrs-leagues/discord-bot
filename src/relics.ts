@@ -28,7 +28,7 @@ export function getRandomRelics(): string[] {
     const randomRelicIndex = Math.floor(
       Math.random() * EARLY_TIER_RELICS[randomTier].length,
     );
-    randomRelics[3] = `Reloaded: ${EARLY_TIER_RELICS[randomTier][randomRelicIndex]}`;
+    randomRelics[3] = EARLY_TIER_RELICS[randomTier][randomRelicIndex];
   }
 
   return randomRelics;
