@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.8.3
+
+### Patch Changes
+
+- bc07bfe: Wrap all commands in try-catch and conditional interaction response
+
 ## 2.8.2
 
 ### Patch Changes
