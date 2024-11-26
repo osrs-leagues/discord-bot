@@ -62,7 +62,7 @@ jobs:
           title: Production Release
           commit: Production Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_TOKEN }}
 
   stage_release:
     needs:
