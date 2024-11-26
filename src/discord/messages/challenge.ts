@@ -1,60 +1,36 @@
 import { MessageEmbed } from 'discord.js';
 
-import { getChallengeCount, getDifficultyName } from '../../challenges';
-import { Challenge, ChallengeDifficulty } from '../../database';
+import {
+  challengeCache,
+  getDifficultyName,
+  getEmbedColour,
+} from '../../challenges';
+import { Challenge } from '../../database';
 
 type GetChallengeCardMessageParams = {
-  difficulty: ChallengeDifficulty;
-  userDisplayName: string;
-  challenges: Challenge[];
+  challenge: Challenge;
 };
 
-const getChallengeCardMessage = ({
-  difficulty,
-  userDisplayName,
-  challenges,
+const getChallengeMessage = ({
+  challenge,
 }: GetChallengeCardMessageParams): MessageEmbed => {
-  const embedColour = getEmbedColour(difficulty);
-  const challengeCount = getChallengeCount(difficulty);
+  const embedColour = getEmbedColour(challenge.difficulty);
+  const regions = challengeCache.regions.filter(
+    (region) =>
+      region.id === challenge.regionOneId ||
+      region.id === challenge.regionTwoId,
+  );
 
   return new MessageEmbed()
     .setColor(embedColour)
-    .setTitle(
-      `Sage's ${getDifficultyName(
-        difficulty,
-      )} Challenge Card for ${userDisplayName}`,
-    )
+    .setTitle(`Challenge ${challenge.id}`)
     .setDescription(
-      challenges
-        .slice(0, challengeCount)
-        .map(
-          (challenge, index) =>
-            `**Challenge ${index + 1}:**\n${challenge.description}`,
-        )
-        .join('\n\n'),
+      `**Description:**\n${
+        challenge.description
+      } \n\n**Difficulty:**\n${getDifficultyName(
+        challenge.difficulty,
+      )} \n\n**Regions:**\n${regions.map((region) => region.name).join(', ')}`,
     );
 };
 
-/**
- * Determines the embed color based on difficulty.
- * @param difficulty - The difficulty tier.
- * @returns The color code.
- */
-function getEmbedColour(difficulty: ChallengeDifficulty): number {
-  switch (difficulty) {
-    case ChallengeDifficulty.NOVICE:
-      return 0x00ff00; // Green
-    case ChallengeDifficulty.INTERMEDIATE:
-      return 0xffff00; // Yellow
-    case ChallengeDifficulty.EXPERIENCED:
-      return 0xffa500; // Orange
-    case ChallengeDifficulty.MASTER:
-      return 0xff0000; // Red
-    case ChallengeDifficulty.GRANDMASTER:
-      return 0x800080; // Purple
-    default:
-      return 0x00ff00; // Default to green
-  }
-}
-
-export default getChallengeCardMessage;
+export default getChallengeMessage;

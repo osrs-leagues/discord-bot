@@ -1,6 +1,6 @@
 import { ButtonInteraction, Message, GuildMember } from 'discord.js';
 import * as challenges from '../../../challenges';
-import getChallengeCardMessage from '../../messages/challenge';
+import getChallengeCardMessage from '../../messages/challengeCard';
 import { Button } from './types';
 import { ChallengeCardStatus } from '../../../database';
 

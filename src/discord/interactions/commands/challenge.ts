@@ -8,7 +8,7 @@ import {
   ChallengeDifficulty,
 } from '../../../database/models';
 import * as challenges from '../../../challenges';
-import getChallengeCardMessage from '../../messages/challenge';
+import getChallengeCardMessage from '../../messages/challengeCard';
 
 const challengeCommand: Command = {
   channels: channelGroups.SAGE_CHALLENGE,

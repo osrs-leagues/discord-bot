@@ -453,3 +453,25 @@ export function getDifficultyName(difficulty: ChallengeDifficulty): string {
       return 'Unknown';
   }
 }
+
+/**
+ * Determines the embed color based on difficulty.
+ * @param difficulty - The difficulty tier.
+ * @returns The color code.
+ */
+export function getEmbedColour(difficulty: ChallengeDifficulty): number {
+  switch (difficulty) {
+    case ChallengeDifficulty.NOVICE:
+      return 0x00ff00; // Green
+    case ChallengeDifficulty.INTERMEDIATE:
+      return 0xffff00; // Yellow
+    case ChallengeDifficulty.EXPERIENCED:
+      return 0xffa500; // Orange
+    case ChallengeDifficulty.MASTER:
+      return 0xff0000; // Red
+    case ChallengeDifficulty.GRANDMASTER:
+      return 0x800080; // Purple
+    default:
+      return 0x00ff00; // Default to green
+  }
+}

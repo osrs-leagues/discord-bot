@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import * as challenges from '../../../challenges';
 import { ChannelListener } from '../types';
 import { setMessageExpiration } from '../utils';
-import getChallengeCardMessage from '../../messages/challenge';
+import getChallengeCardMessage from '../../messages/challengeCard';
 import { ChallengeCardStatus, ChallengeDifficulty } from '../../../database';
 
 /**
