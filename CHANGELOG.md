@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.8.2
+
+### Patch Changes
+
+- 047be4c: Disallow duplicate relic selection for Reloaded relic
+
 ## 2.8.1
 
 ### Patch Changes
