@@ -18,14 +18,14 @@ const removeRegionRolesCommand: Command = {
         regions: [],
       });
       interaction.reply({
-        content: 'Your region role has been removed.',
+        content: 'Your region role(s) have been removed.',
         ephemeral: true,
       });
     } catch (error) {
       console.error(`Error responding to remove region role command: ${error}`);
       interaction.reply({
         content:
-          'There was a problem removing your region role. Please try again.',
+          'There was a problem removing your region role(s). Please try again.',
         ephemeral: true,
       });
     }
