@@ -37,13 +37,21 @@ const approveChallengeCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
-    const difficulty = parseInt(interaction.options.getString('difficulty'));
-    if (userId) {
-      approveChallenge(interaction, userId, difficulty);
-    } else {
-      interaction.reply({
-        content: 'User not found.',
+    try {
+      const userId = interaction.options.getUser('user')?.id;
+      const difficulty = parseInt(interaction.options.getString('difficulty'));
+      if (userId) {
+        approveChallenge(interaction, userId, difficulty);
+      } else {
+        interaction.reply({
+          content: 'User not found.',
+          ephemeral: true,
+        });
+      }
+    } catch (error) {
+      console.error(`Error approving challenge: ${error}`);
+      interaction?.reply({
+        content: 'An error occurred while approving the challenge.',
         ephemeral: true,
       });
     }

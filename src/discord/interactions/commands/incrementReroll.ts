@@ -20,40 +20,48 @@ const incrementRerollCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
-    const userId = interaction.options.getUser('user')?.id;
-    if (userId) {
-      const challengeCard = await challenges.loadChallengeCard(userId);
-      if (challengeCard) {
-        try {
-          if (challengeCard.rerollsRemaining < 2) {
-            await challengeCard.incrementRerolls();
+    try {
+      const userId = interaction.options.getUser('user')?.id;
+      if (userId) {
+        const challengeCard = await challenges.loadChallengeCard(userId);
+        if (challengeCard) {
+          try {
+            if (challengeCard.rerollsRemaining < 2) {
+              await challengeCard.incrementRerolls();
+              interaction.reply({
+                content: 'Reroll added.',
+                ephemeral: true,
+              });
+            } else {
+              interaction.reply({
+                content: 'User already has the maximum number of rerolls.',
+                ephemeral: true,
+              });
+            }
+          } catch (error) {
+            console.error(error);
             interaction.reply({
-              content: 'Reroll added.',
-              ephemeral: true,
-            });
-          } else {
-            interaction.reply({
-              content: 'User already has the maximum number of rerolls.',
+              content: 'Failed to add reroll.',
               ephemeral: true,
             });
           }
-        } catch (error) {
-          console.error(error);
+        } else {
           interaction.reply({
-            content: 'Failed to add reroll.',
+            content: 'User has no challenge card.',
             ephemeral: true,
           });
+          return;
         }
       } else {
         interaction.reply({
-          content: 'User has no challenge card.',
+          content: 'User not found.',
           ephemeral: true,
         });
-        return;
       }
-    } else {
-      interaction.reply({
-        content: 'User not found.',
+    } catch (error) {
+      console.error(`Error incrementing reroll: ${error}`);
+      interaction?.reply({
+        content: 'An error occurred while incrementing the reroll.',
         ephemeral: true,
       });
     }

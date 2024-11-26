@@ -33,32 +33,41 @@ const leagueNameBronze = (league: League): Command => {
           .setRequired(true),
       ) as SlashCommandBuilder,
     execute: async (interaction) => {
-      let username = interaction.options.getString('username');
-      if (interaction) {
-        if (!username) {
-          return interaction.reply('Please enter a valid username.');
-        }
-        username = username.toLocaleLowerCase();
-        const discordMember = interaction.member;
-        await DiscordUser.upsert({
-          user_id: discordMember.user.id,
-          [leagueNameIdentifier]: username,
-        });
-        const rankResult = await setLeagueRole({
-          league,
-          rank: Rank.BRONZE,
-          member: interaction.member as GuildMember,
-          guild: interaction.guild,
-        });
-        if (rankResult) {
-          const message = getRankedMessage({
-            guild: interaction.guild,
-            league,
-            rank: rankResult,
-            username,
+      try {
+        let username = interaction.options.getString('username');
+        if (interaction) {
+          if (!username) {
+            return interaction.reply('Please enter a valid username.');
+          }
+          username = username.toLocaleLowerCase();
+          const discordMember = interaction.member;
+          await DiscordUser.upsert({
+            user_id: discordMember.user.id,
+            [leagueNameIdentifier]: username,
           });
-          return interaction.reply({ embeds: [message] });
+          const rankResult = await setLeagueRole({
+            league,
+            rank: Rank.BRONZE,
+            member: interaction.member as GuildMember,
+            guild: interaction.guild,
+          });
+          if (rankResult) {
+            const message = getRankedMessage({
+              guild: interaction.guild,
+              league,
+              rank: rankResult,
+              username,
+            });
+            return interaction.reply({ embeds: [message] });
+          }
         }
+      } catch (error) {
+        console.error(`Error setting league role: ${error}`);
+        interaction?.reply({
+          content:
+            'There was a problem setting your league role. Please try again.',
+          ephemeral: true,
+        });
       }
     },
   };

@@ -149,7 +149,7 @@ const challengeCommand: Command = {
       }
     } catch (error) {
       console.error('Error executing challenge command: ', error);
-      interaction.reply({
+      interaction?.reply({
         content:
           'There was an error processing your challenge. Please try again later.',
         ephemeral: true,

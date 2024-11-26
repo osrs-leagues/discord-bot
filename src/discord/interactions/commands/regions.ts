@@ -92,9 +92,11 @@ const regionCommand: Command = {
       });
     } catch (error) {
       console.error(`Error sending region select menu: ${error}`);
-      if (interaction) {
-        interaction.reply(`An error occured, please try again.`);
-      }
+      interaction?.reply({
+        content:
+          'There was a problem setting your region roles. Please try again.',
+        ephemeral: true,
+      });
     }
   },
 };

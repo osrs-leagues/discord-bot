@@ -23,11 +23,11 @@ const hiscoresCommand: Command = {
         .setRequired(true),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
-    const username = interaction.options.getString('username');
-    if (!username) {
-      return interaction.reply('Please enter a valid username.');
-    }
     try {
+      const username = interaction.options.getString('username');
+      if (!username) {
+        return interaction.reply('Please enter a valid username.');
+      }
       const hiscoreResult = await fetchHiscoreUser.execute({
         username,
       });
@@ -37,12 +37,12 @@ const hiscoresCommand: Command = {
           points: hiscoreResult.league_points,
           rank: hiscoreResult.league_rank,
         });
-        return interaction.reply({ embeds: [message] });
+        interaction.reply({ embeds: [message] });
       } else {
-        return interaction.reply('Unable to find user on hiscores.');
+        interaction.reply('Unable to find user on hiscores.');
       }
     } catch (error) {
-      return interaction.reply('Unable to find user on hiscores.');
+      interaction?.reply('Unable to find user on hiscores.');
     }
   },
 };

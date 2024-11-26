@@ -47,7 +47,7 @@ const randomRegionsCommand: Command = {
       }
     } catch (error) {
       console.error(`Error responding to random regions command: ${error}`);
-      interaction.reply({
+      interaction?.reply({
         content:
           'There was a problem setting your region roles. Please try again.',
         ephemeral: true,

@@ -11,8 +11,17 @@ const leagueRanksCommand: Command = {
     .setName('league_ranks')
     .setDescription('Display the current League point ranking!'),
   execute: async (interaction) => {
-    const message = getPointRankingsMessage({ league: CURRENT_LEAGUE });
-    interaction.reply({ embeds: [message] });
+    try {
+      const message = getPointRankingsMessage({ league: CURRENT_LEAGUE });
+      interaction.reply({ embeds: [message] });
+    } catch (error) {
+      console.error(`Error responding to league ranks command: ${error}`);
+      interaction?.reply({
+        content:
+          'There was a problem displaying the league ranks. Please try again.',
+        ephemeral: true,
+      });
+    }
   },
 };
 

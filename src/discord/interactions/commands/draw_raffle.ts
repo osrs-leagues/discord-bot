@@ -27,36 +27,44 @@ const raffleDrawCommand: Command = {
     ),
 
   execute: async (interaction) => {
-    // Retrieve the options for the number of low and high level winners
-    const lowLevelWinnersCount =
-      interaction.options.getInteger('low_level_winners');
-    const highLevelWinnersCount =
-      interaction.options.getInteger('high_level_winners');
-
-    if (lowLevelWinnersCount === null || highLevelWinnersCount === null) {
-      interaction.reply({
-        content: 'Please specify valid numbers for the winners count.',
-        ephemeral: true,
-      });
-      return;
-    }
     try {
-      const { lowLevelWinners, highLevelWinners } = await raffles.drawWinners(
-        lowLevelWinnersCount,
-        highLevelWinnersCount,
-      );
+      // Retrieve the options for the number of low and high level winners
+      const lowLevelWinnersCount =
+        interaction.options.getInteger('low_level_winners');
+      const highLevelWinnersCount =
+        interaction.options.getInteger('high_level_winners');
 
-      const raffleEmbed = getRaffleDrawMessage({
-        lowLevelWinners: lowLevelWinners,
-        highLevelWinners: highLevelWinners,
-      });
+      if (lowLevelWinnersCount === null || highLevelWinnersCount === null) {
+        interaction.reply({
+          content: 'Please specify valid numbers for the winners count.',
+          ephemeral: true,
+        });
+        return;
+      }
+      try {
+        const { lowLevelWinners, highLevelWinners } = await raffles.drawWinners(
+          lowLevelWinnersCount,
+          highLevelWinnersCount,
+        );
 
-      interaction.reply({ embeds: [raffleEmbed] });
+        const raffleEmbed = getRaffleDrawMessage({
+          lowLevelWinners: lowLevelWinners,
+          highLevelWinners: highLevelWinners,
+        });
+
+        interaction.reply({ embeds: [raffleEmbed] });
+      } catch (error) {
+        console.error('Error drawing raffle winners:', error);
+        interaction.reply({
+          content:
+            'An error occurred while drawing raffle winners. Please try again later.',
+          ephemeral: true,
+        });
+      }
     } catch (error) {
-      console.error('Error drawing raffle winners:', error);
-      interaction.reply({
-        content:
-          'An error occurred while drawing raffle winners. Please try again later.',
+      console.error(`Error drawing raffle: ${error}`);
+      interaction?.reply({
+        content: 'An error occurred while drawing the raffle.',
         ephemeral: true,
       });
     }

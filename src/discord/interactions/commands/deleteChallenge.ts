@@ -41,8 +41,8 @@ const deleteChallengeCommand: Command = {
         });
       }
     } catch (error) {
-      console.error(error);
-      interaction.reply({
+      console.error(`Error deleting challenge: ${error}`);
+      interaction?.reply({
         content: 'An error occurred while deleting the challenge.',
         ephemeral: true,
       });

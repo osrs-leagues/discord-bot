@@ -38,6 +38,11 @@ const regionsSelectMenu: SelectMenu = {
       }
     } catch (error) {
       console.error(`Error responding to region select menu: ${error}`);
+      interaction?.reply({
+        content:
+          'There was a problem setting your region roles. Please try again.',
+        ephemeral: true,
+      });
     }
   },
 };
