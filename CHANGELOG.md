@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.8.1
+
+### Patch Changes
+
+- c689ad7: Remove Reloaded prefix from relic name in random_relics command
+
 ## 2.8.0
 
 ### Minor Changes
