@@ -12,11 +12,12 @@ const removeLeagueRolesCommand: Command = {
     .setName('remove_league_roles')
     .setDescription('Remove all of your league rank roles.'),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const discordMember = interaction.member;
       const result = await DiscordUser.findByPk(discordMember.user.id);
       if (result) {
-        await result.update({
+        result.update({
           twisted_name: null,
           trailblazer_name: null,
           shattered_relics_name: null,
@@ -24,22 +25,17 @@ const removeLeagueRolesCommand: Command = {
           raging_echoes_name: null,
         });
       }
-      await removeLeagueRoles({
+      removeLeagueRoles({
         member: discordMember as GuildMember,
       });
-      interaction.reply({
-        content: 'Your league rank roles have been removed.',
-        ephemeral: true,
-      });
+      interaction.editReply('Your league rank roles have been removed.');
     } catch (error) {
       console.error(
         `Error responding to remove league roles command: ${error}`,
       );
-      interaction?.reply({
-        content:
-          'There was a problem removing your league rank roles. Please try again.',
-        ephemeral: true,
-      });
+      interaction?.editReply(
+        'There was a problem removing your league rank roles. Please try again.',
+      );
     }
   },
 };

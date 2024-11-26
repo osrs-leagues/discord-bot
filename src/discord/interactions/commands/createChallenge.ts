@@ -50,6 +50,7 @@ const createChallengeCommand: Command = {
         .setDescription('The second region of the challenge.'),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const description = interaction.options
         .getString('description')
@@ -64,10 +65,7 @@ const createChallengeCommand: Command = {
           (region) => region.name === regionOneName,
         );
         if (!regionOne) {
-          interaction.reply({
-            content: 'Region One not found.',
-            ephemeral: true,
-          });
+          interaction.editReply('Region One not found.');
           return;
         }
       }
@@ -76,10 +74,7 @@ const createChallengeCommand: Command = {
           (region) => region.name === regionTwoName,
         );
         if (!regionTwo) {
-          interaction.reply({
-            content: 'Region Two not found.',
-            ephemeral: true,
-          });
+          interaction.editReply('Region Two not found.');
           return;
         }
       }
@@ -89,16 +84,12 @@ const createChallengeCommand: Command = {
         regionOne?.id,
         regionTwo?.id,
       );
-      interaction.reply({
+      interaction.editReply({
         content: `Challenge created with ID: ${challenge.id}`,
-        ephemeral: true,
       });
     } catch (error) {
       console.error(`Error creating challenge: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while creating the challenge.',
-        ephemeral: true,
-      });
+      interaction?.editReply('An error occurred while creating the challenge.');
     }
   },
 };

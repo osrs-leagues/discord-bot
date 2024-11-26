@@ -37,10 +37,11 @@ const leagueNameRemote = (league: League): Command => {
           .setRequired(true),
       ) as SlashCommandBuilder,
     execute: async (interaction) => {
+      await interaction.deferReply();
       try {
         let username = interaction.options.getString('username');
         if (!username) {
-          return interaction.reply('Please enter a valid username.');
+          return interaction.editReply('Please enter a valid username.');
         }
         username = username.toLocaleLowerCase();
         const discordMember = interaction.member;
@@ -73,27 +74,25 @@ const leagueNameRemote = (league: League): Command => {
                 rank: rankResult,
                 username,
               });
-              interaction.reply({ embeds: [message] });
+              interaction.editReply({ embeds: [message] });
             }
           } else {
             const message = getUnrankedMessage({
               league,
               username,
             });
-            interaction.reply({ embeds: [message] });
+            interaction.editReply({ embeds: [message] });
           }
         } else {
-          interaction.reply({
-            content: 'There was an error setting your username, try again.',
-            ephemeral: true,
-          });
+          interaction.editReply(
+            'There was an error setting your username, try again.',
+          );
         }
       } catch (error) {
         console.error(`Error setting ${leagueName} League username: `, error);
-        interaction?.reply({
-          content: 'There was an error setting your username, try again.',
-          ephemeral: true,
-        });
+        interaction?.editReply(
+          'There was an error setting your username, try again.',
+        );
       }
     },
   };

@@ -24,27 +24,19 @@ const randomRegionsCommand: Command = {
       const regionNames = randomRegions.map((region) =>
         capitalize(region.name),
       );
-      const success = await setRegionRoles({
+      setRegionRoles({
         guild: interaction.guild,
         member: interaction.member as GuildMember,
         regions: regionNames,
       });
-      if (success) {
-        return interaction.reply({
-          embeds: [
-            getRegionRoleMessage({
-              member: interaction.member as GuildMember,
-              role: regionNames.join(', '),
-            }),
-          ],
-        });
-      } else {
-        return interaction.reply({
-          content:
-            'There was a problem setting your region role. Please try again.',
-          ephemeral: true,
-        });
-      }
+      interaction.reply({
+        embeds: [
+          getRegionRoleMessage({
+            member: interaction.member as GuildMember,
+            role: regionNames.join(', '),
+          }),
+        ],
+      });
     } catch (error) {
       console.error(`Error responding to random regions command: ${error}`);
       interaction?.reply({

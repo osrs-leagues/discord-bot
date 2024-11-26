@@ -12,7 +12,7 @@ const removeRegionRolesCommand: Command = {
     .setDescription('Remove you region role(s).'),
   execute: async (interaction) => {
     try {
-      await setRegionRoles({
+      setRegionRoles({
         guild: interaction.guild,
         member: interaction.member as GuildMember,
         regions: [],

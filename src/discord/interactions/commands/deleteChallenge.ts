@@ -18,34 +18,23 @@ const deleteChallengeCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const challengeId = interaction.options.getInteger('challenge_id');
       if (challengeId) {
         const challenge = await Challenge.findByPk(challengeId);
         if (challenge) {
           await deleteChallenge(challenge);
-          interaction.reply({
-            content: `Deleted challenge with ID ${challengeId}.`,
-            ephemeral: true,
-          });
+          interaction.editReply(`Deleted challenge with ID ${challengeId}.`);
         } else {
-          interaction.reply({
-            content: `Challenge with ID ${challengeId} not found.`,
-            ephemeral: true,
-          });
+          interaction.editReply(`Challenge with ID ${challengeId} not found.`);
         }
       } else {
-        interaction.reply({
-          content: 'Challenge ID is required.',
-          ephemeral: true,
-        });
+        interaction.editReply('Challenge ID is required.');
       }
     } catch (error) {
       console.error(`Error deleting challenge: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while deleting the challenge.',
-        ephemeral: true,
-      });
+      interaction?.editReply('An error occurred while deleting the challenge.');
     }
   },
 };

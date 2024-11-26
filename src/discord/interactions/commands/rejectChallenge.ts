@@ -43,6 +43,7 @@ const rejectChallengeCommand: Command = {
         .setRequired(false),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const userId = interaction.options.getUser('user')?.id;
       const reason = interaction.options.getString('reason');
@@ -50,17 +51,15 @@ const rejectChallengeCommand: Command = {
       if (userId) {
         rejectChallenge(interaction, userId, difficulty, reason);
       } else {
-        interaction.reply({
+        interaction.editReply({
           content: 'User not found.',
-          ephemeral: true,
         });
       }
     } catch (error) {
       console.error(`Error rejecting challenge: ${error}`);
-      interaction?.reply({
+      interaction?.editReply({
         content:
           'There was a problem rejecting the challenge. Please try again.',
-        ephemeral: true,
       });
     }
   },

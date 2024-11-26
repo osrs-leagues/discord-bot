@@ -21,18 +21,18 @@ const rejectChallenge = async (
     // Standard rejection reason
     const standardReason =
       'Your evidence did not meet the requirements for the challenges set in your Challenge Card.';
-    interaction.reply({
+    await interaction.editReply('Successfully rejected the challenge card.');
+    interaction.followUp({
       content: `<@${userId}> Your challenge card has been rejected for the difficulty tier: ${challenges.getDifficultyName(
         challengeCard.difficulty,
       )}. Reason: ${reason ?? standardReason}`,
       ephemeral: false,
     });
   } else {
-    interaction.reply({
+    interaction.editReply({
       content: `User does not have a challenge card pending approval with ${challenges.getDifficultyName(
         difficulty,
       )} difficulty.`,
-      ephemeral: true,
     });
   }
 };

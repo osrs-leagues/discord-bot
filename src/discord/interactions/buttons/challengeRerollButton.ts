@@ -7,6 +7,7 @@ import { ChallengeCardStatus } from '../../../database';
 const challengeRerollButton: Button = {
   buttons: ['reroll'],
   onButtonInteraction: async (interaction: ButtonInteraction) => {
+    await interaction.deferUpdate();
     const { customId } = interaction;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_action, userId, _difficultyTier] = customId.split(' ');
@@ -30,7 +31,7 @@ const challengeRerollButton: Button = {
         const currentChallengeStatus = challengeCard.status;
         let numberOfRerolls = challengeCard.rerollsRemaining;
         if (numberOfRerolls <= 0) {
-          interaction.reply({
+          interaction.followUp({
             content: `You do not have any rerolls remaining.`,
             ephemeral: true,
           });
@@ -45,7 +46,7 @@ const challengeRerollButton: Button = {
             );
 
             if (regionRoleCount < requiredRegionRoles) {
-              interaction.reply({
+              interaction.followUp({
                 content: `You need at least ${requiredRegionRoles} region role(s) to reroll challenges for ${currentDifficultyTier} difficulty. Please acquire the necessary region roles and try again.`,
                 ephemeral: true,
               });
@@ -76,21 +77,21 @@ const challengeRerollButton: Button = {
               challenges: challengeList,
             });
 
-            interaction.reply({ embeds: [challengeEmbed] });
+            interaction.followUp({ embeds: [challengeEmbed] });
 
             // Remove the buttons from the original message
             if (interaction.message instanceof Message) {
               interaction.message.edit({ components: [] });
             }
           } else {
-            interaction.reply({
+            interaction.followUp({
               content: `You have already rerolled a challenge card for the ${currentDifficultyTier} tier. You can only reroll a challenge card once per difficulty tier.`,
               ephemeral: true,
             });
             return;
           }
         } else {
-          interaction.reply({
+          interaction.followUp({
             content: `You cannot reroll challenge cards that are completed or pending approval`,
             ephemeral: true,
           });
@@ -99,7 +100,7 @@ const challengeRerollButton: Button = {
       }
     } catch (error) {
       console.error('Error in Challenge Reroll Button listener: ', error);
-      interaction.reply({
+      interaction.followUp({
         content: 'An error occurred while processing your request.',
         ephemeral: true,
       });

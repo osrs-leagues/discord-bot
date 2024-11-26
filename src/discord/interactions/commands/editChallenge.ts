@@ -24,6 +24,7 @@ const editChallengeCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const challengeId = interaction.options.getInteger('challenge_id');
       const description = interaction.options
@@ -33,22 +34,13 @@ const editChallengeCommand: Command = {
       const challenge = await Challenge.findByPk(challengeId);
       if (challenge) {
         await updateChallenge(challenge, description);
-        interaction.reply({
-          content: `Challenge updated with ID: ${challenge.id}`,
-          ephemeral: true,
-        });
+        interaction.editReply(`Challenge updated with ID: ${challenge.id}`);
       } else {
-        interaction.reply({
-          content: `Challenge with ID ${challengeId} not found.`,
-          ephemeral: true,
-        });
+        interaction.editReply(`Challenge with ID ${challengeId} not found.`);
       }
     } catch (error) {
       console.error(`Error updating challenge: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while updating the challenge.',
-        ephemeral: true,
-      });
+      interaction?.editReply('An error occurred while updating the challenge.');
     }
   },
 };

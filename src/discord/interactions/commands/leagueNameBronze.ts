@@ -33,11 +33,12 @@ const leagueNameBronze = (league: League): Command => {
           .setRequired(true),
       ) as SlashCommandBuilder,
     execute: async (interaction) => {
+      await interaction.deferReply();
       try {
         let username = interaction.options.getString('username');
         if (interaction) {
           if (!username) {
-            return interaction.reply('Please enter a valid username.');
+            return interaction.editReply('Please enter a valid username.');
           }
           username = username.toLocaleLowerCase();
           const discordMember = interaction.member;
@@ -58,16 +59,14 @@ const leagueNameBronze = (league: League): Command => {
               rank: rankResult,
               username,
             });
-            return interaction.reply({ embeds: [message] });
+            return interaction.editReply({ embeds: [message] });
           }
         }
       } catch (error) {
         console.error(`Error setting league role: ${error}`);
-        interaction?.reply({
-          content:
-            'There was a problem setting your league role. Please try again.',
-          ephemeral: true,
-        });
+        interaction?.editReply(
+          'There was a problem setting your league role. Please try again.',
+        );
       }
     },
   };

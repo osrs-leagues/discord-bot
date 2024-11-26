@@ -20,6 +20,7 @@ const incrementRerollCommand: Command = {
         .setRequired(true),
     ),
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       const userId = interaction.options.getUser('user')?.id;
       if (userId) {
@@ -28,42 +29,30 @@ const incrementRerollCommand: Command = {
           try {
             if (challengeCard.rerollsRemaining < 2) {
               await challengeCard.incrementRerolls();
-              interaction.reply({
-                content: 'Reroll added.',
-                ephemeral: true,
-              });
+              interaction.editReply('Reroll added.');
             } else {
-              interaction.reply({
-                content: 'User already has the maximum number of rerolls.',
-                ephemeral: true,
-              });
+              interaction.editReply(
+                'User already has the maximum number of rerolls.',
+              );
             }
           } catch (error) {
             console.error(error);
-            interaction.reply({
+            interaction.editReply({
               content: 'Failed to add reroll.',
-              ephemeral: true,
             });
           }
         } else {
-          interaction.reply({
-            content: 'User has no challenge card.',
-            ephemeral: true,
-          });
+          interaction.editReply('User has no challenge card.');
           return;
         }
       } else {
-        interaction.reply({
-          content: 'User not found.',
-          ephemeral: true,
-        });
+        interaction.editReply('User not found.');
       }
     } catch (error) {
       console.error(`Error incrementing reroll: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while incrementing the reroll.',
-        ephemeral: true,
-      });
+      interaction?.editReply(
+        'An error occurred while incrementing the reroll.',
+      );
     }
   },
 };

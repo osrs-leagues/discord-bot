@@ -34,7 +34,7 @@ const randomCombatMasteriesCommand: Command = {
         .find((emoji) => emoji.name === 'crmagic_t6')
         ?.toString();
       const randomMasteries = getRandomMasteries();
-      return interaction.reply({
+      interaction.reply({
         embeds: [
           getCombatMasteriesMessage({
             member: interaction.member as GuildMember,

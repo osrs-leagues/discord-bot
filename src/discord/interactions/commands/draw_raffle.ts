@@ -27,6 +27,7 @@ const raffleDrawCommand: Command = {
     ),
 
   execute: async (interaction) => {
+    await interaction.deferReply({ ephemeral: true });
     try {
       // Retrieve the options for the number of low and high level winners
       const lowLevelWinnersCount =
@@ -35,10 +36,9 @@ const raffleDrawCommand: Command = {
         interaction.options.getInteger('high_level_winners');
 
       if (lowLevelWinnersCount === null || highLevelWinnersCount === null) {
-        interaction.reply({
-          content: 'Please specify valid numbers for the winners count.',
-          ephemeral: true,
-        });
+        interaction.editReply(
+          'Please specify valid numbers for the winners count.',
+        );
         return;
       }
       try {
@@ -52,21 +52,17 @@ const raffleDrawCommand: Command = {
           highLevelWinners: highLevelWinners,
         });
 
-        interaction.reply({ embeds: [raffleEmbed] });
+        await interaction.editReply('The raffle winners have been drawn!');
+        interaction.followUp({ embeds: [raffleEmbed] });
       } catch (error) {
         console.error('Error drawing raffle winners:', error);
-        interaction.reply({
-          content:
-            'An error occurred while drawing raffle winners. Please try again later.',
-          ephemeral: true,
-        });
+        interaction.editReply(
+          'An error occurred while drawing raffle winners. Please try again later.',
+        );
       }
     } catch (error) {
       console.error(`Error drawing raffle: ${error}`);
-      interaction?.reply({
-        content: 'An error occurred while drawing the raffle.',
-        ephemeral: true,
-      });
+      interaction?.editReply('An error occurred while drawing the raffle.');
     }
   },
 };
