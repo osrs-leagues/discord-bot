@@ -1,8 +1,9 @@
+import config from '../../config';
 import { updateDiscordRoles } from '../../tasks';
 import { Job } from '../types';
 
 const updateRolesJob: Job = {
-  enabled: false,
+  enabled: config.current_league_active,
   interval: {
     test: undefined,
     development: undefined, //'* * * * *',
