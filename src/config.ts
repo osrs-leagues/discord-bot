@@ -6,6 +6,7 @@ dotenv.config();
 export type Environment = 'test' | 'development' | 'stage' | 'production';
 
 export type BotConfig = {
+  current_league_active: boolean;
   discord_bot: {
     application_id: string;
     token: string;
@@ -30,6 +31,7 @@ export type BotConfig = {
 };
 
 const config: BotConfig = {
+  current_league_active: process.env.CURRENT_LEAGUE_ACTIVE === 'true',
   discord_bot: {
     application_id: process.env.APPLICATION_ID,
     token: process.env.TOKEN,

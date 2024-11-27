@@ -11,7 +11,6 @@ import { LeagueAttributes } from './database/models/League/League';
 import { Attributes, UpsertOptions } from 'sequelize';
 
 export const CURRENT_LEAGUE: League = 'raging_echoes';
-export const CURRENT_LEAGUE_STARTED = false;
 
 export enum Rank {
   BRONZE = 'bronze',
@@ -72,13 +71,13 @@ const LeagueRankings: Leagues = {
     dragon: 56000,
   },
   raging_echoes: {
-    bronze: 2500,
-    iron: 5000,
+    bronze: 2000,
+    iron: 4000,
     steel: 10000,
-    mithril: 18000,
-    adamant: 28000,
-    rune: 42000,
-    dragon: 56000,
+    mithril: 20000,
+    adamant: 30000,
+    rune: 45000,
+    dragon: 60000,
   },
 };
 

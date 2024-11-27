@@ -1,8 +1,9 @@
+import config from '../../config';
 import { updateLeagueUsers } from '../../tasks';
 import { Job } from '../types';
 
 const updateUsersJob: Job = {
-  enabled: false,
+  enabled: config.current_league_active,
   interval: {
     test: undefined,
     development: undefined, //'* * * * *',
