@@ -1,5 +1,12 @@
 # @osrs-leagues/discord-bot
 
+## 2.9.2
+
+### Patch Changes
+
+- 95a4fc9: Update updateRoles and updateUsers to rely on config.current_league_active
+- 95a4fc9: Replace CURRENT_LEAGUE_STARTED with config.current_league_active
+
 ## 2.9.1
 
 ### Patch Changes
