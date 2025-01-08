@@ -34,6 +34,7 @@ import editChallengeCommand from './editChallenge';
 import viewChallengeCommand from './viewChallenge';
 import randomRelicsCommand from './randomRelics';
 import randomCombatMasteriesCommand from './randomCombatMasteries';
+import reverseApprovalCommand from './reverseApproval';
 import config from '../../../config';
 
 const commandData = [
@@ -64,6 +65,7 @@ const commandData = [
   rejectChallengeCommand,
   removeLeagueRolesCommand,
   removeRegionRolesCommand,
+  reverseApprovalCommand,
   editChallengeCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
