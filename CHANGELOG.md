@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.9.3
+
+### Patch Changes
+
+- 6aa8aaa: Update raging echoes command to be local
+
 ## 2.9.2
 
 ### Patch Changes
