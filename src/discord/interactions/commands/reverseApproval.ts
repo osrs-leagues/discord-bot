@@ -47,7 +47,7 @@ const reverseApprovalCommand: Command = {
         interaction.editReply('User not found.');
       }
     } catch (error) {
-      console.error(`Error reverseing challenge approval: ${error}`);
+      console.error(`Error reversing challenge approval: ${error}`);
       interaction?.editReply(
         'An error occurred while reversing the challenge approval.',
       );

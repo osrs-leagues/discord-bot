@@ -30,7 +30,7 @@ const approveChallenge = async (
         'Successfully reversed approval for the challenge card. Please remove master or grandmaster roles accordingly.',
       );
       interaction.followUp({
-        content: `<@${userId}> Your challenge card has been approval has been revoked for the difficulty tier: ${challenges.getDifficultyName(
+        content: `<@${userId}> Your challenge card approval has been revoked for the difficulty tier: ${challenges.getDifficultyName(
           challengeCard.difficulty,
         )}.`,
       });
