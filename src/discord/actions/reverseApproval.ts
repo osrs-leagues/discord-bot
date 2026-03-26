@@ -7,7 +7,7 @@ import {
   RaffleTicket,
 } from '../../database';
 
-const approveChallenge = async (
+const reverseApproval = async (
   interaction: CommandInteraction | ButtonInteraction,
   userId: string,
   difficulty: ChallengeDifficulty,
@@ -52,4 +52,4 @@ const approveChallenge = async (
   }
 };
 
-export default approveChallenge;
+export default reverseApproval;
