@@ -1,16 +1,14 @@
-import { Message, MessageReaction, User} from 'discord.js';
+import { Message, MessageReaction, User } from 'discord.js';
 import impSpottingListener from './messageListeners/impSpottingListener';
 import challengeApprovalMessageListener from './messageListeners/challengeApprovalListener';
-import pregnantManReactionListener from './reactionListeners/pregnantManReactionListener';
+import pregnantManReactionListener from './reactionListeners/bannedEmojiReactionListener';
 
 const messageListeners = [
   impSpottingListener,
   challengeApprovalMessageListener,
 ];
 
-const reactionListeners = [
-  pregnantManReactionListener,
-]
+const reactionListeners = [pregnantManReactionListener];
 
 export const handleMessageCreate = (message: Message) => {
   const validChannels = messageListeners.filter((listener) =>
@@ -19,19 +17,21 @@ export const handleMessageCreate = (message: Message) => {
   validChannels.forEach((channel) => channel.onChannelMessage(message));
 };
 
-export const handleReactionAdd = async (reaction: MessageReaction, user: User) => {
+export const handleReactionAdd = async (
+  reaction: MessageReaction,
+  user: User,
+) => {
   if (user.bot) return;
 
   try {
     if (reaction.partial) {
-      await reaction.fetch()
-      }
+      await reaction.fetch();
+    }
 
-      for (const listener of reactionListeners) {
-        await listener.onMessageReaction(reaction, user)
-      }
+    for (const listener of reactionListeners) {
+      listener.onMessageReaction(reaction, user);
     }
-    catch (err) {
-      console.error('Error in reaction handler', err);
-    }
+  } catch (err) {
+    console.error('Error in reaction handler', err);
+  }
 };

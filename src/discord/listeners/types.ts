@@ -7,5 +7,5 @@ export type ChannelListener = {
 };
 
 export type ReactionListener = {
-  onMessageReaction: (reaction: MessageReaction, user: User) => void,
+  onMessageReaction: (reaction: MessageReaction, user: User) => void;
 };

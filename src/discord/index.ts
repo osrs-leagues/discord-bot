@@ -26,8 +26,8 @@ export const initializeDiscord = (callback?: () => void) => {
 
   interactions.forEach((interactionHandler) => {
     client.on('interactionCreate', interactionHandler);
-  })
-  
+  });
+
   client.on('messageReactionAdd', handleReactionAdd);
 
   client.login(config.discord_bot.token);
