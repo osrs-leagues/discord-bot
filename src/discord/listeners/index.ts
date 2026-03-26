@@ -1,14 +1,14 @@
 import { Message, MessageReaction, User } from 'discord.js';
 import impSpottingListener from './messageListeners/impSpottingListener';
 import challengeApprovalMessageListener from './messageListeners/challengeApprovalListener';
-import pregnantManReactionListener from './reactionListeners/bannedEmojiReactionListener';
+import bannedEmojiReactionListener from './reactionListeners/bannedEmojiReactionListener';
 
 const messageListeners = [
   impSpottingListener,
   challengeApprovalMessageListener,
 ];
 
-const reactionListeners = [pregnantManReactionListener];
+const reactionListeners = [bannedEmojiReactionListener];
 
 export const handleMessageCreate = (message: Message) => {
   const validChannels = messageListeners.filter((listener) =>
