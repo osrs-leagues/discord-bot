@@ -1,14 +1,23 @@
-name: Production Release
+name: Deploy Stage
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref (branch, tag, or SHA) to deploy
+        required: true
+        default: main
+
+env:
+  DEPLOY_REF: ${{ inputs.ref }}
 
 jobs:
   lint_build_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.DEPLOY_REF }}
 
       - uses: actions/setup-node@v5
         with:
@@ -28,14 +37,16 @@ jobs:
       - name: Test
         run: yarn test
 
-  production_release:
+  stage_release:
     needs:
       - lint_build_test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ env.DEPLOY_REF }}
       - uses: akhileshns/heroku-deploy@v3.14.15
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME_PROD}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_STAGE }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}

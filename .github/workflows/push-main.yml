@@ -9,13 +9,13 @@ jobs:
   lint_build_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v5
         with:
           always-auth: true
           cache: yarn
-          node-version: 18
+          node-version: 21
 
       - name: Install yarn packages
         run: yarn install --frozen-lockfile
@@ -40,16 +40,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
+      - name: Use Node.js 21
+        uses: actions/setup-node@v5
         with:
           always-auth: true
           cache: yarn
-          node-version: 18
+          node-version: 21
 
       - name: Install yarn packages
         run: yarn install --frozen-lockfile
@@ -69,8 +69,8 @@ jobs:
       - lint_build_test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - uses: actions/checkout@v6
+      - uses: akhileshns/heroku-deploy@v3.14.15
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME_STAGE}}
