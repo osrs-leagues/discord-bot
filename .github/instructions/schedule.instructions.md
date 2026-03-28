@@ -21,9 +21,9 @@ const myJob: Job = {
     production: '0 */1 * * *', // Cron expression for production
   },
   runOnStart: false, // Run immediately on bot startup?
-  execute: () => {
+  execute: async () => {
     try {
-      myTask.execute();
+      await myTask.execute();
     } catch (error) {
       console.error('Error executing myJob.', error);
     }
@@ -53,6 +53,6 @@ Where `Environment = 'test' | 'development' | 'stage' | 'production'`.
 - The job is also added to the `jobs` array in `src/schedule/index.ts`
 - `interval` values are standard cron expressions; use `undefined` to skip an environment
 - Jobs that should only run when a league is active: `enabled: config.current_league_active`
-- `execute` is synchronous (fire-and-forget) — the job body calls `task.execute()` which returns a Promise but the job doesn't await it unless needed
+- `execute` may be async — the job body calls `await task.execute()` to catch errors properly via try-catch
 - Error handling in `execute`: try-catch with `console.error`
 - Offset production intervals by minutes to avoid all jobs firing at :00 (e.g., `'2 */6 * * *'` = every 6h at minute 2)

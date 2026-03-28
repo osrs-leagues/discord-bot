@@ -40,12 +40,12 @@ import * as challenges from '../challenges';
 describe('challenges', () => {
   describe('generateNewChallenges', () => {
     test('generateNewChallenges should exclude challenge ids', () => {
-      const challenges = challenges.generateNewChallenges(
+      const newChallenges = challenges.generateNewChallenges(
         ChallengeDifficulty.NOVICE,
         [],
         [excludeId1, excludeId2],
       );
-      expect(challenges).not.toContain(excludeId1);
+      expect(newChallenges).not.toContain(excludeId1);
     });
   });
 });

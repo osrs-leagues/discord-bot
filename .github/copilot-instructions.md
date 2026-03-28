@@ -61,17 +61,17 @@ src/schedule/                   → Cron job definitions (Job type with per-envi
 
 ### Naming
 
-| Category            | Style                                | Examples                                     |
-| ------------------- | ------------------------------------ | -------------------------------------------- |
-| Files               | camelCase                            | `approveChallenge.ts`, `fetchHiscoreUser.ts` |
-| Directories         | camelCase                            | `challengeList/`, `selectMenus/`             |
-| Classes/Models      | PascalCase                           | `DiscordUser`, `ChallengeCard`               |
-| Enums               | PascalCase names, UPPER_SNAKE values | `ChallengeDifficulty.NOVICE`, `Rank.DRAGON`  |
-| Constants           | UPPER_SNAKE_CASE                     | `CURRENT_LEAGUE`, `HISCORES_URL`             |
-| Variables/Functions | camelCase                            | `challengeCache`, `getRank()`                |
-| Database columns    | snake_case                           | `user_id`, `twisted_name`                    |
-| Database tables     | PascalCase                           | `DiscordUser`, `ChallengeCard`               |
-| Type aliases        | PascalCase                           | `PointRankings`, `SetLeagueRoleParams`       |
+| Category            | Style                                | Examples                                    |
+| ------------------- | ------------------------------------ | ------------------------------------------- |
+| Files               | camelCase or snake_case              | `approveChallenge.ts`, `draw_raffle.ts`     |
+| Directories         | camelCase                            | `challengeList/`, `selectMenus/`            |
+| Classes/Models      | PascalCase                           | `DiscordUser`, `ChallengeCard`              |
+| Enums               | PascalCase names, UPPER_SNAKE values | `ChallengeDifficulty.NOVICE`, `Rank.DRAGON` |
+| Constants           | UPPER_SNAKE_CASE                     | `CURRENT_LEAGUE`, `HISCORES_URL`            |
+| Variables/Functions | camelCase                            | `challengeCache`, `getRank()`               |
+| Database columns    | snake_case                           | `user_id`, `twisted_name`                   |
+| Database tables     | PascalCase                           | `DiscordUser`, `ChallengeCard`              |
+| Type aliases        | PascalCase                           | `PointRankings`, `SetLeagueRoleParams`      |
 
 ### Imports
 

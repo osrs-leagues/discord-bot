@@ -8,14 +8,31 @@ applyTo: src/discord/interactions/commands/**
 
 Every command file exports a `Command` object as default:
 
+The `Command` type:
+
+```typescript
+type Command = {
+  channels?: string[]; // Optional: restrict to specific channel IDs
+  roles?: string[]; // Optional: restrict to specific role IDs
+  data: SlashCommandBuilder; // Command definition
+  execute: (interaction: CommandInteraction<CacheType>) => Promise<void>;
+};
+```
+
+Example usage:
+
 ```typescript
 import { Command } from './types';
 
 const myCommand: Command = {
-  channels?: string[],        // Optional: restrict to specific channel IDs
-  roles?: string[],           // Optional: restrict to specific role IDs
-  data: SlashCommandBuilder,  // Command definition
-  execute: async (interaction: CommandInteraction<CacheType>) => void,
+  channels: ['123456789012345678'],
+  roles: ['987654321098765432'],
+  data: new SlashCommandBuilder()
+    .setName('my_command')
+    .setDescription('Description'),
+  async execute(interaction) {
+    // Command implementation
+  },
 };
 
 export default myCommand;

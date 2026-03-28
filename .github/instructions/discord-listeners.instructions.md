@@ -11,6 +11,7 @@ Listeners respond to messages in specific Discord channels (not slash commands).
 ```typescript
 import { Message } from 'discord.js';
 import { ChannelListener } from '../types';
+import { setMessageExpiration, ERROR_LIFESPAN } from '../utils';
 
 const myListener: ChannelListener = {
   channels: [
@@ -40,7 +41,7 @@ export default myListener;
 type ChannelListener = {
   channels: string[]; // Channel IDs this listener responds to
   excludedRoles?: string[]; // Optional: role IDs to exclude
-  onChannelMessage: (message: Message) => void;
+  onChannelMessage: (message: Message) => Promise<void>;
 };
 ```
 

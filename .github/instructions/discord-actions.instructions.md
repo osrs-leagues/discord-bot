@@ -20,7 +20,7 @@ export type MyActionParams = {
 const myAction = async ({
   member,
   guild,
-}: MyActionParams): Promise<ReturnType> => {
+}: MyActionParams): Promise<ReturnType | undefined> => {
   try {
     // Perform Discord API operations
     return result;
@@ -37,7 +37,7 @@ export default myAction;
 
 - **Default export** only — one action per file
 - **Typed parameter objects** for actions with multiple params (use `type` aliases, not interfaces)
-- **Error handling**: Always wrap in try-catch with `console.error`. Return `undefined` or `false` on failure — never throw
+- **Error handling**: Prefer wrapping in try-catch with `console.error`. Return `undefined` or `false` on failure — avoid throwing
 - **Register** in `src/discord/actions/index.ts` with: `export { default as myAction } from './myAction'`
 - Actions that interact with Discord interactions accept `CommandInteraction | ButtonInteraction` as first param
 - Use `interaction.editReply()` (assumes caller has already deferred); use `interaction.followUp()` for additional messages
