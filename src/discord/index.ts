@@ -1,7 +1,7 @@
 import { Client, Intents } from 'discord.js';
 
 import config from '../config';
-import { handleMessageCreate } from './listeners';
+import { handleMessageCreate, handleReactionAdd } from './listeners';
 import interactions from './interactions';
 import { loadChallengeCache } from '../challenges';
 
@@ -10,7 +10,9 @@ export const client = new Client({
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
   ],
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 
 export const initializeDiscord = (callback?: () => void) => {
@@ -25,6 +27,8 @@ export const initializeDiscord = (callback?: () => void) => {
   interactions.forEach((interactionHandler) => {
     client.on('interactionCreate', interactionHandler);
   });
+
+  client.on('messageReactionAdd', handleReactionAdd);
 
   client.login(config.discord_bot.token);
 };
