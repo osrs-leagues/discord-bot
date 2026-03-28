@@ -15,6 +15,7 @@ import updateLeaguePointsCommand from './update_league_points';
 import updateAllRolesCommand from './update_all_roles';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
+import leagueNameBronze from './leagueNameBronze';
 import regionCommand from './regions';
 import removeRegionRolesCommand from './remove_region_roles';
 import challengeCommand from './challenge';
@@ -50,6 +51,7 @@ const commandData = [
   leagueNameLocal('twisted'),
   leagueNameLocal('trailblazer_reloaded'),
   leagueNameLocal('raging_echoes'),
+  leagueNameBronze('demonic_pacts'),
   /*config.current_league_active
     ? leagueNameRemote(CURRENT_LEAGUE)
     : leagueNameBronze(CURRENT_LEAGUE),*/

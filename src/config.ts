@@ -94,6 +94,15 @@ const config: BotConfig = {
       rune: process.env.RAGING_ECHOES_RUNE,
       dragon: process.env.RAGING_ECHOES_DRAGON,
     },
+    demonic_pacts: {
+      bronze: process.env.DEMONIC_PACTS_BRONZE,
+      iron: process.env.DEMONIC_PACTS_IRON,
+      steel: process.env.DEMONIC_PACTS_STEEL,
+      mithril: process.env.DEMONIC_PACTS_MITHRIL,
+      adamant: process.env.DEMONIC_PACTS_ADAMANT,
+      rune: process.env.DEMONIC_PACTS_RUNE,
+      dragon: process.env.DEMONIC_PACTS_DRAGON,
+    },
   },
 };
 

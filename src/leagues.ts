@@ -1,5 +1,6 @@
 import { HexColorString } from 'discord.js';
 import {
+  DemonicPactsLeague,
   RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,
@@ -10,7 +11,7 @@ import DiscordUser from './database/models/DiscordUser';
 import { LeagueAttributes } from './database/models/League/League';
 import { Attributes, UpsertOptions } from 'sequelize';
 
-export const CURRENT_LEAGUE: League = 'raging_echoes';
+export const CURRENT_LEAGUE: League = 'demonic_pacts';
 
 export enum Rank {
   BRONZE = 'bronze',
@@ -27,7 +28,8 @@ export type League =
   | 'trailblazer'
   | 'shattered_relics'
   | 'trailblazer_reloaded'
-  | 'raging_echoes';
+  | 'raging_echoes'
+  | 'demonic_pacts';
 
 export type PointRankings = { [key in Rank]: number };
 
@@ -79,6 +81,15 @@ const LeagueRankings: Leagues = {
     rune: 45000,
     dragon: 60000,
   },
+  demonic_pacts: {
+    bronze: 2000,
+    iron: 4000,
+    steel: 10000,
+    mithril: 20000,
+    adamant: 30000,
+    rune: 45000,
+    dragon: 60000,
+  },
 };
 
 const LeagueNames: { [key in League]: string } = {
@@ -87,6 +98,7 @@ const LeagueNames: { [key in League]: string } = {
   shattered_relics: 'Shattered Relics',
   trailblazer_reloaded: 'Trailblazer Reloaded',
   raging_echoes: 'Raging Echoes',
+  demonic_pacts: 'Demonic Pacts',
 };
 
 const RankNames: { [key in Rank]: string } = {
@@ -115,6 +127,7 @@ const LeagueDiscordColumn: { [key in League]: keyof DiscordUser } = {
   shattered_relics: 'shattered_relics_name',
   trailblazer_reloaded: 'trailblazer_reloaded_name',
   raging_echoes: 'raging_echoes_name',
+  demonic_pacts: 'demonic_pacts_name',
 };
 
 export const getRank = (points: number, league: League): Rank => {
@@ -155,6 +168,8 @@ export const getLeagueAttributes = async (
       return await TrailblazerReloadedLeague.findByPk(username);
     case 'raging_echoes':
       return await RagingEchoesLeague.findByPk(username);
+    case 'demonic_pacts':
+      return await DemonicPactsLeague.findByPk(username);
   }
 };
 
@@ -200,6 +215,14 @@ export const insertLeagueName = async (
       );
     case 'raging_echoes':
       return await RagingEchoesLeague.upsert(
+        {
+          name: username,
+          points: points,
+        },
+        options,
+      );
+    case 'demonic_pacts':
+      return await DemonicPactsLeague.upsert(
         {
           name: username,
           points: points,
