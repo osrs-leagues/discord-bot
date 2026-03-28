@@ -1,5 +1,18 @@
 # @osrs-leagues/discord-bot
 
+## 2.10.0
+
+### Minor Changes
+
+- 9c2c395: Add reverse_approval command
+- f41f0d9: Add banned emoji reaction listener
+- 0947be6: Update GitHub Actions workflows to use latest actions versions and improve deployment process
+
+### Patch Changes
+
+- e95143c: Update GitHub Actions workflow permissions and fix GITHUB_TOKEN reference
+- c33b83f: Add Heroku CLI installation step to deployment workflows
+
 ## 2.9.3
 
 ### Patch Changes
