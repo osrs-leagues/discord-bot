@@ -62,7 +62,7 @@ jobs:
         id: changeset
         uses: changesets/action@v1
         with:
-          publish: npx changeset tag
+          publish: yarn changeset tag
           title: Production Release
           commit: Production Release
         env:
