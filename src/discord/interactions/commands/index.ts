@@ -15,6 +15,7 @@ import updateLeaguePointsCommand from './update_league_points';
 import updateAllRolesCommand from './update_all_roles';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
+import leagueNameBronze from './leagueNameBronze';
 import regionCommand from './regions';
 import removeRegionRolesCommand from './remove_region_roles';
 import challengeCommand from './challenge';
@@ -32,6 +33,9 @@ import viewChallengeCommand from './viewChallenge';
 import randomRelicsCommand from './randomRelics';
 import randomCombatMasteriesCommand from './randomCombatMasteries';
 import reverseApprovalCommand from './reverseApproval';
+import config from '../../../config';
+import leagueNameRemote from './leagueNameRemote';
+import { CURRENT_LEAGUE } from '../../../leagues';
 //import config from '../../../config';
 
 const commandData = [
@@ -50,9 +54,9 @@ const commandData = [
   leagueNameLocal('twisted'),
   leagueNameLocal('trailblazer_reloaded'),
   leagueNameLocal('raging_echoes'),
-  /*config.current_league_active
+  config.current_league_active
     ? leagueNameRemote(CURRENT_LEAGUE)
-    : leagueNameBronze(CURRENT_LEAGUE),*/
+    : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   raffleDrawCommand,
   randomCombatMasteriesCommand,

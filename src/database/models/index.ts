@@ -7,11 +7,13 @@ import Challenge from './Challenge/Challenge';
 import ChallengeCard from './Challenge/ChallengeCard';
 import Region from './Region';
 import RagingEchoesLeague from './League/RagingEchoesLeague';
+import DemonicPactsLeague from './League/DemonicPactsLeague';
 import RaffleTicket from './RaffleTicket';
 
 const models = [
   Challenge,
   ChallengeCard,
+  DemonicPactsLeague,
   DiscordUser,
   RagingEchoesLeague,
   ShatteredRelicsLeague,
@@ -25,6 +27,7 @@ const models = [
 export {
   Challenge,
   ChallengeCard,
+  DemonicPactsLeague,
   DiscordUser,
   RagingEchoesLeague,
   ShatteredRelicsLeague,

@@ -23,6 +23,7 @@ const removeLeagueRolesCommand: Command = {
           shattered_relics_name: null,
           trailblazer_reloaded_name: null,
           raging_echoes_name: null,
+          demonic_pacts_name: null,
         });
       }
       removeLeagueRoles({

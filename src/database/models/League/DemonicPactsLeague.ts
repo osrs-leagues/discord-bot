@@ -1,0 +1,38 @@
+import { CreationOptional, DataTypes, Sequelize } from 'sequelize';
+import { InitializableModel } from '../types';
+
+class DemonicPactsLeague extends InitializableModel<DemonicPactsLeague> {
+  declare name: string;
+  declare points: number;
+
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
+
+  static initialize = (sequelize: Sequelize) => {
+    DemonicPactsLeague.init(
+      {
+        name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          primaryKey: true,
+          unique: true,
+        },
+        points: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        createdAt: DataTypes.DATE,
+        updatedAt: DataTypes.DATE,
+      },
+      {
+        tableName: 'DemonicPactsLeague',
+        sequelize,
+      },
+    );
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  static initializeAssociations() {}
+}
+
+export default DemonicPactsLeague;
