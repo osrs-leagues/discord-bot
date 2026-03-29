@@ -1,5 +1,16 @@
 # @osrs-leagues/discord-bot
 
+## 2.11.0
+
+### Minor Changes
+
+- 362ab0f: Add copilot instructions
+
+### Patch Changes
+
+- 5ffb726: Add additional banned emoji
+- 3c9443d: Fix changeset release
+
 ## 2.10.0
 
 ### Minor Changes
