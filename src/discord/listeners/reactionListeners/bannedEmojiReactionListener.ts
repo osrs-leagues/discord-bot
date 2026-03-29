@@ -1,7 +1,7 @@
 import { MessageReaction } from 'discord.js';
 import { ReactionListener } from '../types';
 
-const BANNED_EMOJIS = ['🫃'];
+const BANNED_EMOJIS = ['🫃', '🫄'];
 
 const bannedEmojiReactionListener: ReactionListener = {
   onMessageReaction: (reaction: MessageReaction) => {
