@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.12.0
+
+### Minor Changes
+
+- 04e8a5d: Add Demonic Pacts League
+
 ## 2.11.0
 
 ### Minor Changes
