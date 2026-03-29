@@ -33,6 +33,9 @@ import viewChallengeCommand from './viewChallenge';
 import randomRelicsCommand from './randomRelics';
 import randomCombatMasteriesCommand from './randomCombatMasteries';
 import reverseApprovalCommand from './reverseApproval';
+import config from '../../../config';
+import leagueNameRemote from './leagueNameRemote';
+import { CURRENT_LEAGUE } from '../../../leagues';
 //import config from '../../../config';
 
 const commandData = [
@@ -51,10 +54,9 @@ const commandData = [
   leagueNameLocal('twisted'),
   leagueNameLocal('trailblazer_reloaded'),
   leagueNameLocal('raging_echoes'),
-  leagueNameBronze('demonic_pacts'),
-  /*config.current_league_active
+  config.current_league_active
     ? leagueNameRemote(CURRENT_LEAGUE)
-    : leagueNameBronze(CURRENT_LEAGUE),*/
+    : leagueNameBronze(CURRENT_LEAGUE),
   leagueRanksCommand,
   raffleDrawCommand,
   randomCombatMasteriesCommand,
