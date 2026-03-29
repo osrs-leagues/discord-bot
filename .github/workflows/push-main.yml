@@ -62,7 +62,7 @@ jobs:
         id: changeset
         uses: changesets/action@v1
         with:
-          publish: echo Production Release && echo "New tag:"
+          publish: npx changeset tag
           title: Production Release
           commit: Production Release
         env:
