@@ -1,4 +1,4 @@
-import { Collection, MessageEmbed, User } from 'discord.js';
+import { Collection, MessageAttachment, MessageEmbed, User } from 'discord.js';
 
 type DMTicketInfoMessageParams = {
   user: User;
@@ -7,7 +7,7 @@ type DMTicketInfoMessageParams = {
 type DMForwardMessageParams = {
   user: User;
   content: string;
-  attachments?: Collection<string, { url: string; name: string }>;
+  attachments?: Collection<string, MessageAttachment>;
 };
 
 type DMResponseMessageParams = {
@@ -59,7 +59,7 @@ const getDMForwardMessage = ({
       embed.setImage(firstImage.url);
     }
     const attachmentList = attachments
-      .map((a) => `[${a.name}](${a.url})`)
+      .map((a) => `[${a.name ?? a.url}](${a.url})`)
       .join('\n');
     embed.addField('Attachments', attachmentList);
   }
@@ -79,4 +79,9 @@ const getDMResponseMessage = ({
     .setTimestamp();
 };
 
-export { getDMTicketInfoMessage, getDMForwardMessage, getDMResponseMessage };
+export {
+  getDMTicketInfoMessage as default,
+  getDMTicketInfoMessage,
+  getDMForwardMessage,
+  getDMResponseMessage,
+};

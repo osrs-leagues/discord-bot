@@ -35,6 +35,7 @@ const handleDirectMessage = async (message: Message) => {
     return;
   }
   cooldowns.set(userId, Date.now());
+  setTimeout(() => cooldowns.delete(userId), COOLDOWN_MS);
 
   try {
     let ticket = await DMTicket.findByPk(userId);
@@ -88,7 +89,20 @@ const handleDirectMessage = async (message: Message) => {
 
           // Update the pinned info message buttons back to "Close Ticket"
           const pinnedMessages = await thread.messages.fetchPinned();
-          const infoMessage = pinnedMessages.first();
+          const TICKET_BUTTON_PREFIXES = ['reopen_ticket ', 'close_ticket ', 'block_user '];
+          const infoMessage = pinnedMessages.find((msg) => {
+            if (!client.user || msg.author.id !== client.user.id) return false;
+            if (!msg.components?.length) return false;
+            return msg.components.some((row) =>
+              row.components.some((component: any) => {
+                const customId = component?.customId;
+                return (
+                  typeof customId === 'string' &&
+                  TICKET_BUTTON_PREFIXES.some((prefix) => customId.startsWith(prefix))
+                );
+              }),
+            );
+          });
           if (infoMessage?.components?.length) {
             const updatedRow = new MessageActionRow().addComponents(
               new MessageButton()

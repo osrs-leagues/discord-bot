@@ -20,7 +20,33 @@ const blockUserButton: Button = {
 
     try {
       const thread = interaction.channel as ThreadChannel;
-      if (!thread?.isThread()) return;
+      if (!thread?.isThread()) {
+        await interaction.followUp({
+          content: 'This button can only be used inside a ticket thread.',
+          ephemeral: true,
+        });
+        return;
+      }
+
+      const hasAdminPermission = interaction.memberPermissions?.has('ADMINISTRATOR');
+      const hasModeratorPermission = interaction.memberPermissions?.has('MANAGE_THREADS');
+
+      if (!hasAdminPermission && !hasModeratorPermission) {
+        await interaction.followUp({
+          content: 'You do not have permission to perform this action.',
+          ephemeral: true,
+        });
+        return;
+      }
+
+      const parentName = thread.parent?.name?.toLowerCase() ?? '';
+      if (!parentName.includes('appeal')) {
+        await interaction.followUp({
+          content: 'This button can only be used in appeals ticket threads.',
+          ephemeral: true,
+        });
+        return;
+      }
 
       if (action === 'block_user') {
         const success = await blockDMUser({

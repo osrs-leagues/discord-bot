@@ -1,4 +1,4 @@
-import { Collection, User } from 'discord.js';
+import { Collection, MessageAttachment, User } from 'discord.js';
 import {
   getDMTicketInfoMessage,
   getDMForwardMessage,
@@ -53,11 +53,11 @@ describe('getDMForwardMessage', () => {
   });
 
   test('should handle attachments with images', () => {
-    const attachments = new Collection<string, { url: string; name: string }>();
+    const attachments = new Collection<string, MessageAttachment>();
     attachments.set('1', {
       url: 'https://example.com/screenshot.png',
       name: 'screenshot.png',
-    });
+    } as unknown as MessageAttachment);
 
     const embed = getDMForwardMessage({
       user: mockUser,
@@ -72,11 +72,11 @@ describe('getDMForwardMessage', () => {
   });
 
   test('should handle non-image attachments without setting image', () => {
-    const attachments = new Collection<string, { url: string; name: string }>();
+    const attachments = new Collection<string, MessageAttachment>();
     attachments.set('1', {
       url: 'https://example.com/file.txt',
       name: 'file.txt',
-    });
+    } as unknown as MessageAttachment);
 
     const embed = getDMForwardMessage({
       user: mockUser,
@@ -90,15 +90,15 @@ describe('getDMForwardMessage', () => {
   });
 
   test('should handle multiple attachments', () => {
-    const attachments = new Collection<string, { url: string; name: string }>();
+    const attachments = new Collection<string, MessageAttachment>();
     attachments.set('1', {
       url: 'https://example.com/photo.jpg',
       name: 'photo.jpg',
-    });
+    } as unknown as MessageAttachment);
     attachments.set('2', {
       url: 'https://example.com/log.txt',
       name: 'log.txt',
-    });
+    } as unknown as MessageAttachment);
 
     const embed = getDMForwardMessage({
       user: mockUser,

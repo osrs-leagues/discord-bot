@@ -10,6 +10,9 @@ import {
 import interactions from './interactions';
 import { loadChallengeCache } from '../challenges';
 
+/** Privileged MESSAGE_CONTENT intent (bit 15); not yet present in discord.js 13.5.0 Intents.FLAGS */
+const MESSAGE_CONTENT_INTENT = 1 << 15;
+
 export const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -17,7 +20,7 @@ export const client = new Client({
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
     Intents.FLAGS.DIRECT_MESSAGES,
-    1 << 15, // MESSAGE_CONTENT privileged intent
+    MESSAGE_CONTENT_INTENT,
   ],
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });

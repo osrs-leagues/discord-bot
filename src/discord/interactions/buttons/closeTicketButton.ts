@@ -20,6 +20,17 @@ const closeTicketButton: Button = {
       const thread = interaction.channel as ThreadChannel;
       if (!thread?.isThread()) return;
 
+      const hasAdminPermission = interaction.memberPermissions?.has('ADMINISTRATOR');
+      const hasModeratorPermission = interaction.memberPermissions?.has('MANAGE_THREADS');
+
+      if (!hasAdminPermission && !hasModeratorPermission) {
+        await interaction.followUp({
+          content: 'You do not have permission to perform this action.',
+          ephemeral: true,
+        });
+        return;
+      }
+
       if (action === 'close_ticket') {
         // Update the pinned message buttons before archiving
         if (interaction.message instanceof Message) {
