@@ -2,6 +2,8 @@ import { Message, MessageReaction, User } from 'discord.js';
 import impSpottingListener from './messageListeners/impSpottingListener';
 import challengeApprovalMessageListener from './messageListeners/challengeApprovalListener';
 import bannedEmojiReactionListener from './reactionListeners/bannedEmojiReactionListener';
+import handleDirectMessage from './dmMessageListener';
+import handleThreadReply from './appealThreadReplyListener';
 
 const messageListeners = [
   impSpottingListener,
@@ -16,6 +18,8 @@ export const handleMessageCreate = (message: Message) => {
   );
   validChannels.forEach((channel) => channel.onChannelMessage(message));
 };
+
+export { handleDirectMessage, handleThreadReply };
 
 export const handleReactionAdd = async (
   reaction: MessageReaction,

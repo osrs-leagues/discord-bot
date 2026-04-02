@@ -1,8 +1,14 @@
 import { ButtonInteraction } from 'discord.js';
 import challengeRerollButtonListener from './challengeRerollButton';
+import closeTicketButtonListener from './closeTicketButton';
+import blockUserButtonListener from './blockUserButton';
 import { Button } from './types';
 
-const buttons: Button[] = [challengeRerollButtonListener];
+const buttons: Button[] = [
+  challengeRerollButtonListener,
+  closeTicketButtonListener,
+  blockUserButtonListener,
+];
 
 export const handleButtonInteraction = async (
   interaction: ButtonInteraction,

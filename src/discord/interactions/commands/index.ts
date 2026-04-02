@@ -33,6 +33,7 @@ import viewChallengeCommand from './viewChallenge';
 import randomRelicsCommand from './randomRelics';
 import randomCombatMasteriesCommand from './randomCombatMasteries';
 import reverseApprovalCommand from './reverseApproval';
+import unblockDmCommand from './unblock_dm';
 import config from '../../../config';
 import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../../leagues';
@@ -69,6 +70,7 @@ const commandData = [
   removeRegionRolesCommand,
   reverseApprovalCommand,
   editChallengeCommand,
+  unblockDmCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
   viewChallengeCommand,
