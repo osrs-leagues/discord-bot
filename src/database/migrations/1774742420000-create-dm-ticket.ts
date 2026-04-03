@@ -31,6 +31,9 @@ module.exports = {
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     });
+    await queryInterface.addIndex('DMTicket', ['thread_id'], {
+      name: 'dm_ticket_thread_id_idx',
+    });
   },
   async down(queryInterface: QueryInterface) {
     await queryInterface.dropTable('DMTicket');

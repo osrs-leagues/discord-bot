@@ -1,4 +1,7 @@
 {
   "prettier.configPath": ".prettierrc.js",
-  "js/ts.tsdk.path": "node_modules/typescript/lib"
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "chat.tools.terminal.autoApprove": {
+    "nvm": true
+  }
 }

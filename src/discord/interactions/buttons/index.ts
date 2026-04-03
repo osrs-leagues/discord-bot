@@ -29,10 +29,12 @@ export const handleButtonInteraction = async (
     validListeners.map((listener) => {
       // Role guard: check if the user has the required role
       if (listener.roles?.length > 0) {
-        const memberRoles = interaction.member?.roles as GuildMemberRoleManager;
-        const hasRole = listener.roles.some((role) =>
-          memberRoles?.cache?.has(role),
-        );
+        const memberRoles = interaction.member?.roles;
+        const hasRole = Array.isArray(memberRoles)
+          ? listener.roles.some((role) => memberRoles.includes(role))
+          : listener.roles.some((role) =>
+              (memberRoles as GuildMemberRoleManager)?.cache?.has(role),
+            );
         if (!hasRole) {
           return interaction.reply({
             content: 'You do not have permission to perform this action.',
@@ -42,5 +44,7 @@ export const handleButtonInteraction = async (
       }
       return listener.onButtonInteraction(interaction);
     }),
+  ).catch((error) =>
+    console.error('Error handling button interaction:', error),
   );
 };
