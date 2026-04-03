@@ -33,6 +33,7 @@ describe('closeTicketButton', () => {
     expect(closeTicketButton.roles).toEqual([
       Role.Administrator,
       Role.Moderator,
+      Role.Tester,
     ]);
   });
 

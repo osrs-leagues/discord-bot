@@ -40,7 +40,11 @@ describe('blockUserButton', () => {
   });
 
   test('should require Administrator and Moderator roles', () => {
-    expect(blockUserButton.roles).toEqual([Role.Administrator, Role.Moderator]);
+    expect(blockUserButton.roles).toEqual([
+      Role.Administrator,
+      Role.Moderator,
+      Role.Tester,
+    ]);
   });
 
   test('should return early if channel is not a thread', async () => {

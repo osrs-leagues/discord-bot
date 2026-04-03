@@ -13,7 +13,7 @@ import Role from '../../Role';
 
 const blockUserButton: Button = {
   buttons: ['block_user', 'unblock_user'],
-  roles: [Role.Administrator, Role.Moderator],
+  roles: [Role.Administrator, Role.Moderator, Role.Tester],
   onButtonInteraction: async (interaction: ButtonInteraction) => {
     await interaction.deferUpdate();
 
