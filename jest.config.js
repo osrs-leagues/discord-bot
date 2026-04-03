@@ -6,4 +6,5 @@ module.exports = {
   setupFilesAfterEnv: ['./src/test/jest.database.ts'],
   testEnvironment: 'node',
   testMatch: ['**/src/**/*.test.ts'],
+  maxWorkers: 1,
 };
