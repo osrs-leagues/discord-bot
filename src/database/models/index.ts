@@ -1,4 +1,5 @@
 import DiscordUser from './DiscordUser';
+import DMTicket from './DMTicket';
 import ShatteredRelicsLeague from './League/ShatteredRelicsLeague';
 import TrailblazerLeague from './League/TrailblazerLeague';
 import TrailblazerReloadedLeague from './League/TrailblazerReloadedLeague';
@@ -15,6 +16,7 @@ const models = [
   ChallengeCard,
   DemonicPactsLeague,
   DiscordUser,
+  DMTicket,
   RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,
@@ -29,6 +31,7 @@ export {
   ChallengeCard,
   DemonicPactsLeague,
   DiscordUser,
+  DMTicket,
   RagingEchoesLeague,
   ShatteredRelicsLeague,
   TrailblazerLeague,

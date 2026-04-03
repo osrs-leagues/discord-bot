@@ -1,7 +1,12 @@
 import { Client, Intents } from 'discord.js';
 
 import config from '../config';
-import { handleMessageCreate, handleReactionAdd } from './listeners';
+import {
+  handleMessageCreate,
+  handleReactionAdd,
+  handleDirectMessage,
+  handleThreadReply,
+} from './listeners';
 import interactions from './interactions';
 import { loadChallengeCache } from '../challenges';
 
@@ -11,6 +16,8 @@ export const client = new Client({
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.DIRECT_MESSAGES,
+    1 << 15, // MESSAGE_CONTENT privileged intent (not available in discord.js v13 Intents.FLAGS)
   ],
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
@@ -22,7 +29,14 @@ export const initializeDiscord = (callback?: () => void) => {
     callback?.();
   });
 
-  client.on('messageCreate', handleMessageCreate);
+  client.on('messageCreate', (message) => {
+    if (message.channel.type === 'DM') {
+      handleDirectMessage(message);
+    } else {
+      handleMessageCreate(message);
+      handleThreadReply(message);
+    }
+  });
 
   interactions.forEach((interactionHandler) => {
     client.on('interactionCreate', interactionHandler);
