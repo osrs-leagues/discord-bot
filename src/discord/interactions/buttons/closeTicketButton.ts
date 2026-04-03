@@ -1,5 +1,6 @@
 import {
   ButtonInteraction,
+  GuildMemberRoleManager,
   Message,
   MessageActionRow,
   MessageButton,
@@ -7,6 +8,9 @@ import {
 } from 'discord.js';
 
 import { Button } from './types';
+import Role from '../../Role';
+
+const STAFF_ROLES = [Role.Administrator, Role.Moderator];
 
 const closeTicketButton: Button = {
   buttons: ['close_ticket', 'reopen_ticket'],
@@ -19,6 +23,19 @@ const closeTicketButton: Button = {
     try {
       const thread = interaction.channel as ThreadChannel;
       if (!thread?.isThread()) return;
+
+      // Permission guard: only staff can close/reopen tickets
+      const memberRoles = interaction.member?.roles as GuildMemberRoleManager;
+      const hasPermission = STAFF_ROLES.some((role) =>
+        memberRoles?.cache?.has(role),
+      );
+      if (!hasPermission) {
+        await interaction.followUp({
+          content: 'You do not have permission to perform this action.',
+          ephemeral: true,
+        });
+        return;
+      }
 
       if (action === 'close_ticket') {
         // Update the pinned message buttons before archiving

@@ -17,7 +17,7 @@ export const client = new Client({
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
     Intents.FLAGS.DIRECT_MESSAGES,
-    1 << 15, // MESSAGE_CONTENT privileged intent
+    1 << 15, // MESSAGE_CONTENT privileged intent (not available in discord.js v13 Intents.FLAGS)
   ],
   partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });

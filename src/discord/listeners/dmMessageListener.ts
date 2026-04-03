@@ -18,6 +18,12 @@ import {
 const COOLDOWN_MS = 30_000;
 const cooldowns = new Map<string, number>();
 
+/** Evict cooldown entries after they expire to prevent unbounded growth */
+const setCooldown = (userId: string) => {
+  cooldowns.set(userId, Date.now());
+  setTimeout(() => cooldowns.delete(userId), COOLDOWN_MS);
+};
+
 const handleDirectMessage = async (message: Message) => {
   if (message.author.bot) return;
 
@@ -34,7 +40,7 @@ const handleDirectMessage = async (message: Message) => {
     );
     return;
   }
-  cooldowns.set(userId, Date.now());
+  setCooldown(userId);
 
   try {
     let ticket = await DMTicket.findByPk(userId);
@@ -88,7 +94,21 @@ const handleDirectMessage = async (message: Message) => {
 
           // Update the pinned info message buttons back to "Close Ticket"
           const pinnedMessages = await thread.messages.fetchPinned();
-          const infoMessage = pinnedMessages.first();
+          const infoMessage = pinnedMessages.find(
+            (msg) =>
+              msg.author.id === client.user?.id &&
+              msg.components?.some((row) =>
+                row.components.some((component: any) => {
+                  const cId = component?.customId;
+                  return (
+                    typeof cId === 'string' &&
+                    (cId.startsWith('close_ticket ') ||
+                      cId.startsWith('reopen_ticket ') ||
+                      cId.startsWith('block_user '))
+                  );
+                }),
+              ),
+          );
           if (infoMessage?.components?.length) {
             const updatedRow = new MessageActionRow().addComponents(
               new MessageButton()

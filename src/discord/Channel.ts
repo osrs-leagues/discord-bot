@@ -42,12 +42,9 @@ enum Channel {
   /**
    * #appeals
    */
-  Appeals = '1487967703183528038',
+  Appeals = '1489580896511201320',
 
-  /**
-   * #appeals in Bot Testing Server
-   */
-  AppealsTest = '0000000000000000001',
+  AppealsTest = '1487967703183528038',
 }
 
 export const channelGroups = {
@@ -80,7 +77,7 @@ export const channelGroups = {
     Channel.SageChallengeCommands,
   ],
   SAGE_CHALLENGE_RAFFLE: [Channel.BotCommandsServer, Channel.SageChallengeInfo],
-  APPEALS: [Channel.Appeals, Channel.AppealsTest],
+  APPEALS: [Channel.Appeals],
 };
 
 export default Channel;
