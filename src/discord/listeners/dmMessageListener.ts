@@ -53,28 +53,23 @@ const handleDirectMessage = async (message: Message) => {
       return;
     }
 
-    // Find the appeals channel
-    const appealsChannelId = channelGroups.APPEALS.find((id) => {
+    // Find the appeals channel (try cache first, then fetch)
+    let appealsChannel: TextChannel | undefined;
+    for (const id of channelGroups.APPEALS) {
       try {
-        return client.channels.cache.has(id);
+        const channel =
+          client.channels.cache.get(id) ?? (await client.channels.fetch(id));
+        if (channel?.isText()) {
+          appealsChannel = channel as TextChannel;
+          break;
+        }
       } catch {
-        return false;
+        // Channel not accessible, try next
       }
-    });
-
-    if (!appealsChannelId) {
-      console.error('No appeals channel found in cache.');
-      await message.reply(
-        'Unable to process your message at this time. Please try again later.',
-      );
-      return;
     }
 
-    const appealsChannel = client.channels.cache.get(
-      appealsChannelId,
-    ) as TextChannel;
     if (!appealsChannel) {
-      console.error('Appeals channel not found:', appealsChannelId);
+      console.error('No appeals channel found.');
       await message.reply(
         'Unable to process your message at this time. Please try again later.',
       );
@@ -143,7 +138,13 @@ const handleDirectMessage = async (message: Message) => {
       content: message.content,
       attachments: message.attachments,
     });
-    await thread.send({ embeds: [forwardEmbed] });
+    await thread.send({
+      embeds: [forwardEmbed],
+      files: [...message.attachments.values()].map((a) => ({
+        attachment: a.url,
+        name: a.name ?? 'attachment',
+      })),
+    });
 
     await message.reply(
       'Your message has been received. Staff will respond as soon as possible.',

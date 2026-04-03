@@ -1,6 +1,5 @@
 import {
   ButtonInteraction,
-  GuildMemberRoleManager,
   Message,
   MessageActionRow,
   MessageButton,
@@ -12,10 +11,9 @@ import blockDMUser from '../../actions/blockDMUser';
 import { client } from '../../index';
 import Role from '../../Role';
 
-const STAFF_ROLES = [Role.Administrator, Role.Moderator];
-
 const blockUserButton: Button = {
   buttons: ['block_user', 'unblock_user'],
+  roles: [Role.Administrator, Role.Moderator],
   onButtonInteraction: async (interaction: ButtonInteraction) => {
     await interaction.deferUpdate();
 
@@ -25,19 +23,6 @@ const blockUserButton: Button = {
     try {
       const thread = interaction.channel as ThreadChannel;
       if (!thread?.isThread()) return;
-
-      // Permission guard: only staff can block/unblock users
-      const memberRoles = interaction.member?.roles as GuildMemberRoleManager;
-      const hasPermission = STAFF_ROLES.some((role) =>
-        memberRoles?.cache?.has(role),
-      );
-      if (!hasPermission) {
-        await interaction.followUp({
-          content: 'You do not have permission to perform this action.',
-          ephemeral: true,
-        });
-        return;
-      }
 
       if (action === 'block_user') {
         const success = await blockDMUser({

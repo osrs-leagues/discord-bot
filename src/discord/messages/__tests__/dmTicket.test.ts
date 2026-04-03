@@ -5,6 +5,16 @@ import {
   getDMResponseMessage,
 } from '../dmTicket';
 
+/**
+ * Helper to create a mock attachment matching the shape of real API MessageAttachment
+ * (which has `url` populated, unlike the constructor-only form).
+ */
+const mockAttachment = (url: string, name: string): MessageAttachment => {
+  const a = new MessageAttachment(url, name);
+  (a as any).url = url;
+  return a;
+};
+
 const mockUser = {
   id: '123456789',
   tag: 'TestUser#1234',
@@ -56,10 +66,7 @@ describe('getDMForwardMessage', () => {
     const attachments = new Collection<string, MessageAttachment>();
     attachments.set(
       '1',
-      new MessageAttachment(
-        'https://example.com/screenshot.png',
-        'screenshot.png',
-      ),
+      mockAttachment('https://example.com/screenshot.png', 'screenshot.png'),
     );
 
     const embed = getDMForwardMessage({
@@ -78,7 +85,7 @@ describe('getDMForwardMessage', () => {
     const attachments = new Collection<string, MessageAttachment>();
     attachments.set(
       '1',
-      new MessageAttachment('https://example.com/file.txt', 'file.txt'),
+      mockAttachment('https://example.com/file.txt', 'file.txt'),
     );
 
     const embed = getDMForwardMessage({
@@ -96,11 +103,11 @@ describe('getDMForwardMessage', () => {
     const attachments = new Collection<string, MessageAttachment>();
     attachments.set(
       '1',
-      new MessageAttachment('https://example.com/photo.jpg', 'photo.jpg'),
+      mockAttachment('https://example.com/photo.jpg', 'photo.jpg'),
     );
     attachments.set(
       '2',
-      new MessageAttachment('https://example.com/log.txt', 'log.txt'),
+      mockAttachment('https://example.com/log.txt', 'log.txt'),
     );
 
     const embed = getDMForwardMessage({

@@ -77,7 +77,7 @@ export const channelGroups = {
     Channel.SageChallengeCommands,
   ],
   SAGE_CHALLENGE_RAFFLE: [Channel.BotCommandsServer, Channel.SageChallengeInfo],
-  APPEALS: [Channel.Appeals],
+  APPEALS: [Channel.Appeals, Channel.AppealsTest],
 };
 
 export default Channel;

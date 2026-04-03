@@ -27,7 +27,13 @@ const handleThreadReply = async (message: Message) => {
       content: message.content,
     });
 
-    await user.send({ embeds: [responseEmbed] });
+    await user.send({
+      embeds: [responseEmbed],
+      files: [...message.attachments.values()].map((a) => ({
+        attachment: a.url,
+        name: a.name ?? 'attachment',
+      })),
+    });
     await message.react('✅');
   } catch (error) {
     console.error('Error forwarding thread reply to user:', error);

@@ -1,4 +1,4 @@
-import { ButtonInteraction } from 'discord.js';
+import { ButtonInteraction, GuildMemberRoleManager } from 'discord.js';
 import challengeRerollButtonListener from './challengeRerollButton';
 import closeTicketButtonListener from './closeTicketButton';
 import blockUserButtonListener from './blockUserButton';
@@ -26,6 +26,21 @@ export const handleButtonInteraction = async (
 
   // Trigger the valid button's handler functions
   Promise.all(
-    validListeners.map((listener) => listener.onButtonInteraction(interaction)),
+    validListeners.map((listener) => {
+      // Role guard: check if the user has the required role
+      if (listener.roles?.length > 0) {
+        const memberRoles = interaction.member?.roles as GuildMemberRoleManager;
+        const hasRole = listener.roles.some((role) =>
+          memberRoles?.cache?.has(role),
+        );
+        if (!hasRole) {
+          return interaction.reply({
+            content: 'You do not have permission to perform this action.',
+            ephemeral: true,
+          });
+        }
+      }
+      return listener.onButtonInteraction(interaction);
+    }),
   );
 };
