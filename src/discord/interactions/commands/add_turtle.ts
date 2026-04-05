@@ -60,7 +60,7 @@ const addTurtleCommand: Command = {
 
       const rarityName = getTurtleRarityName(rarity);
       interaction.editReply(
-        `Turtle added (ID: ${turtle.id})${
+        `Turtle added (${turtle.uuid})${
           name ? ` — "${name}"` : ''
         } with rarity **${rarityName}**.`,
       );

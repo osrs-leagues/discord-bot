@@ -35,6 +35,8 @@ import randomCombatMasteriesCommand from './randomCombatMasteries';
 import reverseApprovalCommand from './reverseApproval';
 import unblockDmCommand from './unblock_dm';
 import addTurtleCommand from './add_turtle';
+import editTurtleCommand from './edit_turtle';
+import removeTurtleCommand from './remove_turtle';
 import turtleCommand from './turtle';
 import turtleLogCommand from './turtle_log';
 import config from '../../../config';
@@ -49,6 +51,7 @@ const commandData = [
   challengeStatisticsCommand,
   createChallengeCommand,
   deleteChallengeCommand,
+  editTurtleCommand,
   pingCommand,
   fetchLeagueRanksCommand,
   hiscoresCommand,
@@ -72,6 +75,7 @@ const commandData = [
   rejectChallengeCommand,
   removeLeagueRolesCommand,
   removeRegionRolesCommand,
+  removeTurtleCommand,
   reverseApprovalCommand,
   editChallengeCommand,
   turtleCommand,

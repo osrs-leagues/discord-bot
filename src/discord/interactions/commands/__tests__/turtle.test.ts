@@ -7,6 +7,10 @@ import Turtle from '../../../../database/models/Turtle';
 import { selectWeightedTurtle } from '../turtle';
 import getTurtleMessage from '../../../messages/turtle';
 import getTurtleLogMessage from '../../../messages/turtleLog';
+import editTurtleCommand from '../edit_turtle';
+import addTurtleCommand from '../add_turtle';
+import turtleCommand from '../turtle';
+import turtleLogCommand from '../turtle_log';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -186,6 +190,24 @@ describe('turtle', () => {
       const embed = getTurtleLogMessage({ turtles, collected });
       expect(embed.fields).toHaveLength(1);
       expect(embed.fields[0].name).toBe('Common');
+    });
+  });
+
+  describe('command registration', () => {
+    test('add_turtle command should be defined', () => {
+      expect(addTurtleCommand.data.name).toBe('add_turtle');
+    });
+
+    test('edit_turtle command should be defined', () => {
+      expect(editTurtleCommand.data.name).toBe('edit_turtle');
+    });
+
+    test('turtle command should be defined', () => {
+      expect(turtleCommand.data.name).toBe('turtle');
+    });
+
+    test('turtle_log command should be defined', () => {
+      expect(turtleLogCommand.data.name).toBe('turtle_log');
     });
   });
 });

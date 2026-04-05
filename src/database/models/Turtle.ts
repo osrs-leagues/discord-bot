@@ -30,6 +30,7 @@ export const getTurtleRarityName = (rarity: TurtleRarity): string => {
 
 class Turtle extends InitializableModel<Turtle> {
   declare readonly id: CreationOptional<number>;
+  declare uuid: CreationOptional<string>;
   declare name: CreationOptional<string>;
   declare image_url: string;
   declare rarity: TurtleRarity;
@@ -45,6 +46,12 @@ class Turtle extends InitializableModel<Turtle> {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
+          unique: true,
+        },
+        uuid: {
+          type: DataTypes.UUID,
+          allowNull: false,
+          defaultValue: DataTypes.UUIDV4,
           unique: true,
         },
         name: {
