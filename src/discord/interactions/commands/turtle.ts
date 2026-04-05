@@ -3,6 +3,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Turtle, { TURTLE_RARITY_WEIGHTS } from '../../../database/models/Turtle';
+import TurtleCollection from '../../../database/models/TurtleCollection';
 import getTurtleMessage from '../../messages/turtle';
 
 const selectWeightedTurtle = (turtles: Turtle[]): Turtle => {
@@ -38,7 +39,10 @@ const turtleCommand: Command = {
       }
 
       const turtle = selectWeightedTurtle(turtles);
-      const embed = getTurtleMessage({ turtle });
+      const [, created] = await TurtleCollection.findOrCreate({
+        where: { user_id: interaction.user.id, turtle_id: turtle.id },
+      });
+      const embed = getTurtleMessage({ turtle, isNewDiscovery: created });
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.error(`Error rolling turtle: ${error}`);

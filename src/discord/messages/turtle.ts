@@ -4,14 +4,17 @@ import Turtle, { getTurtleRarityName } from '../../database/models/Turtle';
 
 type TurtleMessageParams = {
   turtle: Turtle;
+  isNewDiscovery?: boolean;
 };
 
-const getTurtleMessage = ({ turtle }: TurtleMessageParams): MessageEmbed => {
+const getTurtleMessage = ({
+  turtle,
+  isNewDiscovery,
+}: TurtleMessageParams): MessageEmbed => {
   const rarityName = getTurtleRarityName(turtle.rarity);
   const title = turtle.name ? turtle.name : 'You found a turtle!';
-  const description = turtle.name
-    ? `Rarity: **${rarityName}**`
-    : `Rarity: **${rarityName}**`;
+  const newTag = isNewDiscovery ? '🆕 **New Discovery!**\n' : '';
+  const description = `${newTag}Rarity: **${rarityName}**`;
 
   return new MessageEmbed()
     .setTitle(title)

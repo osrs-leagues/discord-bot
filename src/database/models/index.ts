@@ -1,6 +1,7 @@
 import DiscordUser from './DiscordUser';
 import DMTicket from './DMTicket';
 import Turtle from './Turtle';
+import TurtleCollection from './TurtleCollection';
 import ShatteredRelicsLeague from './League/ShatteredRelicsLeague';
 import TrailblazerLeague from './League/TrailblazerLeague';
 import TrailblazerReloadedLeague from './League/TrailblazerReloadedLeague';
@@ -23,6 +24,7 @@ const models = [
   TrailblazerLeague,
   TrailblazerReloadedLeague,
   Turtle,
+  TurtleCollection,
   TwistedLeague,
   Region,
   RaffleTicket,
@@ -39,6 +41,7 @@ export {
   TrailblazerLeague,
   TrailblazerReloadedLeague,
   Turtle,
+  TurtleCollection,
   TwistedLeague,
   Region,
   RaffleTicket,

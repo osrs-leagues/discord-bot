@@ -5,6 +5,8 @@ import {
 } from '../database/models/Turtle';
 import Turtle from '../database/models/Turtle';
 import { selectWeightedTurtle } from '../discord/interactions/commands/turtle';
+import getTurtleMessage from '../discord/messages/turtle';
+import getTurtleLogMessage from '../discord/messages/turtleLog';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -77,6 +79,87 @@ describe('turtle', () => {
       expect(counts[2]).toBeGreaterThan(iterations * 0.4);
       expect(counts[3]).toBeGreaterThan(0);
       expect(counts[3]).toBeLessThan(iterations * 0.05);
+    });
+  });
+
+  describe('getTurtleMessage', () => {
+    const makeTurtle = (overrides: Partial<Turtle>) =>
+      ({
+        id: 1,
+        rarity: TurtleRarity.COMMON,
+        image_url: 'https://example.com/turtle.png',
+        ...overrides,
+      } as Turtle);
+
+    test('should show new discovery tag when isNewDiscovery is true', () => {
+      const turtle = makeTurtle({ name: 'Shelly' });
+      const embed = getTurtleMessage({ turtle, isNewDiscovery: true });
+      expect(embed.description).toContain('New Discovery');
+    });
+
+    test('should not show new discovery tag when isNewDiscovery is false', () => {
+      const turtle = makeTurtle({ name: 'Shelly' });
+      const embed = getTurtleMessage({ turtle, isNewDiscovery: false });
+      expect(embed.description).not.toContain('New Discovery');
+    });
+
+    test('should not show new discovery tag when isNewDiscovery is undefined', () => {
+      const turtle = makeTurtle({ name: 'Shelly' });
+      const embed = getTurtleMessage({ turtle });
+      expect(embed.description).not.toContain('New Discovery');
+    });
+  });
+
+  describe('getTurtleLogMessage', () => {
+    const makeTurtle = (id: number, rarity: TurtleRarity, name?: string) =>
+      // @ts-ignore
+      ({ id, rarity, name } as Turtle);
+
+    test('should show collected count', () => {
+      const turtles = [
+        makeTurtle(1, TurtleRarity.COMMON, 'Shelly'),
+        makeTurtle(2, TurtleRarity.RARE, 'Spike'),
+      ];
+      const collected = new Set([1]);
+      const embed = getTurtleLogMessage({ turtles, collected });
+      expect(embed.description).toContain('1');
+      expect(embed.description).toContain('2');
+    });
+
+    test('should show checkmark for collected turtles', () => {
+      const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
+      const collected = new Set([1]);
+      const embed = getTurtleLogMessage({ turtles, collected });
+      const field = embed.fields.find((f) => f.name === 'Common');
+      expect(field.value).toContain('✅ Shelly');
+    });
+
+    test('should show question mark for uncollected turtles', () => {
+      const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
+      const collected = new Set<number>();
+      const embed = getTurtleLogMessage({ turtles, collected });
+      const field = embed.fields.find((f) => f.name === 'Common');
+      expect(field.value).toContain('❓ ???');
+    });
+
+    test('should group turtles by rarity', () => {
+      const turtles = [
+        makeTurtle(1, TurtleRarity.COMMON, 'Shelly'),
+        makeTurtle(2, TurtleRarity.RARE, 'Spike'),
+      ];
+      const collected = new Set<number>();
+      const embed = getTurtleLogMessage({ turtles, collected });
+      const fieldNames = embed.fields.map((f) => f.name);
+      expect(fieldNames).toContain('Common');
+      expect(fieldNames).toContain('Rare');
+    });
+
+    test('should skip rarity groups with no turtles', () => {
+      const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
+      const collected = new Set<number>();
+      const embed = getTurtleLogMessage({ turtles, collected });
+      expect(embed.fields).toHaveLength(1);
+      expect(embed.fields[0].name).toBe('Common');
     });
   });
 });
