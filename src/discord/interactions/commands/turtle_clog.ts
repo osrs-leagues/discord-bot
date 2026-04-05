@@ -6,10 +6,10 @@ import Turtle from '../../../database/models/Turtle';
 import TurtleCollection from '../../../database/models/TurtleCollection';
 import getTurtleLogMessage from '../../messages/turtleLog';
 
-const turtleLogCommand: Command = {
+const turtleClogCommand: Command = {
   channels: channelGroups.BOT_COMMANDS,
   data: new SlashCommandBuilder()
-    .setName('turtle_log')
+    .setName('turtle_clog')
     .setDescription('View your turtle collection log.'),
   execute: async (interaction) => {
     await interaction.deferReply({ ephemeral: true });
@@ -40,4 +40,4 @@ const turtleLogCommand: Command = {
   },
 };
 
-export default turtleLogCommand;
+export default turtleClogCommand;

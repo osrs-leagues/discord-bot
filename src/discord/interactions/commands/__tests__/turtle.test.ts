@@ -10,7 +10,7 @@ import getTurtleLogMessage from '../../../messages/turtleLog';
 import editTurtleCommand from '../edit_turtle';
 import addTurtleCommand from '../add_turtle';
 import turtleCommand from '../turtle';
-import turtleLogCommand from '../turtle_log';
+import turtleClogCommand from '../turtle_clog';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -206,8 +206,8 @@ describe('turtle', () => {
       expect(turtleCommand.data.name).toBe('turtle');
     });
 
-    test('turtle_log command should be defined', () => {
-      expect(turtleLogCommand.data.name).toBe('turtle_log');
+    test('turtle_clog command should be defined', () => {
+      expect(turtleClogCommand.data.name).toBe('turtle_clog');
     });
   });
 });

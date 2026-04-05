@@ -38,7 +38,8 @@ import addTurtleCommand from './add_turtle';
 import editTurtleCommand from './edit_turtle';
 import removeTurtleCommand from './remove_turtle';
 import turtleCommand from './turtle';
-import turtleLogCommand from './turtle_log';
+import turtleClogCommand from './turtle_clog';
+import turtleStatsCommand from './turtle_stats';
 import config from '../../../config';
 import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../../leagues';
@@ -78,8 +79,9 @@ const commandData = [
   removeTurtleCommand,
   reverseApprovalCommand,
   editChallengeCommand,
+  turtleClogCommand,
   turtleCommand,
-  turtleLogCommand,
+  turtleStatsCommand,
   unblockDmCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
