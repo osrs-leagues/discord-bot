@@ -106,5 +106,8 @@ dist
 # sqlite
 .sqlite
 
+# VS Code
+.vscode
+
 # Environment files
 *.env
