@@ -2,11 +2,11 @@ import {
   TurtleRarity,
   TURTLE_RARITY_WEIGHTS,
   getTurtleRarityName,
-} from '../database/models/Turtle';
-import Turtle from '../database/models/Turtle';
-import { selectWeightedTurtle } from '../discord/interactions/commands/turtle';
-import getTurtleMessage from '../discord/messages/turtle';
-import getTurtleLogMessage from '../discord/messages/turtleLog';
+} from '../../../../database/models/Turtle';
+import Turtle from '../../../../database/models/Turtle';
+import { selectWeightedTurtle } from '../turtle';
+import getTurtleMessage from '../../../messages/turtle';
+import getTurtleLogMessage from '../../../messages/turtleLog';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -90,6 +90,32 @@ describe('turtle', () => {
         image_url: 'https://example.com/turtle.png',
         ...overrides,
       } as Turtle);
+
+    test('should show named title when turtle has a name', () => {
+      const turtle = makeTurtle({ name: 'Shelly' });
+      const embed = getTurtleMessage({ turtle });
+      expect(embed.title).toBe('You found a Shelly turtle!');
+    });
+
+    test('should show generic title when turtle has no name', () => {
+      const turtle = makeTurtle({ name: undefined });
+      const embed = getTurtleMessage({ turtle });
+      expect(embed.title).toBe('You found a turtle!');
+    });
+
+    test('should include rarity in description', () => {
+      const turtle = makeTurtle({ rarity: TurtleRarity.RARE });
+      const embed = getTurtleMessage({ turtle });
+      expect(embed.description).toContain('Rare');
+    });
+
+    test('should set image from turtle image_url', () => {
+      const turtle = makeTurtle({
+        image_url: 'https://example.com/shelly.png',
+      });
+      const embed = getTurtleMessage({ turtle });
+      expect(embed.image.url).toBe('https://example.com/shelly.png');
+    });
 
     test('should show new discovery tag when isNewDiscovery is true', () => {
       const turtle = makeTurtle({ name: 'Shelly' });

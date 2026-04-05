@@ -12,15 +12,16 @@ const getTurtleMessage = ({
   isNewDiscovery,
 }: TurtleMessageParams): MessageEmbed => {
   const rarityName = getTurtleRarityName(turtle.rarity);
-  const title = turtle.name ? turtle.name : 'You found a turtle!';
+  const title = turtle.name
+    ? `You found a ${turtle.name} turtle!`
+    : 'You found a turtle!';
   const newTag = isNewDiscovery ? '🆕 **New Discovery!**\n' : '';
   const description = `${newTag}Rarity: **${rarityName}**`;
 
   return new MessageEmbed()
     .setTitle(title)
     .setDescription(description)
-    .setImage(turtle.image_url)
-    .setFooter({ text: `Rarity: ${rarityName}` });
+    .setImage(turtle.image_url);
 };
 
 export default getTurtleMessage;
