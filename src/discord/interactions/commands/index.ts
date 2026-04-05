@@ -34,12 +34,15 @@ import randomRelicsCommand from './randomRelics';
 import randomCombatMasteriesCommand from './randomCombatMasteries';
 import reverseApprovalCommand from './reverseApproval';
 import unblockDmCommand from './unblock_dm';
+import addTurtleCommand from './add_turtle';
+import turtleCommand from './turtle';
 import config from '../../../config';
 import leagueNameRemote from './leagueNameRemote';
 import { CURRENT_LEAGUE } from '../../../leagues';
 //import config from '../../../config';
 
 const commandData = [
+  addTurtleCommand,
   approveChallengeCommand,
   challengeCommand,
   challengeStatisticsCommand,
@@ -70,6 +73,7 @@ const commandData = [
   removeRegionRolesCommand,
   reverseApprovalCommand,
   editChallengeCommand,
+  turtleCommand,
   unblockDmCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,

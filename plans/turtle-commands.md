@@ -14,16 +14,15 @@ Add a collectible turtle image system: moderators add turtle images with raritie
 - Extend `InitializableModel<Turtle>` following `DMTicket.ts` pattern
 - Schema:
 
-| Column               | Type    | Constraints                      |
-| -------------------- | ------- | -------------------------------- |
-| `id`                 | BIGINT  | PK, auto-increment               |
-| `name`               | STRING  | nullable (optional display name) |
-| `image_url`          | STRING  | not null                         |
-| `rarity_numerator`   | INTEGER | not null, default 1              |
-| `rarity_denominator` | INTEGER | not null                         |
-| `added_by`           | STRING  | nullable (Discord user ID)       |
-| `createdAt`          | DATE    | auto                             |
-| `updatedAt`          | DATE    | auto                             |
+| Column      | Type   | Constraints                                         |
+| ----------- | ------ | --------------------------------------------------- |
+| `id`        | BIGINT | PK, auto-increment                                  |
+| `name`      | STRING | nullable (optional display name)                    |
+| `image_url` | STRING | not null                                            |
+| `rarity`    | STRING | not null (enum: COMMON, UNCOMMON, RARE, ULTRA_RARE) |
+| `added_by`  | STRING | nullable (Discord user ID)                          |
+| `createdAt` | DATE   | auto                                                |
+| `updatedAt` | DATE   | auto                                                |
 
 - Empty `initializeAssociations()`
 
@@ -47,17 +46,13 @@ Add a collectible turtle image system: moderators add turtle images with raritie
 - **Roles**: `[Role.Administrator, Role.Moderator]`
 - **Channels**: `channelGroups.STAFF`
 - **Options**:
-  - `rarity` (string, required): Format "X/Y" (e.g., "1/50")
-  - `image` (string, optional): Direct URL to the turtle image
-  - `message_link` (string, optional): Discord message link to extract image from
+  - `image_url` (string, required): Externally hosted image URL (e.g., Imgur)
+  - `rarity` (string, required): Dropdown choice — Common, Uncommon, Rare, Ultra Rare
   - `name` (string, optional): Display name for the turtle
 - **Execute logic**:
-  1. Require at least one of `image` or `message_link` — reply with ephemeral error if neither provided
-  2. If `message_link` provided, parse channel/message IDs from the link (`https://discord.com/channels/{guild}/{channel}/{message}`), fetch the message via `interaction.client.channels.fetch(channelId)` → `channel.messages.fetch(messageId)`, and extract the first attachment or embed image URL
-  3. Parse rarity string with regex `/^(\d+)\/(\d+)$/` — validate numerator > 0, denominator > 0, numerator ≤ denominator
-  4. Validate image URL with `new URL()` check
-  5. Create `Turtle` record in DB
-  6. Reply with ephemeral confirmation including the turtle name/rarity
+  1. Validate `image_url` with `new URL()` check — reply with ephemeral error if invalid
+  2. Create `Turtle` record in DB with the selected rarity
+  3. Reply with ephemeral confirmation including the turtle name/rarity
 
 ### Step 5: Create `turtle` command
 
@@ -85,27 +80,44 @@ Add a collectible turtle image system: moderators add turtle images with raritie
 
 ---
 
-## Phase 3: Rarity Algorithm
+## Phase 3: Rarity System
 
-Weighted random selection that normalizes rarity fractions so a turtle is **always** returned:
+### Rarity Categories
 
-1. For each turtle, compute `weight = rarity_numerator / rarity_denominator`
+Defined as an enum (`TurtleRarity`) with fixed weights:
+
+| Category   | Enum Value   | Weight |
+| ---------- | ------------ | ------ |
+| Common     | `COMMON`     | 1      |
+| Uncommon   | `UNCOMMON`   | 1/10   |
+| Rare       | `RARE`       | 1/100  |
+| Ultra Rare | `ULTRA_RARE` | 1/500  |
+
+### Weighted Random Selection
+
+A turtle is **always** returned:
+
+1. For each turtle, look up its `weight` from the rarity category
 2. Sum all weights → `totalWeight`
 3. Generate `roll = Math.random() * totalWeight`
 4. Iterate turtles, accumulating weights; return the turtle where cumulative weight exceeds `roll`
 
 ### Example
 
-| Turtle   | Rarity | Weight |
-| -------- | ------ | ------ |
-| Turtle A | 1/100  | 0.01   |
-| Turtle B | 1/3    | 0.333  |
+3 Common turtles + 1 Ultra Rare turtle:
 
-- `totalWeight` = 0.343
-- P(A) = 0.01 / 0.343 ≈ **2.9%**
-- P(B) = 0.333 / 0.343 ≈ **97.1%**
+| Turtle   | Rarity     | Weight |
+| -------- | ---------- | ------ |
+| Turtle A | Common     | 1      |
+| Turtle B | Common     | 1      |
+| Turtle C | Common     | 1      |
+| Turtle D | Ultra Rare | 0.002  |
 
-Relative rarities are preserved while guaranteeing a result.
+- `totalWeight` = 3.002
+- P(each Common) = 1 / 3.002 ≈ **33.3%**
+- P(Ultra Rare) = 0.002 / 3.002 ≈ **0.067%** (~1 in 1,500)
+
+Relative rarities are preserved while guaranteeing a result. A Common turtle is always 500x more likely than an Ultra Rare.
 
 ---
 
@@ -115,8 +127,8 @@ Relative rarities are preserved while guaranteeing a result.
 - Test cases:
   - Weighted selection with a single turtle always returns that turtle
   - Weighted selection with multiple turtles respects relative probabilities (statistical test over many iterations)
-  - Rarity parsing correctly handles valid formats ("1/50", "3/10")
-  - Rarity parsing rejects invalid formats ("0/50", "abc", "3/0", "5/3")
+  - All rarity categories map to correct weights
+  - Ultra Rare turtles are selected far less frequently than Common turtles
 
 ---
 
@@ -132,18 +144,15 @@ Relative rarities are preserved while guaranteeing a result.
 
 ## Design Decisions
 
-### Image storage via URL string (not file upload)
+### Image storage via externally hosted URL
 
-`@discordjs/builders` v0.11 does not have `addAttachmentOption()`. Images are stored as URLs. Two input methods are supported:
+Images are stored as externally hosted URLs (e.g., Imgur). The bot never downloads or re-uploads images — it passes the URL directly to Discord's embed API via `.setImage(url)`, and Discord's client fetches the image from the external host at render time.
 
-- **Direct URL**: Moderator pastes any persistent image URL (Imgur, external host, etc.)
-- **Message link**: Moderator posts an image in Discord, copies the message link, and passes it to the command — the bot extracts the attachment URL automatically
+This approach was chosen over Discord attachment uploads or message link extraction because Discord CDN URLs include expiring tokens and may break over time. Externally hosted URLs remain permanent as long as the host is live.
 
-> **Note**: Discord CDN attachment URLs may expire. External hosting (Imgur, etc.) is recommended for permanence when using direct URLs. Message link extraction is convenient but the resulting CDN URL may eventually expire.
+### Predefined rarity categories (not free-text fractions)
 
-### Rarity as numerator + denominator columns
-
-Two integer columns rather than a float — preserves exact fractions and avoids floating-point precision issues during selection.
+Four fixed tiers (Common, Uncommon, Rare, Ultra Rare) with weights defined in code. This avoids mod confusion — free-text fractions like "1/50" express relative weight, not absolute probability, so the actual drop rate shifts every time a turtle is added. Predefined categories make rarity immediately understandable and consistent.
 
 ### `turtle` uses non-ephemeral reply
 
