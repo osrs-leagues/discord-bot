@@ -18,6 +18,11 @@ module.exports = {
       );
     }
 
+    await queryInterface.changeColumn('Turtle', 'uuid', {
+      type: DataTypes.UUID,
+      allowNull: false,
+    });
+
     await queryInterface.addIndex('Turtle', ['uuid'], {
       unique: true,
       name: 'turtle_uuid_unique',

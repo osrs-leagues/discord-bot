@@ -25,16 +25,18 @@ export const getTurtleRarityName = (rarity: TurtleRarity): string => {
       return 'Rare';
     case TurtleRarity.ULTRA_RARE:
       return 'Ultra Rare';
+    default:
+      throw new Error(`Unknown turtle rarity: ${rarity}`);
   }
 };
 
 class Turtle extends InitializableModel<Turtle> {
   declare readonly id: CreationOptional<number>;
   declare uuid: CreationOptional<string>;
-  declare name: CreationOptional<string>;
+  declare name?: CreationOptional<string>;
   declare image_url: string;
   declare rarity: TurtleRarity;
-  declare added_by: CreationOptional<string>;
+  declare added_by?: CreationOptional<string>;
   declare readonly createdAt: CreationOptional<Date>;
   declare readonly updatedAt: CreationOptional<Date>;
 

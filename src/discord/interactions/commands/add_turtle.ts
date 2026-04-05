@@ -44,10 +44,18 @@ const addTurtleCommand: Command = {
       const rarity = interaction.options.getString('rarity') as TurtleRarity;
       const name = interaction.options.getString('name');
 
+      let parsedUrl: URL;
       try {
-        new URL(imageUrl);
+        parsedUrl = new URL(imageUrl);
       } catch {
         interaction.editReply('Invalid image URL provided.');
+        return;
+      }
+
+      if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+        interaction.editReply(
+          'Invalid image URL provided. Only http:// and https:// URLs are allowed.',
+        );
         return;
       }
 
