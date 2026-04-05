@@ -93,6 +93,9 @@ commandData.forEach((command) => {
   commands.set(command.data.name, command);
 });
 
+/** Map of commandName -> userId -> lastUsedTimestamp */
+const cooldowns = new Map<string, Map<string, number>>();
+
 const handleCommandInteraction = async (
   interaction: Interaction<CacheType>,
 ) => {
@@ -120,6 +123,38 @@ const handleCommandInteraction = async (
     if (!hasRole) {
       return interaction.reply(
         'You do not have permission to use this command.',
+      );
+    }
+  }
+
+  if (command.cooldown) {
+    const isExempt = command.cooldown.exemptChannels?.includes(
+      interaction.channel.id,
+    );
+    if (!isExempt) {
+      if (!cooldowns.has(interaction.commandName)) {
+        cooldowns.set(interaction.commandName, new Map());
+      }
+      const commandCooldowns = cooldowns.get(interaction.commandName);
+      const lastUsed = commandCooldowns.get(interaction.user.id);
+      const now = Date.now();
+      if (lastUsed && now - lastUsed < command.cooldown.duration) {
+        const remainingSeconds = Math.ceil(
+          (command.cooldown.duration - (now - lastUsed)) / 1000,
+        );
+        const remainingText =
+          remainingSeconds >= 60
+            ? `${Math.ceil(remainingSeconds / 60)} minutes`
+            : `${remainingSeconds} seconds`;
+        return interaction.reply({
+          content: `Please wait ${remainingText} before using this command again.`,
+          ephemeral: true,
+        });
+      }
+      commandCooldowns.set(interaction.user.id, now);
+      setTimeout(
+        () => commandCooldowns.delete(interaction.user.id),
+        command.cooldown.duration,
       );
     }
   }

@@ -24,7 +24,10 @@ const selectWeightedTurtle = (turtles: Turtle[]): Turtle => {
 };
 
 const turtleCommand: Command = {
-  channels: channelGroups.BOT_COMMANDS,
+  cooldown: {
+    duration: 10 * 60 * 1000,
+    exemptChannels: channelGroups.TURTLES,
+  },
   data: new SlashCommandBuilder()
     .setName('turtle')
     .setDescription('Roll a random turtle!'),

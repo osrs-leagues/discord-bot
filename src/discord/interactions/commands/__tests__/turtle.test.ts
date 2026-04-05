@@ -11,6 +11,7 @@ import editTurtleCommand from '../edit_turtle';
 import addTurtleCommand from '../add_turtle';
 import turtleCommand from '../turtle';
 import turtleClogCommand from '../turtle_clog';
+import { channelGroups } from '../../../Channel';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -208,6 +209,25 @@ describe('turtle', () => {
 
     test('turtle_clog command should be defined', () => {
       expect(turtleClogCommand.data.name).toBe('turtle_clog');
+    });
+
+    test('turtle command should not have channel restrictions', () => {
+      expect(turtleCommand.channels).toBeUndefined();
+    });
+
+    test('turtle command should have a 10 minute cooldown', () => {
+      expect(turtleCommand.cooldown).toBeDefined();
+      expect(turtleCommand.cooldown.duration).toBe(10 * 60 * 1000);
+    });
+
+    test('turtle command cooldown should exempt turtles channels', () => {
+      expect(turtleCommand.cooldown.exemptChannels).toEqual(
+        channelGroups.TURTLES,
+      );
+    });
+
+    test('turtle_clog command should be restricted to turtles channels', () => {
+      expect(turtleClogCommand.channels).toEqual(channelGroups.TURTLES);
     });
   });
 });

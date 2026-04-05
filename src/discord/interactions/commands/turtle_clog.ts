@@ -7,7 +7,7 @@ import TurtleCollection from '../../../database/models/TurtleCollection';
 import getTurtleLogMessage from '../../messages/turtleLog';
 
 const turtleClogCommand: Command = {
-  channels: channelGroups.BOT_COMMANDS,
+  channels: channelGroups.TURTLES,
   data: new SlashCommandBuilder()
     .setName('turtle_clog')
     .setDescription('View your turtle collection log.'),
