@@ -2,6 +2,7 @@ import Turtle, {
   TurtleRarity,
   TURTLE_RARITY_WEIGHTS,
 } from '../database/models/Turtle';
+import TurtleCollection from '../database/models/TurtleCollection';
 import {
   turtleCache,
   loadTurtleCache,
@@ -17,6 +18,10 @@ import {
 describe('turtles cache', () => {
   beforeAll(async () => {
     await loadTurtleCache();
+  });
+
+  afterAll(() => {
+    jest.clearAllTimers();
   });
 
   describe('loadTurtleCache', () => {
@@ -158,6 +163,8 @@ describe('turtles cache', () => {
 
   describe('collection cache', () => {
     let testTurtle: Turtle;
+    let createSpy: jest.SpyInstance;
+    let findAllSpy: jest.SpyInstance;
 
     beforeAll(async () => {
       testTurtle = await addTurtle({
@@ -165,6 +172,19 @@ describe('turtles cache', () => {
         rarity: TurtleRarity.COMMON,
         name: 'CollTest',
       });
+      createSpy = jest
+        .spyOn(TurtleCollection, 'create')
+        .mockResolvedValue({} as TurtleCollection);
+      findAllSpy = jest
+        .spyOn(TurtleCollection, 'findAll')
+        .mockResolvedValue([]);
+      jest.useFakeTimers('modern');
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+      createSpy.mockRestore();
+      findAllSpy.mockRestore();
     });
 
     test('recordTurtleDiscovery should return true for new discovery', async () => {
