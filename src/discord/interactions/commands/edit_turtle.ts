@@ -3,10 +3,11 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
-import Turtle, {
+import {
   TurtleRarity,
   getTurtleRarityName,
 } from '../../../database/models/Turtle';
+import { getTurtleByUuid, editTurtle } from '../../../turtles';
 
 const editTurtleCommand: Command = {
   channels: channelGroups.STAFF,
@@ -52,7 +53,7 @@ const editTurtleCommand: Command = {
         return;
       }
 
-      const turtle = await Turtle.findOne({ where: { uuid } });
+      const turtle = getTurtleByUuid(uuid);
 
       if (!turtle) {
         interaction.editReply(`No turtle found with UUID \`${uuid}\`.`);
@@ -73,16 +74,13 @@ const editTurtleCommand: Command = {
           );
           return;
         }
-        turtle.image_url = imageUrl;
-      }
-      if (rarity) {
-        turtle.rarity = rarity;
-      }
-      if (name) {
-        turtle.name = name;
       }
 
-      await turtle.save();
+      await editTurtle(uuid, {
+        image_url: imageUrl ?? undefined,
+        rarity: rarity ?? undefined,
+        name: name ?? undefined,
+      });
 
       const updates: string[] = [];
       if (imageUrl) updates.push('image_url');
