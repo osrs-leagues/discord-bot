@@ -148,6 +148,12 @@ describe('turtles cache', () => {
         expect(turtles).toContain(result);
       }
     });
+
+    test('should throw when given an empty array', () => {
+      expect(() => selectWeightedTurtle([])).toThrow(
+        'Cannot select from an empty turtle array',
+      );
+    });
   });
 
   describe('collection cache', () => {

@@ -63,6 +63,9 @@ export const getTurtleByUuid = (uuid: string): Turtle | undefined => {
 };
 
 export const selectWeightedTurtle = (turtles: Turtle[]): Turtle => {
+  if (turtles.length === 0) {
+    throw new Error('Cannot select from an empty turtle array');
+  }
   const totalWeight = computeTotalWeight(turtles);
   let roll = Math.random() * totalWeight;
   for (const turtle of turtles) {
@@ -163,6 +166,7 @@ export const recordTurtleDiscovery = async (
   if (collected.has(turtleId)) {
     return false;
   }
+
   collected.add(turtleId);
   TurtleCollection.create({ user_id: userId, turtle_id: turtleId }).catch(
     (err) => console.error(`Failed to persist turtle discovery: ${err}`),
