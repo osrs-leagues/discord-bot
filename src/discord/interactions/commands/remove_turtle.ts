@@ -3,8 +3,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
-import Turtle from '../../../database/models/Turtle';
-import TurtleCollection from '../../../database/models/TurtleCollection';
+import { removeTurtle } from '../../../turtles';
 
 const removeTurtleCommand: Command = {
   channels: channelGroups.STAFF,
@@ -23,15 +22,12 @@ const removeTurtleCommand: Command = {
     try {
       const uuid = interaction.options.getString('uuid');
 
-      const turtle = await Turtle.findOne({ where: { uuid } });
+      const turtle = await removeTurtle(uuid);
 
       if (!turtle) {
         interaction.editReply(`No turtle found with UUID \`${uuid}\`.`);
         return;
       }
-
-      await TurtleCollection.destroy({ where: { turtle_id: turtle.id } });
-      await turtle.destroy();
 
       interaction.editReply(
         `Turtle \`${uuid}\`${

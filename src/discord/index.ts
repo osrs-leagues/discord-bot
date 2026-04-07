@@ -9,6 +9,7 @@ import {
 } from './listeners';
 import interactions from './interactions';
 import { loadChallengeCache } from '../challenges';
+import { loadTurtleCache } from '../turtles';
 
 export const client = new Client({
   intents: [
@@ -24,6 +25,7 @@ export const client = new Client({
 
 export const initializeDiscord = (callback?: () => void) => {
   loadChallengeCache();
+  loadTurtleCache();
   client.once('ready', () => {
     console.log('Started OSRS Leagues Bot!');
     callback?.();

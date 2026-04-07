@@ -2,26 +2,12 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
-import Turtle, { TURTLE_RARITY_WEIGHTS } from '../../../database/models/Turtle';
-import TurtleCollection from '../../../database/models/TurtleCollection';
+import {
+  turtleCache,
+  selectWeightedTurtle,
+  recordTurtleDiscovery,
+} from '../../../turtles';
 import getTurtleMessage from '../../messages/turtle';
-
-const selectWeightedTurtle = (turtles: Turtle[]): Turtle => {
-  let totalWeight = 0;
-  for (const turtle of turtles) {
-    totalWeight += TURTLE_RARITY_WEIGHTS[turtle.rarity];
-  }
-
-  let roll = Math.random() * totalWeight;
-  for (const turtle of turtles) {
-    roll -= TURTLE_RARITY_WEIGHTS[turtle.rarity];
-    if (roll <= 0) {
-      return turtle;
-    }
-  }
-
-  return turtles[turtles.length - 1];
-};
 
 const turtleCommand: Command = {
   cooldown: {
@@ -34,7 +20,7 @@ const turtleCommand: Command = {
   execute: async (interaction) => {
     await interaction.deferReply();
     try {
-      const turtles = await Turtle.findAll();
+      const turtles = turtleCache.turtles;
 
       if (turtles.length === 0) {
         interaction.editReply('No turtles available yet!');
@@ -42,10 +28,11 @@ const turtleCommand: Command = {
       }
 
       const turtle = selectWeightedTurtle(turtles);
-      const [, created] = await TurtleCollection.findOrCreate({
-        where: { user_id: interaction.user.id, turtle_id: turtle.id },
-      });
-      const embed = getTurtleMessage({ turtle, isNewDiscovery: created });
+      const isNewDiscovery = await recordTurtleDiscovery(
+        interaction.user.id,
+        turtle.id,
+      );
+      const embed = getTurtleMessage({ turtle, isNewDiscovery });
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.error(`Error rolling turtle: ${error}`);
@@ -54,5 +41,4 @@ const turtleCommand: Command = {
   },
 };
 
-export { selectWeightedTurtle };
 export default turtleCommand;

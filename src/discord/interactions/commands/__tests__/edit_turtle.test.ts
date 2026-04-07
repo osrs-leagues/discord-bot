@@ -1,15 +1,14 @@
 import editTurtleCommand from '../edit_turtle';
-import Turtle from '../../../../database/models/Turtle';
 import { TurtleRarity } from '../../../../database/models/Turtle';
+import * as turtles from '../../../../turtles';
 
-jest.mock('../../../../database/models/Turtle', () => {
-  const actual = jest.requireActual('../../../../database/models/Turtle');
+jest.mock('../../../../turtles', () => {
+  const actual = jest.requireActual('../../../../turtles');
   return {
     ...actual,
     __esModule: true,
-    default: {
-      findOne: jest.fn(),
-    },
+    getTurtleByUuid: jest.fn(),
+    editTurtle: jest.fn(),
   };
 });
 
@@ -45,7 +44,7 @@ describe('edit_turtle', () => {
   });
 
   test('should reply with error when turtle is not found', async () => {
-    (Turtle.findOne as jest.Mock).mockResolvedValue(null);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue(undefined);
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -61,8 +60,7 @@ describe('edit_turtle', () => {
   });
 
   test('should reply with error for invalid image URL', async () => {
-    const mockTurtle = { save: jest.fn() };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue({ uuid: 'abc-123' });
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -75,12 +73,12 @@ describe('edit_turtle', () => {
     expect(interaction.editReply).toHaveBeenCalledWith(
       'Invalid image URL provided.',
     );
-    expect(mockTurtle.save).not.toHaveBeenCalled();
+    expect(turtles.editTurtle).not.toHaveBeenCalled();
   });
 
   test('should update name and save', async () => {
-    const mockTurtle = { name: 'Old', save: jest.fn() };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue({ uuid: 'abc-123' });
+    (turtles.editTurtle as jest.Mock).mockResolvedValue({});
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -90,19 +88,17 @@ describe('edit_turtle', () => {
     // @ts-ignore
     await editTurtleCommand.execute(interaction);
 
-    expect(mockTurtle.name).toBe('Shelly');
-    expect(mockTurtle.save).toHaveBeenCalled();
+    expect(turtles.editTurtle).toHaveBeenCalledWith('abc-123', {
+      name: 'Shelly',
+    });
     expect(interaction.editReply).toHaveBeenCalledWith(
       expect.stringContaining('name → "Shelly"'),
     );
   });
 
   test('should update rarity and save', async () => {
-    const mockTurtle = {
-      rarity: TurtleRarity.COMMON,
-      save: jest.fn(),
-    };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue({ uuid: 'abc-123' });
+    (turtles.editTurtle as jest.Mock).mockResolvedValue({});
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -112,19 +108,17 @@ describe('edit_turtle', () => {
     // @ts-ignore
     await editTurtleCommand.execute(interaction);
 
-    expect(mockTurtle.rarity).toBe(TurtleRarity.RARE);
-    expect(mockTurtle.save).toHaveBeenCalled();
+    expect(turtles.editTurtle).toHaveBeenCalledWith('abc-123', {
+      rarity: TurtleRarity.RARE,
+    });
     expect(interaction.editReply).toHaveBeenCalledWith(
       expect.stringContaining('rarity → Rare'),
     );
   });
 
   test('should update image_url and save', async () => {
-    const mockTurtle = {
-      image_url: 'https://example.com/old.png',
-      save: jest.fn(),
-    };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue({ uuid: 'abc-123' });
+    (turtles.editTurtle as jest.Mock).mockResolvedValue({});
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -134,21 +128,17 @@ describe('edit_turtle', () => {
     // @ts-ignore
     await editTurtleCommand.execute(interaction);
 
-    expect(mockTurtle.image_url).toBe('https://example.com/new.png');
-    expect(mockTurtle.save).toHaveBeenCalled();
+    expect(turtles.editTurtle).toHaveBeenCalledWith('abc-123', {
+      image_url: 'https://example.com/new.png',
+    });
     expect(interaction.editReply).toHaveBeenCalledWith(
       expect.stringContaining('image_url'),
     );
   });
 
   test('should update multiple fields at once', async () => {
-    const mockTurtle = {
-      name: 'Old',
-      rarity: TurtleRarity.COMMON,
-      image_url: 'https://example.com/old.png',
-      save: jest.fn(),
-    };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
+    (turtles.getTurtleByUuid as jest.Mock).mockReturnValue({ uuid: 'abc-123' });
+    (turtles.editTurtle as jest.Mock).mockResolvedValue({});
 
     const interaction = createMockInteraction({
       uuid: 'abc-123',
@@ -160,9 +150,10 @@ describe('edit_turtle', () => {
     // @ts-ignore
     await editTurtleCommand.execute(interaction);
 
-    expect(mockTurtle.name).toBe('Shelly');
-    expect(mockTurtle.rarity).toBe(TurtleRarity.ULTRA_RARE);
-    expect(mockTurtle.image_url).toBe('https://example.com/new.png');
-    expect(mockTurtle.save).toHaveBeenCalledTimes(1);
+    expect(turtles.editTurtle).toHaveBeenCalledWith('abc-123', {
+      name: 'Shelly',
+      rarity: TurtleRarity.ULTRA_RARE,
+      image_url: 'https://example.com/new.png',
+    });
   });
 });

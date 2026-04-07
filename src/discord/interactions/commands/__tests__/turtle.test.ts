@@ -4,7 +4,7 @@ import {
   getTurtleRarityName,
 } from '../../../../database/models/Turtle';
 import Turtle from '../../../../database/models/Turtle';
-import { selectWeightedTurtle } from '../turtle';
+import { selectWeightedTurtle } from '../../../../turtles';
 import getTurtleMessage from '../../../messages/turtle';
 import getTurtleLogMessage from '../../../messages/turtleLog';
 import editTurtleCommand from '../edit_turtle';
