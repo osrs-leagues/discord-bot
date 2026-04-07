@@ -4,8 +4,9 @@ import { MessageEmbed } from 'discord.js';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
-import Turtle, { getTurtleRarityName } from '../../../database/models/Turtle';
+import { getTurtleRarityName } from '../../../database/models/Turtle';
 import TurtleCollection from '../../../database/models/TurtleCollection';
+import { getTurtleByUuid } from '../../../turtles';
 
 const turtleStatsCommand: Command = {
   channels: channelGroups.STAFF,
@@ -24,7 +25,7 @@ const turtleStatsCommand: Command = {
     try {
       const uuid = interaction.options.getString('uuid');
 
-      const turtle = await Turtle.findOne({ where: { uuid } });
+      const turtle = getTurtleByUuid(uuid);
 
       if (!turtle) {
         interaction.editReply(`No turtle found with UUID \`${uuid}\`.`);

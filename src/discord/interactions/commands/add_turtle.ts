@@ -3,10 +3,11 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
 import Role from '../../Role';
-import Turtle, {
+import {
   TurtleRarity,
   getTurtleRarityName,
 } from '../../../database/models/Turtle';
+import { addTurtle } from '../../../turtles';
 
 const addTurtleCommand: Command = {
   channels: channelGroups.STAFF,
@@ -59,7 +60,7 @@ const addTurtleCommand: Command = {
         return;
       }
 
-      const turtle = await Turtle.create({
+      const turtle = await addTurtle({
         image_url: imageUrl,
         rarity,
         name: name ?? undefined,

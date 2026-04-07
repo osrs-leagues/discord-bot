@@ -1,9 +1,14 @@
 import removeTurtleCommand from '../remove_turtle';
-import Turtle from '../../../../database/models/Turtle';
-import TurtleCollection from '../../../../database/models/TurtleCollection';
+import * as turtles from '../../../../turtles';
 
-jest.mock('../../../../database/models/Turtle');
-jest.mock('../../../../database/models/TurtleCollection');
+jest.mock('../../../../turtles', () => {
+  const actual = jest.requireActual('../../../../turtles');
+  return {
+    ...actual,
+    __esModule: true,
+    removeTurtle: jest.fn(),
+  };
+});
 
 const createMockInteraction = (options: Record<string, string | null>) => ({
   deferReply: jest.fn(),
@@ -24,7 +29,7 @@ describe('remove_turtle', () => {
   });
 
   test('should reply with error when turtle is not found', async () => {
-    (Turtle.findOne as jest.Mock).mockResolvedValue(null);
+    (turtles.removeTurtle as jest.Mock).mockResolvedValue(undefined);
 
     const interaction = createMockInteraction({ uuid: 'abc-123' });
 
@@ -40,20 +45,15 @@ describe('remove_turtle', () => {
     const mockTurtle = {
       id: 1,
       name: 'Shelly',
-      destroy: jest.fn(),
     };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
-    (TurtleCollection.destroy as jest.Mock).mockResolvedValue(2);
+    (turtles.removeTurtle as jest.Mock).mockResolvedValue(mockTurtle);
 
     const interaction = createMockInteraction({ uuid: 'abc-123' });
 
     // @ts-ignore
     await removeTurtleCommand.execute(interaction);
 
-    expect(TurtleCollection.destroy).toHaveBeenCalledWith({
-      where: { turtle_id: 1 },
-    });
-    expect(mockTurtle.destroy).toHaveBeenCalled();
+    expect(turtles.removeTurtle).toHaveBeenCalledWith('abc-123');
     expect(interaction.editReply).toHaveBeenCalledWith(
       'Turtle `abc-123` ("Shelly") has been removed.',
     );
@@ -63,24 +63,23 @@ describe('remove_turtle', () => {
     const mockTurtle = {
       id: 2,
       name: null as string | null,
-      destroy: jest.fn(),
     };
-    (Turtle.findOne as jest.Mock).mockResolvedValue(mockTurtle);
-    (TurtleCollection.destroy as jest.Mock).mockResolvedValue(0);
+    (turtles.removeTurtle as jest.Mock).mockResolvedValue(mockTurtle);
 
     const interaction = createMockInteraction({ uuid: 'def-456' });
 
     // @ts-ignore
     await removeTurtleCommand.execute(interaction);
 
-    expect(mockTurtle.destroy).toHaveBeenCalled();
     expect(interaction.editReply).toHaveBeenCalledWith(
       'Turtle `def-456` has been removed.',
     );
   });
 
   test('should handle errors gracefully', async () => {
-    (Turtle.findOne as jest.Mock).mockRejectedValue(new Error('DB error'));
+    (turtles.removeTurtle as jest.Mock).mockRejectedValue(
+      new Error('DB error'),
+    );
 
     const interaction = createMockInteraction({ uuid: 'abc-123' });
 
