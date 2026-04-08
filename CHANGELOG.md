@@ -1,5 +1,23 @@
 # @osrs-leagues/discord-bot
 
+## 2.13.0
+
+### Minor Changes
+
+- 036de47: Add DM ticketing system
+- 715db22: Add support for Turtles
+- 3576a19: Add caching support for Turtles and related commands
+
+### Patch Changes
+
+- 6060178: Add support for turtle clog response padding
+- 0b9b607: Use PAT_GITHUB_TOKEN for push-main token
+- 545bd80: Exempt testing channels from turtle command cooldowns
+- 380d832: Condense turtle clog response
+- 04d4a65: Fix ChallengeCard flaky test caused by concurrent SQLite writes
+- 2db5ae4: Restrict turtle commands to mods & staff channels
+- 45c037b: Make command and select menu responses ephemeral for permission errors
+
 ## 2.12.0
 
 ### Minor Changes
