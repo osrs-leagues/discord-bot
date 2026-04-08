@@ -229,9 +229,9 @@ describe('turtle', () => {
       expect(turtleCommand.cooldown.duration).toBe(10 * 60 * 1000);
     });
 
-    test('turtle command cooldown should exempt turtles channels', () => {
+    test('turtle command cooldown should exempt testing channels', () => {
       expect(turtleCommand.cooldown.exemptChannels).toEqual(
-        channelGroups.TURTLES,
+        channelGroups.TESTING,
       );
     });
 

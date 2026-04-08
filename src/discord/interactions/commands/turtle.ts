@@ -15,7 +15,7 @@ const turtleCommand: Command = {
   roles: [Role.Administrator, Role.Moderator, Role.Tester],
   cooldown: {
     duration: 10 * 60 * 1000,
-    exemptChannels: channelGroups.TURTLES,
+    exemptChannels: channelGroups.TESTING,
   },
   data: new SlashCommandBuilder()
     .setName('turtle')
