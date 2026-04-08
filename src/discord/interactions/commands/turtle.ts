@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { Command } from './types';
 import { channelGroups } from '../../Channel';
+import Role from '../../Role';
 import {
   turtleCache,
   selectWeightedTurtle,
@@ -10,6 +11,8 @@ import {
 import getTurtleMessage from '../../messages/turtle';
 
 const turtleCommand: Command = {
+  channels: channelGroups.STAFF,
+  roles: [Role.Administrator, Role.Moderator, Role.Tester],
   cooldown: {
     duration: 10 * 60 * 1000,
     exemptChannels: channelGroups.TURTLES,
