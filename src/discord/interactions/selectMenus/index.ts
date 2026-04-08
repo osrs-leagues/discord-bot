@@ -28,9 +28,10 @@ const handleSelectMenuInteraction = async (
       selectMenu.channels?.length > 0 &&
       !selectMenu.channels.includes(interaction.channel.id)
     ) {
-      return interaction.reply(
-        'You cannot answer this select in this channel.',
-      );
+      return interaction.reply({
+        content: 'You cannot answer this select in this channel.',
+        ephemeral: true,
+      });
     }
     if (selectMenu.roles?.length > 0) {
       let hasRole = false;
@@ -42,7 +43,10 @@ const handleSelectMenuInteraction = async (
         }
       }
       if (!hasRole) {
-        return interaction.reply('You do not have permission to answer this.');
+        return interaction.reply({
+          content: 'You do not have permission to answer this.',
+          ephemeral: true,
+        });
       }
     }
 

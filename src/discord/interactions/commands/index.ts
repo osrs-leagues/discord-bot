@@ -109,7 +109,10 @@ const handleCommandInteraction = async (
     command.channels?.length > 0 &&
     !command.channels.includes(interaction.channel.id)
   ) {
-    return interaction.reply('You cannot use this command in this channel.');
+    return interaction.reply({
+      content: 'You cannot use this command in this channel.',
+      ephemeral: true,
+    });
   }
   if (command.roles?.length > 0) {
     let hasRole = false;
@@ -121,9 +124,10 @@ const handleCommandInteraction = async (
       }
     }
     if (!hasRole) {
-      return interaction.reply(
-        'You do not have permission to use this command.',
-      );
+      return interaction.reply({
+        content: 'You do not have permission to use this command.',
+        ephemeral: true,
+      });
     }
   }
 
