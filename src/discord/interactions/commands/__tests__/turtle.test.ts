@@ -224,7 +224,8 @@ describe('turtle', () => {
       const embed = getTurtleLogMessage({ turtles, collected });
       const field = embed.fields.find((f) => f.name.startsWith('Common'));
       expect(field).toBeDefined();
-      const lines = field.value.split('\n');
+      const content = field.value.replace(/```\n?/g, '').trim();
+      const lines = content.split('\n');
       expect(lines).toHaveLength(2);
       expect(lines[0]).toBe('✅ Shelly | ✅ Sandy | ✅ Coral');
       expect(lines[1]).toBe('✅ Mossy');
