@@ -167,13 +167,13 @@ describe('turtle', () => {
       expect(field.value).toContain('✅ Shelly');
     });
 
-    test('should show question mark for uncollected turtles', () => {
+    test('should show discover message for uncollected turtles', () => {
       const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
       const collected = new Set<number>();
       const embed = getTurtleLogMessage({ turtles, collected });
       const field = embed.fields.find((f) => f.name.startsWith('Common'));
       expect(field).toBeDefined();
-      expect(field.value).toContain('❓ ???');
+      expect(field.value).toContain('... and 1 more to discover');
     });
 
     test('should group turtles by rarity', () => {
@@ -227,8 +227,10 @@ describe('turtle', () => {
       const content = field.value.replace(/```\n?/g, '').trim();
       const lines = content.split('\n');
       expect(lines).toHaveLength(2);
-      expect(lines[0]).toBe('✅ Shelly | ✅ Sandy | ✅ Coral');
-      expect(lines[1]).toBe('✅ Mossy');
+      expect(lines[0]).toContain('✅ Shelly');
+      expect(lines[0]).toContain('✅ Sandy');
+      expect(lines[1]).toContain('✅ Coral');
+      expect(lines[1]).toContain('✅ Mossy');
     });
   });
 

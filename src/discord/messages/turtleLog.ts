@@ -28,22 +28,18 @@ const getTurtleLogMessage = ({
     .setTitle('🐢 Turtle Collection Log')
     .setDescription(`Collected: **${collectedCount}** / **${totalCount}**`);
 
-  const ITEMS_PER_LINE = 3;
+  const ITEMS_PER_LINE = 2;
 
   for (const rarity of RARITY_ORDER) {
     const rarityTurtles = turtles.filter((t) => t.rarity === rarity);
     if (rarityTurtles.length === 0) continue;
 
-    const collectedInRarity = rarityTurtles.filter((t) =>
-      collected.has(t.id),
-    ).length;
+    const collectedTurtles = rarityTurtles.filter((t) => collected.has(t.id));
+    const uncollectedCount = rarityTurtles.length - collectedTurtles.length;
 
-    const entries = rarityTurtles.map((turtle) => {
-      if (collected.has(turtle.id)) {
-        return `✅ ${turtle.name ?? `Turtle #${turtle.id}`}`;
-      }
-      return '❓ ???';
-    });
+    const entries = collectedTurtles.map(
+      (turtle) => `✅ ${turtle.name ?? `Turtle #${turtle.id}`}`,
+    );
 
     const colWidths: number[] = [];
     for (let col = 0; col < ITEMS_PER_LINE; col++) {
@@ -66,8 +62,12 @@ const getTurtleLogMessage = ({
       );
     }
 
+    if (uncollectedCount > 0) {
+      lines.push(`... and ${uncollectedCount} more to discover`);
+    }
+
     embed.addField(
-      `${getTurtleRarityName(rarity)} (${collectedInRarity}/${
+      `${getTurtleRarityName(rarity)} (${collectedTurtles.length}/${
         rarityTurtles.length
       })`,
       '```\n' + lines.join('\n') + '\n```',
