@@ -162,7 +162,8 @@ describe('turtle', () => {
       const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
       const collected = new Set([1]);
       const embed = getTurtleLogMessage({ turtles, collected });
-      const field = embed.fields.find((f) => f.name === 'Common');
+      const field = embed.fields.find((f) => f.name.startsWith('Common'));
+      expect(field).toBeDefined();
       expect(field.value).toContain('✅ Shelly');
     });
 
@@ -170,7 +171,8 @@ describe('turtle', () => {
       const turtles = [makeTurtle(1, TurtleRarity.COMMON, 'Shelly')];
       const collected = new Set<number>();
       const embed = getTurtleLogMessage({ turtles, collected });
-      const field = embed.fields.find((f) => f.name === 'Common');
+      const field = embed.fields.find((f) => f.name.startsWith('Common'));
+      expect(field).toBeDefined();
       expect(field.value).toContain('❓ ???');
     });
 
@@ -182,8 +184,12 @@ describe('turtle', () => {
       const collected = new Set<number>();
       const embed = getTurtleLogMessage({ turtles, collected });
       const fieldNames = embed.fields.map((f) => f.name);
-      expect(fieldNames).toContain('Common');
-      expect(fieldNames).toContain('Rare');
+      expect(fieldNames).toEqual(
+        expect.arrayContaining([
+          expect.stringContaining('Common'),
+          expect.stringContaining('Rare'),
+        ]),
+      );
     });
 
     test('should skip rarity groups with no turtles', () => {
@@ -191,7 +197,37 @@ describe('turtle', () => {
       const collected = new Set<number>();
       const embed = getTurtleLogMessage({ turtles, collected });
       expect(embed.fields).toHaveLength(1);
-      expect(embed.fields[0].name).toBe('Common');
+      expect(embed.fields[0].name).toContain('Common');
+    });
+
+    test('should show per-rarity collected count in field header', () => {
+      const turtles = [
+        makeTurtle(1, TurtleRarity.COMMON, 'Shelly'),
+        makeTurtle(2, TurtleRarity.COMMON, 'Sandy'),
+        makeTurtle(3, TurtleRarity.COMMON, 'Coral'),
+      ];
+      const collected = new Set([1, 3]);
+      const embed = getTurtleLogMessage({ turtles, collected });
+      const field = embed.fields.find((f) => f.name.startsWith('Common'));
+      expect(field).toBeDefined();
+      expect(field.name).toBe('Common (2/3)');
+    });
+
+    test('should display multiple turtles per line separated by pipes', () => {
+      const turtles = [
+        makeTurtle(1, TurtleRarity.COMMON, 'Shelly'),
+        makeTurtle(2, TurtleRarity.COMMON, 'Sandy'),
+        makeTurtle(3, TurtleRarity.COMMON, 'Coral'),
+        makeTurtle(4, TurtleRarity.COMMON, 'Mossy'),
+      ];
+      const collected = new Set([1, 2, 3, 4]);
+      const embed = getTurtleLogMessage({ turtles, collected });
+      const field = embed.fields.find((f) => f.name.startsWith('Common'));
+      expect(field).toBeDefined();
+      const lines = field.value.split('\n');
+      expect(lines).toHaveLength(2);
+      expect(lines[0]).toBe('✅ Shelly | ✅ Sandy | ✅ Coral');
+      expect(lines[1]).toBe('✅ Mossy');
     });
   });
 

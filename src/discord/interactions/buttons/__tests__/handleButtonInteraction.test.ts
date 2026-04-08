@@ -3,7 +3,6 @@ import Role from '../../../Role';
 import { Collection } from 'discord.js';
 
 // Mock all button handlers to isolate handleButtonInteraction logic
-// Note: jest.mock is hoisted above imports, so we use require() for Role
 jest.mock('../challengeRerollButton', () => ({
   default: {
     buttons: ['reroll'],
@@ -13,7 +12,7 @@ jest.mock('../challengeRerollButton', () => ({
 }));
 
 jest.mock('../closeTicketButton', () => {
-  const { default: R } = require('../../../Role');
+  const { default: R } = jest.requireActual('../../../Role');
   return {
     default: {
       buttons: ['close_ticket', 'reopen_ticket'],
@@ -25,7 +24,7 @@ jest.mock('../closeTicketButton', () => {
 });
 
 jest.mock('../blockUserButton', () => {
-  const { default: R } = require('../../../Role');
+  const { default: R } = jest.requireActual('../../../Role');
   return {
     default: {
       buttons: ['block_user', 'unblock_user'],
