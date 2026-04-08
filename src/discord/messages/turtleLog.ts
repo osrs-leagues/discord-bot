@@ -51,7 +51,9 @@ const getTurtleLogMessage = ({
     }
 
     embed.addField(
-      `${getTurtleRarityName(rarity)} (${collectedInRarity}/${rarityTurtles.length})`,
+      `${getTurtleRarityName(rarity)} (${collectedInRarity}/${
+        rarityTurtles.length
+      })`,
       lines.join('\n'),
     );
   }
