@@ -1,11 +1,7 @@
 import { TurtleRarity } from '../../../database/models/Turtle';
 import getTurtleLogMessage from '../turtleLog';
 
-const makeTurtle = (
-  id: number,
-  rarity: TurtleRarity,
-  name?: string,
-): any => ({
+const makeTurtle = (id: number, rarity: TurtleRarity, name?: string): any => ({
   id,
   rarity,
   name,
