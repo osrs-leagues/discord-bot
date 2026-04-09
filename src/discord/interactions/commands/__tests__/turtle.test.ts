@@ -12,7 +12,6 @@ import addTurtleCommand from '../add_turtle';
 import turtleCommand from '../turtle';
 import turtleClogCommand from '../turtle_clog';
 import { channelGroups } from '../../../Channel';
-import Role from '../../../Role';
 
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
@@ -253,16 +252,12 @@ describe('turtle', () => {
       expect(turtleClogCommand.data.name).toBe('turtle_clog');
     });
 
-    test('turtle command should be restricted to staff channels', () => {
-      expect(turtleCommand.channels).toEqual(channelGroups.STAFF);
+    test('turtle command should not restrict channels', () => {
+      expect(turtleCommand.channels).toBeUndefined();
     });
 
-    test('turtle command should require staff roles', () => {
-      expect(turtleCommand.roles).toEqual([
-        Role.Administrator,
-        Role.Moderator,
-        Role.Tester,
-      ]);
+    test('turtle command should not restrict roles', () => {
+      expect(turtleCommand.roles).toBeUndefined();
     });
 
     test('turtle command should have a 10 minute cooldown', () => {
@@ -270,22 +265,18 @@ describe('turtle', () => {
       expect(turtleCommand.cooldown.duration).toBe(10 * 60 * 1000);
     });
 
-    test('turtle command cooldown should exempt testing channels', () => {
+    test('turtle command cooldown should exempt turtle channels', () => {
       expect(turtleCommand.cooldown.exemptChannels).toEqual(
-        channelGroups.TESTING,
+        channelGroups.TURTLES,
       );
     });
 
-    test('turtle_clog command should be restricted to staff channels', () => {
-      expect(turtleClogCommand.channels).toEqual(channelGroups.STAFF);
+    test('turtle_clog command should not restrict channels', () => {
+      expect(turtleClogCommand.channels).toBeUndefined();
     });
 
-    test('turtle_clog command should require staff roles', () => {
-      expect(turtleClogCommand.roles).toEqual([
-        Role.Administrator,
-        Role.Moderator,
-        Role.Tester,
-      ]);
+    test('turtle_clog command should not restrict roles', () => {
+      expect(turtleClogCommand.roles).toBeUndefined();
     });
   });
 });
