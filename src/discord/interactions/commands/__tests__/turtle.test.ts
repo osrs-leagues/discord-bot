@@ -252,23 +252,21 @@ describe('turtle', () => {
       expect(turtleClogCommand.data.name).toBe('turtle_clog');
     });
 
-    test('turtle command should not restrict channels', () => {
-      expect(turtleCommand.channels).toBeUndefined();
+    test('turtle command should be restricted to turtle channels', () => {
+      expect(turtleCommand.channels).toEqual(channelGroups.TURTLES);
     });
 
     test('turtle command should not restrict roles', () => {
       expect(turtleCommand.roles).toBeUndefined();
     });
 
-    test('turtle command should have a 10 minute cooldown', () => {
+    test('turtle command should have a 30 second cooldown', () => {
       expect(turtleCommand.cooldown).toBeDefined();
-      expect(turtleCommand.cooldown.duration).toBe(10 * 60 * 1000);
+      expect(turtleCommand.cooldown.duration).toBe(30 * 1000);
     });
 
-    test('turtle command cooldown should exempt turtle channels', () => {
-      expect(turtleCommand.cooldown.exemptChannels).toEqual(
-        channelGroups.TURTLES,
-      );
+    test('turtle command cooldown should not exempt any channels', () => {
+      expect(turtleCommand.cooldown.exemptChannels).toBeUndefined();
     });
 
     test('turtle_clog command should not restrict channels', () => {
