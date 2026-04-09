@@ -23,12 +23,18 @@ const collectionCache = new Map<string, Set<number>>();
 /** userId → eviction timer handle */
 const collectionTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
-const computeTotalWeight = (turtles: Turtle[]): number => {
-  let total = 0;
-  for (const turtle of turtles) {
-    total += TURTLE_RARITY_WEIGHTS[turtle.rarity];
+const rollRarity = (): TurtleRarity => {
+  const roll = Math.random();
+
+  let cumulative = 0;
+  for (const rarity of Object.values(TurtleRarity)) {
+    cumulative += TURTLE_RARITY_WEIGHTS[rarity];
+    if (roll <= cumulative) {
+      return rarity;
+    }
   }
-  return total;
+
+  return TurtleRarity.COMMON; // fallback
 };
 
 const rebuildUuidMap = (turtles: Turtle[]): Map<string, Turtle> => {
@@ -54,7 +60,7 @@ const refreshCollectionTimer = (userId: string) => {
 export const loadTurtleCache = async () => {
   turtleCache.turtles = await Turtle.findAll();
   turtleCache.uuidMap = rebuildUuidMap(turtleCache.turtles);
-  turtleCache.totalWeight = computeTotalWeight(turtleCache.turtles);
+  //turtleCache.totalWeight = turtle(turtleCache.turtles);
   console.info('Turtle cache loaded:', turtleCache.turtles.length);
 };
 
@@ -66,15 +72,16 @@ export const selectWeightedTurtle = (turtles: Turtle[]): Turtle => {
   if (turtles.length === 0) {
     throw new Error('Cannot select from an empty turtle array');
   }
-  const totalWeight = computeTotalWeight(turtles);
-  let roll = Math.random() * totalWeight;
-  for (const turtle of turtles) {
-    roll -= TURTLE_RARITY_WEIGHTS[turtle.rarity];
-    if (roll <= 0) {
-      return turtle;
-    }
-  }
-  return turtles[turtles.length - 1];
+
+  const rarity = rollRarity();
+
+  const filtered = turtles.filter((t) => t.rarity === rarity);
+
+  // fallback if somehow none exist
+  const pool = filtered.length > 0 ? filtered : turtles;
+
+  const index = Math.floor(Math.random() * pool.length);
+  return pool[index];
 };
 
 type AddTurtleParams = {
@@ -145,16 +152,21 @@ export const removeTurtle = async (
 };
 
 const getUserCollection = async (userId: string): Promise<Set<number>> => {
-  if (collectionCache.has(userId)) {
+  const cached = collectionCache.get(userId);
+
+  if (cached !== undefined) {
     refreshCollectionTimer(userId);
-    return collectionCache.get(userId);
+    return cached;
   }
+
   const entries = await TurtleCollection.findAll({
     where: { user_id: userId },
   });
+
   const set = new Set(entries.map((e) => Number(e.turtle_id)));
   collectionCache.set(userId, set);
   refreshCollectionTimer(userId);
+
   return set;
 };
 
