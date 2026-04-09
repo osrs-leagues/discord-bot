@@ -1,5 +1,13 @@
 # @osrs-leagues/discord-bot
 
+## 2.13.1
+
+### Patch Changes
+
+- a81ef96: Update turtle command permissions
+- 1466add: Refactor turtle log message tests and update item display logic
+- 63a76b6: Adjust turtle rarities
+
 ## 2.13.0
 
 ### Minor Changes
