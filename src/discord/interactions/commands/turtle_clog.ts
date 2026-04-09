@@ -1,14 +1,10 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 import { Command } from './types';
-import { channelGroups } from '../../Channel';
-import Role from '../../Role';
 import { turtleCache, getCollectedTurtleIds } from '../../../turtles';
 import getTurtleLogMessage from '../../messages/turtleLog';
 
 const turtleClogCommand: Command = {
-  channels: channelGroups.STAFF,
-  roles: [Role.Administrator, Role.Moderator, Role.Tester],
   data: new SlashCommandBuilder()
     .setName('turtle_clog')
     .setDescription('View your turtle collection log.'),
