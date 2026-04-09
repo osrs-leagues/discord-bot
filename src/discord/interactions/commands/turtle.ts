@@ -10,9 +10,9 @@ import {
 import getTurtleMessage from '../../messages/turtle';
 
 const turtleCommand: Command = {
+  channels: channelGroups.TURTLES,
   cooldown: {
-    duration: 10 * 60 * 1000,
-    exemptChannels: channelGroups.TURTLES,
+    duration: 30 * 1000,
   },
   data: new SlashCommandBuilder()
     .setName('turtle')
