@@ -17,10 +17,10 @@ import Role from '../../../Role';
 describe('turtle', () => {
   describe('TURTLE_RARITY_WEIGHTS', () => {
     test('all rarity categories should have correct weights', () => {
-      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.COMMON]).toBe(1);
-      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.UNCOMMON]).toBe(1 / 10);
-      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.RARE]).toBe(1 / 100);
-      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.ULTRA_RARE]).toBe(1 / 500);
+      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.COMMON]).toBe(0.8835);
+      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.UNCOMMON]).toBe(0.1);
+      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.RARE]).toBe(0.0125);
+      expect(TURTLE_RARITY_WEIGHTS[TurtleRarity.ULTRA_RARE]).toBe(0.004);
     });
   });
 
@@ -57,11 +57,12 @@ describe('turtle', () => {
         counts[result.id]++;
       }
 
-      // Common weight = 1, Ultra Rare weight = 0.002
-      // Expected: Common ~99.8%, Ultra Rare ~0.2%
-      expect(counts[1]).toBeGreaterThan(iterations * 0.95);
+      // Two-step roll: rarity tier first, then uniform within tier.
+      // Common ~88.35%, Ultra Rare ~0.4%, missing tiers fall back to full pool.
+      // Common gets ~88.35% + ~5.6% fallback ≈ 94%, Ultra Rare gets ~0.4% + ~5.6% ≈ 6%
+      expect(counts[1]).toBeGreaterThan(iterations * 0.88);
       expect(counts[2]).toBeGreaterThan(0);
-      expect(counts[2]).toBeLessThan(iterations * 0.05);
+      expect(counts[2]).toBeLessThan(iterations * 0.15);
     });
 
     test('should select from multiple turtles of different rarities', () => {
@@ -79,12 +80,13 @@ describe('turtle', () => {
         counts[result.id]++;
       }
 
-      // Each Common weight = 1, Rare weight = 0.01
-      // Commons should each be ~49.75%, Rare ~0.5%
-      expect(counts[1]).toBeGreaterThan(iterations * 0.4);
-      expect(counts[2]).toBeGreaterThan(iterations * 0.4);
+      // Two-step roll: COMMON tier (88.35%) split between ids 1 & 2,
+      // RARE tier (1.25%) goes to id 3, missing tiers fall back to full pool.
+      // Each Common ~44% + fallback, Rare ~1.25% + fallback ≈ ~5%
+      expect(counts[1]).toBeGreaterThan(iterations * 0.35);
+      expect(counts[2]).toBeGreaterThan(iterations * 0.35);
       expect(counts[3]).toBeGreaterThan(0);
-      expect(counts[3]).toBeLessThan(iterations * 0.05);
+      expect(counts[3]).toBeLessThan(iterations * 0.1);
     });
   });
 

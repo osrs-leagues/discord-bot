@@ -60,7 +60,11 @@ const refreshCollectionTimer = (userId: string) => {
 export const loadTurtleCache = async () => {
   turtleCache.turtles = await Turtle.findAll();
   turtleCache.uuidMap = rebuildUuidMap(turtleCache.turtles);
-  //turtleCache.totalWeight = turtle(turtleCache.turtles);
+  let total = 0;
+  for (const t of turtleCache.turtles) {
+    total += TURTLE_RARITY_WEIGHTS[t.rarity];
+  }
+  turtleCache.totalWeight = total;
   console.info('Turtle cache loaded:', turtleCache.turtles.length);
 };
 
