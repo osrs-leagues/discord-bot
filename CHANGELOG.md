@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.13.2
+
+### Patch Changes
+
+- e0b1126: Add cooldwon to turtle command in all channels. Restrict usage to turtles channel.
+
 ## 2.13.1
 
 ### Patch Changes
