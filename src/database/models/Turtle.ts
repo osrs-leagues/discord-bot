@@ -9,10 +9,10 @@ export enum TurtleRarity {
 }
 
 export const TURTLE_RARITY_WEIGHTS: Record<TurtleRarity, number> = {
-  [TurtleRarity.COMMON]: 1,
-  [TurtleRarity.UNCOMMON]: 1 / 10,
-  [TurtleRarity.RARE]: 1 / 100,
-  [TurtleRarity.ULTRA_RARE]: 1 / 500,
+  [TurtleRarity.COMMON]: 0.8835,
+  [TurtleRarity.UNCOMMON]: 0.1,
+  [TurtleRarity.RARE]: 0.0125,
+  [TurtleRarity.ULTRA_RARE]: 0.004,
 };
 
 export const getTurtleRarityName = (rarity: TurtleRarity): string => {
