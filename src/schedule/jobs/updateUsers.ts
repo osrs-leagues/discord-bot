@@ -8,7 +8,7 @@ const updateUsersJob: Job = {
     test: undefined,
     development: undefined, //'* * * * *',
     stage: undefined, // '* * *',
-    production: '2 */6 * * *',
+    production: '2 */2 * * *',
   },
   runOnStart: false,
   execute: async () => {
