@@ -13,6 +13,7 @@ import leagueRanksCommand from './league_ranks';
 import removeLeagueRolesCommand from './remove_league_roles';
 import updateLeaguePointsCommand from './update_league_points';
 import updateAllRolesCommand from './update_all_roles';
+import updateLeagueUsersCommand from './update_league_users';
 import { Command } from './types';
 import leagueNameLocal from './leagueNameLocal';
 import leagueNameBronze from './leagueNameBronze';
@@ -85,6 +86,7 @@ const commandData = [
   unblockDmCommand,
   updateLeaguePointsCommand,
   updateAllRolesCommand,
+  updateLeagueUsersCommand,
   viewChallengeCommand,
 ];
 
