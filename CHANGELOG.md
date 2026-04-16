@@ -1,5 +1,11 @@
 # @osrs-leagues/discord-bot
 
+## 2.13.3
+
+### Patch Changes
+
+- c7ac98d: Fix hiscore index for leagues points; Set update users job to 2 hours
+
 ## 2.13.2
 
 ### Patch Changes
