@@ -18,6 +18,7 @@ export type BotConfig = {
     username: string;
   };
   environment: Environment;
+  port: number;
   guild_id: string;
   imp_spotting_time: number;
   channels: {
@@ -43,6 +44,7 @@ const config: BotConfig = {
     database: process.env.DB_NAME,
   },
   environment: process.env.NODE_ENV as Environment,
+  port: parseInt(process.env.PORT ?? '3000'),
   guild_id: process.env.GUILD_ID,
   imp_spotting_time: parseInt(process.env.IMP_SPOTTING_TIME ?? '1'),
   channels: {
